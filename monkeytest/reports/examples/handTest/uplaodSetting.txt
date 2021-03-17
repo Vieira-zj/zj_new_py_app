@@ -1,0 +1,5 @@
+comlum:time,mem,cpu,upflow,downflow
+comlumTotal:time,sysmemleft,syscpu,totalpss,totalcpu,totalcputime,totalupflow,totaldownflow
+app_info:[{"application_name":"京东掌柜宝","package_name":"com.jd.b2b","location":"\/data\/user\/0\/com.jd.b2b","version":"4.4.0"}]
+device_info:{"phone_brand":"LeEco","phone_type":"LEX651","sys_name":"KGXCNFN6003009091S release-keys","bootloader":"unknown","serial":"LP036878A7130018825","hardware":"mt6797","android_vesion":"6.0","cpu_type":"AArch64 Processor rev 4 (aarch64)","cpu_num":10,"cpu_freq":1391000,"imei":"862559033842685","storage_size":"3.67 GB","screen_high":1920,"screen_width":1080,"screen_desi":2.625,"sys_version_num":"KGXCNFN6003009091S","mac":"02:00:00:00:00:00","carrieroperator":""}
+tips:MjAxOC0xMS0yNi0xMi0yMy0xNiUzQQ==

@@ -1,0 +1,507 @@
+11-26 12:19:53.589 12530 14485 I System.out: [socket][16] connection /106.39.164.150:80;LocalPort=39412(15000)
+11-26 12:19:53.589 12530 14485 I System.out: [CDS]connect[/106.39.164.150:80] tm:15
+11-26 12:19:53.596 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@c7d3dbbcompletesCount:1, httpCount:1
+11-26 12:19:53.602 12530 12530 I HttpGroup: id:3- onEnd -->> 
+11-26 12:19:53.604 12530 12530 I CrashReport-Native: Set native info: isAppForeground(false)
+11-26 12:19:53.610 12530 12530 I TrackUtil: -----Send click data start -----
+11-26 12:19:53.613 12530 12530 I TrackUtil: pin=jd_64aa7bd58f909, page_id=0016, event_id=zgb_2017102519|14, event_param=, skuid=, map={platform=android, bpin=xtl_tyEGtnS, createtime=1543205993604, sale_ord_id=, sku_id=, clientversion=4.4.0, uuid=862559033842685020000000000, cpin=jd_64aa7bd58f909, operatetime=1543205993604, provinceid=1, operatetype=1}, orderid=
+11-26 12:19:53.618 12530 12530 I TrackUtil: -----Send click data end -----true
+11-26 12:19:53.619  1164  1830 I WindowManager: setAppVisibility(Token{e4e6651 ActivityRecord{45f78db u0 com.jd.b2b/.activity.SplashActivity, isShadow:false t337 f}}, visible=false): mNextAppTransition=TRANSIT_ACTIVITY_OPEN hidden=false hiddenRequested=false
+11-26 12:19:53.620  1164  1830 I WindowManager: setAppVisibility(Token{dddbdf2 ActivityRecord{232bcfd u0 com.jd.b2b/.frame.MainFrameActivity, isShadow:false t337}}, visible=true): mNextAppTransition=TRANSIT_ACTIVITY_OPEN hidden=true hiddenRequested=true
+11-26 12:19:53.626  1164  1616 I libPerfService: [perfScnDisable] scenario:19
+11-26 12:19:53.635 12530 12530 I HttpGroup: id:2--FunctionId--one.webConfig- StringCallback -->> {"data":{"currentTime":1543205995277,"GENERAL_GLOBAL":{"GENERAL_GLOBAL_CATEGORY_SWITCH":[{"id":15,"configClassId":30,"paramType":"boolean","sortNo":15,"value":true}],"GENERAL_GLOBAL_JDREACT_SWITCH":[{"id":11,"configClassId":23,"paramType":"boolean","sortNo":11,"value":false}],"GENERAL_GLOBAL_UnionDepot_SWITCH":[{"id":12,"configClassId":25,"paramType":"boolean","sortNo":12,"value":true}],"GENERAL_GLOBAL_JXC_MAX_PRICE":[{"id":14,"configClassId":28,"paramType":"string","paramInfo":"10万","sortNo":14,"value":"99999.99"}],"GENERAL_GLOBAL_SHOP_URL":[{"id":10,"configClassId":21,"paramType":"string","sortNo":10,"value":"http://h5zgbgwb.m.jd.com/shopHome.html"}],"GENERAL_GLOBAL_MARK_SHOW":[{"id":5,"configClassId":14,"paramType":"boolean","sortNo":5,"value":true}],"GENERAL_GLOBAL_HEAD_LOGO":[{"id":1,"configClassId":5,"paramType":"string","sortNo":1,"value":"test"}]},"GENERAL_LUNBO":{},"success":true},"code":"0"}
+11-26 12:19:53.642 12530 14447 I System.out: [CDS][DNS] getAllByNameImpl netId = 0
+11-26 12:19:53.643 12530 14447 I System.out: [CDS]rx timeout:5000
+11-26 12:19:53.643 12530 14447 I System.out: [socket][17] connection luna.jd.com/106.39.164.185:443;LocalPort=44150(9000)
+11-26 12:19:53.643 12530 14447 I System.out: [CDS]connect[luna.jd.com/106.39.164.185:443] tm:9
+11-26 12:19:53.644 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@8b7fa97completesCount:1, httpCount:1
+11-26 12:19:53.651 12530 12530 I HttpGroup: id:2- onEnd -->> 
+11-26 12:19:53.652 12530 12530 I xx      : httpResponse:null
+11-26 12:19:53.667 12530 12530 W System.err: java.lang.NullPointerException: Attempt to invoke interface method 'java.lang.Object java.util.List.get(int)' on a null object reference
+11-26 12:19:53.667 12530 12530 W System.err: 	at com.jd.b2b.app.B2bApp$7.onEnd(B2bApp.java:405)
+11-26 12:19:53.667 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:19:53.667 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:19:53.667 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:19:53.667 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:19:53.667 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:19:53.667 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:19:53.667 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:19:53.667 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:19:53.667 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:19:53.668 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:19:53.668 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:19:53.668 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:19:53.668 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:19:53.676   426   426 I SurfaceFlinger: [Built-in Screen (type:0)] fps:54.114902,dur:1016.36,max:50.37,min:9.19
+11-26 12:19:53.679 12530 12530 W ResourceType: No known package when getting name for resource number 0xffffffff
+11-26 12:19:53.697  3143  3186 I System.out: [CDS]port[56848]
+11-26 12:19:53.697  3143  3186 I System.out: [CDS]rx timeout:10000
+11-26 12:19:53.697 12530 14485 I System.out: [socket][/10.14.170.150:39412] connected
+11-26 12:19:53.697 12530 14485 I System.out: [CDS]rx timeout:20000
+11-26 12:19:53.707 12530 14447 I System.out: [socket][/10.14.170.150:44150] connected
+--
+11-26 12:19:54.427 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@2573622completesCount:1, httpCount:1
+11-26 12:19:54.427 12530 14451 I HttpGroup: id:15- body -->> {}
+11-26 12:19:54.429 12530 14466 I HttpGroup: id:6- MyApplication.getInstance().isdns--->> true
+11-26 12:19:54.440 12530 14465 I HttpGroup: id:8----post-params-----ctid=2816&lon=114.431188&s=1920*1080&sign=458635bc559fcb0a2d1f4135372680c3&source=&devicetoken=64b1d5a30c5e1370b57485b05a723d46&pid=1&guid=a2367267-35a2-4333-82f3-ea4f525d83e1&uuid=862559033842685020000000000&cid=6667&body=%7B%7D&m=LEX651&os=android&an=zgb&b=LeMobile&c=android&cv=4.4.0&p=jingdong&nt=wifi&cvb=1810263&tid=0&ov=6.0&isEncoder=1&lat=30.469831&aid=978383
+11-26 12:19:54.454 12530 14486 I HttpGroup: id:2----httpdns-hostname-----zgbgwb.m.jd.com
+11-26 12:19:54.454 12530 14486 I System.out: [CDS][DNS] getAllByNameImpl netId = 0
+11-26 12:19:54.455 12530 14486 I System.out: [CDS]rx timeout:20000
+11-26 12:19:54.455 12530 14486 I System.out: [socket][20] connection zgbgwb.m.jd.com/106.39.164.150:80;LocalPort=51519(15000)
+11-26 12:19:54.455 12530 14486 I System.out: [CDS]connect[zgbgwb.m.jd.com/106.39.164.150:80] tm:15
+11-26 12:19:54.456 12530 12530 I HttpGroup: id:1- onEnd -->> 
+11-26 12:19:54.462 12530 14466 I HttpGroup: id:6- post-url -- json--->> http://zgbgwb.m.jd.com/one.gisLocation
+11-26 12:19:54.469 12530 12530 E ActivityThread: Failed to find provider info for com.jd.b2b.app.B2bApp.net.grandcentrix.tray
+11-26 12:19:54.471 12530 12530 E ActivityThread: Failed to find provider info for com.jd.b2b.app.B2bApp.net.grandcentrix.tray
+11-26 12:19:54.472 12530 12530 W System.err: net.grandcentrix.tray.core.TrayException: could not access stored data with uri content://com.jd.b2b.app.B2bApp.net.grandcentrix.tray/internal_preferences/com.jd.b2b/version?backup=true
+11-26 12:19:54.472 12530 12530 W System.err: 	at net.grandcentrix.tray.provider.TrayProviderHelper.a(TrayProviderHelper.java:176)
+11-26 12:19:54.472 12530 12530 W System.err: 	at net.grandcentrix.tray.provider.ContentProviderStorage.c(ContentProviderStorage.java:216)
+11-26 12:19:54.472 12530 12530 W System.err: 	at net.grandcentrix.tray.core.Preferences.b(Preferences.java:258)
+11-26 12:19:54.472 12530 12530 W System.err: 	at net.grandcentrix.tray.core.Preferences.h(Preferences.java:292)
+11-26 12:19:54.472 12530 12530 W System.err: 	at net.grandcentrix.tray.core.Preferences.b(Preferences.java:167)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.jdb2bpush_libray.utils.TrayUtils.a(TrayUtils.java:46)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.jd.b2b.app.B2bApp.startPush(B2bApp.java:551)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.jd.b2b.app.B2bApp.initPushEvents(B2bApp.java:422)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.jd.b2b.app.B2bApp$8.onEnd(B2bApp.java:471)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:19:54.473 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:19:54.473 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:19:54.474 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:19:54.474 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:19:54.474 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:19:54.474 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:19:54.474 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:19:54.474 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:19:54.475 12530 12530 E ActivityThread: Failed to find provider info for com.jd.b2b.app.B2bApp.net.grandcentrix.tray
+11-26 12:19:54.476 12530 12530 W System.err: net.grandcentrix.tray.core.TrayException: could not access stored data with uri content://com.jd.b2b.app.B2bApp.net.grandcentrix.tray/internal_preferences/com.jd.b2b/version?backup=true
+11-26 12:19:54.476 12530 14452 I HttpGroup: id:13- onStart -->> 
+11-26 12:19:54.476 12530 12530 W System.err: 	at net.grandcentrix.tray.provider.TrayProviderHelper.a(TrayProviderHelper.java:176)
+11-26 12:19:54.477 12530 12530 W System.err: 	at net.grandcentrix.tray.provider.ContentProviderStorage.c(ContentProviderStorage.java:216)
+11-26 12:19:54.477 12530 12530 W System.err: 	at net.grandcentrix.tray.core.Preferences.b(Preferences.java:258)
+11-26 12:19:54.477 12530 12530 W System.err: 	at net.grandcentrix.tray.core.Preferences.h(Preferences.java:292)
+11-26 12:19:54.477 12530 12530 W System.err: 	at net.grandcentrix.tray.core.Preferences.b(Preferences.java:131)
+11-26 12:19:54.477 12530 12530 W System.err: 	at com.jdb2bpush_libray.utils.TrayUtils.a(TrayUtils.java:26)
+11-26 12:19:54.477 12530 12530 W System.err: 	at com.jd.b2b.app.B2bApp.startPush(B2bApp.java:554)
+11-26 12:19:54.477 12530 12530 W System.err: 	at com.jd.b2b.app.B2bApp.initPushEvents(B2bApp.java:422)
+11-26 12:19:54.477 12530 12530 W System.err: 	at com.jd.b2b.app.B2bApp$8.onEnd(B2bApp.java:471)
+11-26 12:19:54.477 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:19:54.477 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:19:54.477 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:19:54.477 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:19:54.478 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:19:54.478 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:19:54.478 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:19:54.478 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:19:54.478 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:19:54.478 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:19:54.478 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:19:54.478 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:19:54.478 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:19:54.484 12530 14522 E DbCenter: DbHelper(): >>>>>>cxl<<<<<<老数据库文件存在：/data/user/0/com.jd.b2b/databases/database.db
+11-26 12:19:54.484 12530 14522 E DbCenter: DbHelper(): >>>>>>cxl<<<<<<新数据库文件存在：/data/user/0/com.jd.b2b/databases/__icssdk_database.db
+11-26 12:19:54.488 12530 14486 I System.out: [socket][/10.14.170.150:51519] connected
+11-26 12:19:54.488 12530 14486 I System.out: [CDS]rx timeout:20000
+11-26 12:19:54.492 12530 14466 I HttpGroup: id:6----post-params-----ctid=2816&lon=114.431188&s=1920*1080&sign=c44a5a3b22db38297bce1deb0a3f4f3a&source=&devicetoken=64b1d5a30c5e1370b57485b05a723d46&pid=1&guid=eab6197c-e058-4fa4-94bd-d72ce86e9ff5&uuid=862559033842685020000000000&cid=6667&body=%7B%22lon%22%3A%22114.431188%22%2C%22lat%22%3A%2230.469831%22%7D&m=LEX651&os=android&an=zgb&b=LeMobile&c=android&cv=4.4.0&p=jingdong&nt=wifi&cvb=1810263&tid=0&ov=6.0&isEncoder=1&lat=30.469831&aid=978383
+11-26 12:19:54.502  1164  2200 I AlarmManager: APP set(PendingIntent{7cb55c2: PendingIntentRecord{bc0cfd3 android broadcastIntent key.isShadow:false}}) : type=3 triggerAtTime=616005152 win=-1 tElapsed=616005152 maxElapsed=616005152 interval=0 flags=0x0
+11-26 12:19:54.504  1164  1216 W JobStore: don't allow to write to disk for 179..:[ComponentInfo{com.tencent.qqpim/com.tencent.qqpim.sdk.softuseinfoupload.flowcontrol.DataUploadJobService},jId=8088,u0,R=(23:26:06,33:40:05),N=1,C=false,I=false,F=0,P=true,ANI=true]
+--
+11-26 12:20:10.070 12530 14599 W Bitmap  : Called reconfigure on a bitmap that is in use! This may cause graphical corruption!
+11-26 12:20:10.070 12530 12530 I HttpGroup: id:35--FunctionId--one.cart- StringCallback -->> {"data":{"currentTime":1543206011731,"bottomTitle":"快去选购商品参加促销活动吧","cartNum":107},"code":"0"}
+11-26 12:20:10.094 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@f7db33completesCount:1, httpCount:1
+11-26 12:20:10.103 12530 14553 I System.out: close [socket][/10.14.170.150:35454]
+11-26 12:20:10.121 12530 12530 I HttpGroup: id:35- onEnd -->> 
+11-26 12:20:10.202 12530 12540 I art     : Background sticky concurrent mark sweep GC freed 32822(2020KB) AllocSpace objects, 11(200KB) LOS objects, 3% free, 71MB/74MB, paused 5.315ms total 70.106ms
+11-26 12:20:10.223  8350  8350 I ADB_SERVICES: service_to_fd shell:dumpsys iphonesubinfo
+11-26 12:20:10.224  8350  8350 I ADB_SERVICES: create_subproc ret_fd=20 pid=14734
+11-26 12:20:10.225  1164  2168 I InputDispatcher: injectInputEvent  motion-p=(380,1532),action=0, pointerCount=1,EventTime=163972846000000, DownTime=163972846000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:10.229 12530 12530 I ViewRootImpl: finishMotionEvent: handled = true stage=10: View Post IME stage,inputElapseTime=0 eventTime = 163972846 downTime = 163972846 title= com.jd.b2b/com.jd.b2b.activity.ProductDetailActivity
+11-26 12:20:10.230  1164  1644 I InputDispatcher: injectInputEvent  motion-p=(381,1537),action=1, pointerCount=1,EventTime=163972851000000, DownTime=163972846000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:10.278  8350 14735 I ADB_SERVICES: shell exited fd=20 of pid=14734 err=0
+11-26 12:20:10.321 12530 12530 I HttpGroup: id:33--FunctionId--one.skudetail- StringCallback -->> {"data":{"shareNode":{"slogan":"京东掌柜宝的这个商品真不错，特适合在咱小店卖，快来进货吧。","shareUrl":"https://h5zgbgwb.m.jd.com/detail.html?id=4758623&showtip=1"},"taskCard":[],"freightFee":{"yunFeeTips":"满600元免运费，不足600元运费10元","yunFeeLimit":600,"userLevel":"XB_OLD_USER","defaultYunFee":10,"needMoneyTips":"此单还差{0}元即免运费","isShow":false,"isPopWare":false,"freightText":[{"text":"满600元免运费，不足600元运费10元"}],"priceType":0,"ifShowPrice":false,"isUserFree":false,"isNewUser":false},"type":1,"adwords":[{"text":"爆款直降，速速抢购！","color":"#FF5745","backColor":"#F3F3F4"},{"text":"更多优惠请点击》》","color":"#FF5745","backColor":"#F3F3F4","href":"http://esale.jd.com/zgb/m/fpgkJHUY6ywBSm.html"}],"contact":{"contactTel":"400-625-8811","contactUrl":"http://h5zgbgwb.m.jd.com/my_service.html","contactTitle":"客服时间: 周一至周日 9:00-22:00"},"promiseResult":"18:00前下单,预计明天(11月27日)送达","stock":{"isStock":true,"stockType":1,"remainNum":-1,"wareHouseId":"35","parallelWareHouseId":"35","wareHouseType":"0","parallelWareHouseType":"0","distributionCenterId":"682","parallelDistributionCenterId":"682"},"showAddress":true,"notice":"不支持7天无理由退货","addressList":null,"detailUrl":"https://h5zgbgwb.m.jd.com/goodDetail.html?goodId=4758623","isFav":false,"packFee":{"feeTip":"满600元免运费，不足600元运费10元"},"isSupportShipPay":true,"jdzs":0,"wareInfo":{"name":"【自营】七度空间 卫生巾 优雅系列 丝柔超薄 日用 245mm 10片 QUC8110（新老品随机发货）","skuId":"4758623","imageUrl":"http://img13.360buyimg.com/n7/jfs/t25615/68/2354487101/288998/640b2608/5be3fdc6N6f7af960.jpg","price":"6.20","jdPrice":"5.80","marketPrice":"8.00 元/包","showOriginPrice":false,"adword":"爆款直降，速速抢购！","addCart":true,"addCartTip":"加入购物车","available":1,"sales":2,"status":1,"lowPurchaseCount":6,"firstCatId":16750,"secondCatId":16754,"thirdCatId":16800,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isCanUseDq":1,"isCanUseJq":1,"isSevenReturn":0,"zgbUpcCode":"6903244370424","isTopSku":false,"jdsy":0,"reduceLimitShowTexts":{"color":"#aaaaaa"},"firstReduceInfo":{"isFirstReduce":false},"venderId":0,"type":1,"multBuyNum":1,"packageSize":"24包/箱","shelfLife":"三年","directReduce":true,"labelList":[{"text":"6包起订","color":"#FF5745","backColor":"#FFFFFF"}],"isCanBook":false,"stockType":"现货","saleUnit":"包","produceDate":"2018-10","isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"hasChild":false,"brandId":14108,"isShowMarkingPrice":true},"tipsList":[{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"由京东发货&售后","order":5},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"货到付款","order":10},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"满600元免运费","order":20},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2851/135/4294207310/1147/1bfecc8b/57b58643N690fcf89.jpg","text":"不支持无理由退换货","order":30}],"currentTime":1543206011801,"address":{"id":978383,"addressDefault":false,"name":"无效店铺1","provinceId":1,"provinceName
+11-26 12:20:10.322 12530 12530 I HttpGroup: ":"北京","cityId":2816,"cityName":"密云区","countyId":6667,"countyName":"城区","townId":0,"fullAddress":"北京密云区城区新南路109密云区路政局","addressDetail":"新南路109密云区路政局","mobile":"134*****835","phone":"134*****835","status":1,"hasChanged":false,"storeId":978383,"bpin":"xtl_tyEGtnS","appAreaId":"11b73aed-addb-4950-ad0c-49eed66fd241","isShowQhdzButton":false,"isShowEditButton":false,"isShowFpButton":false,"isShowAddBtton":false,"isSelectionStore":false,"totalCount":0,"storeStatus":1},"shopInfo":null,"priceReport":"https://h5zgbgwb.m.jd.com/report.html?skuId=4758623","isSkusNotic":false,"contactType":1,"images":[{"path":"http://img13.360buyimg.com/n0/jfs/t25615/68/2354487101/288998/640b2608/5be3fdc6N6f7af960.jpg","isPrimary":true},{"path":"http://img13.360buyimg.com/n0/jfs/t19915/64/1641116314/254147/236e7d41/5b4d52b5Nea457de3.jpg","isPrimary":false,"index":1},{"path":"http://img13.360buyimg.com/n0/jfs/t20530/184/2278061861/248666/97046b9d/5b4d52b2N7dc33168.jpg","isPrimary":false,"index":2},{"path":"http://img13.360buyimg.com/n0/jfs/t7399/55/355622065/107202/437fd66/59924ff2N0fb70977.jpg","isPrimary":false,"index":3},{"path":"http://img13.360buyimg.com/n0/jfs/t21337/186/2232762918/275573/51d6ebbc/5b4d52b0N49a0ca3c.jpg","isPrimary":false,"index":4}],"showDelivery":true,"success":true,"JDService":{"content":"由京东配送并提供售后服务","moreContent":[{"key":"货到付款","value":"支持送货上门后再收款，支持现金，POS机刷卡等方式"}]},"skuMaxNum":500},"code":"0"}
+11-26 12:20:10.349 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@ac1c6a3completesCount:1, httpCount:1
+11-26 12:20:10.368 12530 12530 I HttpGroup: id:33- onEnd -->> 
+11-26 12:20:10.390 12530 12530 W System.err: org.json.JSONException: No value for preSaleSkuInfo
+11-26 12:20:10.391 12530 12530 W System.err: 	at org.json.JSONObject.get(JSONObject.java:389)
+11-26 12:20:10.391 12530 12530 W System.err: 	at org.json.JSONObject.getString(JSONObject.java:550)
+11-26 12:20:10.391 12530 12530 W System.err: 	at com.jingdong.common.utils.JSONObjectProxy.getString(JSONObjectProxy.java:196)
+11-26 12:20:10.391 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$WareInfo.<init>(ProductObject.java:1844)
+11-26 12:20:10.391 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:193)
+11-26 12:20:10.391 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:10.391 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:10.391 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:10.391 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:10.391 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:10.392 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:10.392 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:10.392 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:10.392 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:10.392 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:10.392 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:10.392 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:10.392 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:10.392 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:10.392 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:10.392 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:10.392 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:10.394 12530 12530 W System.err: java.lang.NullPointerException: Attempt to invoke virtual method 'int com.jingdong.common.utils.JSONArrayPoxy.length()' on a null object reference
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.initProductSource(ProductObject.java:306)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:296)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:10.395 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:10.396 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:10.396 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:10.396 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:10.396 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:10.396 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:10.396 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:10.396 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:10.396 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:10.405 12530 12530 I TrackUtil: -----Send click data start -----
+11-26 12:20:10.414 12530 12530 I TrackUtil: pin=jd_64aa7bd58f909, page_id=0005, event_id=zgb_2017102519|16, event_param=, skuid=, map={bpin=xtl_tyEGtnS, sku=4758623|5.80|true|1|true, sale_ord_id=, sku_id=, area=1|2816|6667|0}, orderid=
+11-26 12:20:10.427 12530 12530 I TrackUtil: -----Send click data end -----true
+11-26 12:20:10.440  1164  1164 E WifiTrafficPoller: TRAFFIC_STATS_POLL true Token 386 num clients 21
+11-26 12:20:10.440  1164  1164 E WifiTrafficPoller:  packet count Tx=992849 Rx=911014
+11-26 12:20:10.445   426  1329 I BufferQueueProducer: [com.jd.b2b/com.jd.b2b.frame.MainFrameActivity](this:0x7f90eb4000,id:6213,api:1,p:12530,c:426) queueBuffer: fps=7.84 dur=1020.95 max=258.56 min=37.46
+--
+11-26 12:20:17.369 12530 14602 W Bitmap  : Called reconfigure on a bitmap that is in use! This may cause graphical corruption!
+11-26 12:20:17.375 12530 12530 I HttpGroup: id:36--FunctionId--one.skudetail- StringCallback -->> {"data":{"shareNode":{"slogan":"京东掌柜宝的这个商品真不错，特适合在咱小店卖，快来进货吧。","shareUrl":"https://h5zgbgwb.m.jd.com/detail.html?id=4758621&showtip=1"},"taskCard":[],"freightFee":{"yunFeeTips":"满600元免运费，不足600元运费10元","yunFeeLimit":600,"userLevel":"XB_OLD_USER","defaultYunFee":10,"needMoneyTips":"此单还差{0}元即免运费","isShow":false,"isPopWare":false,"freightText":[{"text":"满600元免运费，不足600元运费10元"}],"priceType":0,"ifShowPrice":false,"isUserFree":false,"isNewUser":false},"type":1,"adwords":[{"text":"爆款直降，速速抢购！","color":"#FF5745","backColor":"#F3F3F4"},{"text":"更多优惠请点击》》","color":"#FF5745","backColor":"#F3F3F4","href":"http://esale.jd.com/zgb/m/3XHkcb61C0jaN5.html"}],"contact":{"contactTel":"400-625-8811","contactUrl":"http://h5zgbgwb.m.jd.com/my_service.html","contactTitle":"客服时间: 周一至周日 9:00-22:00"},"promiseResult":"18:00前下单,预计明天(11月27日)送达","stock":{"isStock":true,"stockType":1,"remainNum":-1,"wareHouseId":"35","parallelWareHouseId":"35","wareHouseType":"0","parallelWareHouseType":"0","distributionCenterId":"682","parallelDistributionCenterId":"682"},"showAddress":true,"notice":"不支持7天无理由退货","addressList":null,"detailUrl":"https://h5zgbgwb.m.jd.com/goodDetail.html?goodId=4758621","isFav":false,"packFee":{"feeTip":"满600元免运费，不足600元运费10元"},"isSupportShipPay":true,"jdzs":0,"wareInfo":{"name":"【自营】七度空间 卫生巾 优雅系列 丝柔超薄 夜用 275mm*10片 QUC8210(新老品随机发货)","skuId":"4758621","imageUrl":"http://img11.360buyimg.com/n7/jfs/t27013/342/1474798120/302293/526f7e56/5be3ff42Naa23854b.jpg","price":"6.90","jdPrice":"6.60","marketPrice":"8.80 元/包","showOriginPrice":false,"adword":"爆款直降，速速抢购！","addCart":true,"addCartTip":"加入购物车","available":1,"sales":2,"status":1,"lowPurchaseCount":6,"firstCatId":16750,"secondCatId":16754,"thirdCatId":16800,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isCanUseDq":1,"isCanUseJq":1,"isSevenReturn":0,"zgbUpcCode":"6903244370431","isTopSku":false,"jdsy":0,"reduceLimitShowTexts":{"color":"#aaaaaa"},"firstReduceInfo":{"isFirstReduce":false},"venderId":0,"type":1,"multBuyNum":1,"packageSize":"24包/箱","shelfLife":"三年","directReduce":true,"labelList":[{"text":"6包起订","color":"#FF5745","backColor":"#FFFFFF"}],"isCanBook":false,"stockType":"现货","saleUnit":"包","produceDate":"2018-10","isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"hasChild":false,"brandId":14108,"isShowMarkingPrice":true},"tipsList":[{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"由京东发货&售后","order":5},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"货到付款","order":10},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"满600元免运费","order":20},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2851/135/4294207310/1147/1bfecc8b/57b58643N690fcf89.jpg","text":"不支持无理由退换货","order":30}],"currentTime":1543206019026,"address":{"id":978383,"addressDefault":false,"name":"无效店铺1","provinceId":1,"provinceNam
+11-26 12:20:17.375 12530 12530 I HttpGroup: e":"北京","cityId":2816,"cityName":"密云区","countyId":6667,"countyName":"城区","townId":0,"fullAddress":"北京密云区城区新南路109密云区路政局","addressDetail":"新南路109密云区路政局","mobile":"134*****835","phone":"134*****835","status":1,"hasChanged":false,"storeId":978383,"bpin":"xtl_tyEGtnS","appAreaId":"11b73aed-addb-4950-ad0c-49eed66fd241","isShowQhdzButton":false,"isShowEditButton":false,"isShowFpButton":false,"isShowAddBtton":false,"isSelectionStore":false,"totalCount":0,"storeStatus":1},"shopInfo":null,"priceReport":"https://h5zgbgwb.m.jd.com/report.html?skuId=4758621","isSkusNotic":false,"contactType":1,"images":[{"path":"http://img11.360buyimg.com/n0/jfs/t27013/342/1474798120/302293/526f7e56/5be3ff42Naa23854b.jpg","isPrimary":true},{"path":"http://img11.360buyimg.com/n0/jfs/t23680/239/1056374737/276773/17844103/5b502e2cN8a135f7e.jpg","isPrimary":false,"index":1},{"path":"http://img11.360buyimg.com/n0/jfs/t22654/252/1087376770/278581/868ff3e5/5b502e30Nddd58006.jpg","isPrimary":false,"index":2},{"path":"http://img11.360buyimg.com/n0/jfs/t7432/305/358661504/114257/dc744325/59925058Nc5e805df.jpg","isPrimary":false,"index":3},{"path":"http://img11.360buyimg.com/n0/jfs/t22885/205/1089484661/286532/fe02e9e9/5b502e2eN74633993.jpg","isPrimary":false,"index":4}],"showDelivery":true,"success":true,"JDService":{"content":"由京东配送并提供售后服务","moreContent":[{"key":"货到付款","value":"支持送货上门后再收款，支持现金，POS机刷卡等方式"}]},"skuMaxNum":500},"code":"0"}
+11-26 12:20:17.390 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@954c79ccompletesCount:1, httpCount:1
+11-26 12:20:17.402  1164  1354 E WifiStateMachine:  ConnectedState (when=-4ms what=131155 arg1=128!CMD_RSSI_POLL  rt=163980024/616028052 128 0 "JD_mobile" 00:fe:c8:d5:92:84 rssi=-52 f=2412 sc=60 link=72 tx=235.8, 0.0, 0.0  rx=228.6 bcn=0 [on:0 tx:0 rx:0 period:3002] from screen [on:0 period:1312758138] gl rssi=-52 ag=0 hr ticks 0,0,0 ls-=0 [56,56,60,60,65] brc=0 lrc=0 offload-stoppedmmls=
+11-26 12:20:17.402  1164  1354 E WifiStateMachine: Fail=0 Retry=0 MulRetry=0 ACKFail=0 FCSErr=4277 TxOk=0 RxOk=0 Rst:Reason=0 Time=0 RoamFail:Times=0 Time=0 TxDone:IsARP=0 ArrDrv=0 EnQ=0 DeQ=0 LeaveDrv=0 Curr=0 CurrTime=0
+11-26 12:20:17.402  1164  1354 E WifiStateMachine: fw log: 1 1 ScanCnt: 2900003 1 90 119 RoamCnt: 1 1 0 RFCnt: 0 0 0 0 1 CoexCnt: 26447 32973 2 LPCnt: 5527 19180 32 BBCnt: 16574 637 0 6932 47 9704 957 50479136 41877504 5748053 3234892 24 MacRXCnt: 19325 513244 0 0 3092460917 457 457 457 457 457 55077577 0 0 MacTXCnt: 1953121638 71637757 
+11-26 12:20:17.404  1164  1354 E WifiStateMachine:  L2ConnectedState (when=-5ms what=131155 arg1=128!CMD_RSSI_POLL  rt=163980025/616028053 128 0 "JD_mobile" 00:fe:c8:d5:92:84 rssi=-52 f=2412 sc=60 link=72 tx=235.8, 0.0, 0.0  rx=228.6 bcn=0 [on:0 tx:0 rx:0 period:2] from screen [on:0 period:1312758140] gl rssi=-52 ag=0 hr ticks 0,0,0 ls-=0 [56,56,60,60,65] brc=0 lrc=0 offload-stoppedmmls=
+11-26 12:20:17.404  1164  1354 E WifiStateMachine: Fail=0 Retry=0 MulRetry=0 ACKFail=0 FCSErr=4277 TxOk=0 RxOk=0 Rst:Reason=0 Time=0 RoamFail:Times=0 Time=0 TxDone:IsARP=0 ArrDrv=0 EnQ=0 DeQ=0 LeaveDrv=0 Curr=0 CurrTime=0
+11-26 12:20:17.404  1164  1354 E WifiStateMachine: fw log: 1 1 ScanCnt: 2900003 1 90 119 RoamCnt: 1 1 0 RFCnt: 0 0 0 0 1 CoexCnt: 26447 32973 2 LPCnt: 5527 19180 32 BBCnt: 16574 637 0 6932 47 9704 957 50479136 41877504 5748053 3234892 24 MacRXCnt: 19325 513244 0 0 3092460917 457 457 457 457 457 55077577 0 0 MacTXCnt: 1953121638 71637757 
+11-26 12:20:17.407 12530 12530 I HttpGroup: id:36- onEnd -->> 
+11-26 12:20:17.408  1164  1354 I WifiStateMachine: fetchRssiLinkSpeedAndFrequencyNative, newRssi:-52, newLinkSpeed:72, SSID:"JD_mobile"
+11-26 12:20:17.410  1164  1354 E WifiStateMachine: wifiLinkStatics=
+11-26 12:20:17.410  1164  1354 E WifiStateMachine: Fail=0 Retry=0 MulRetry=0 ACKFail=0 FCSErr=3347 TxOk=3 RxOk=22 Rst:Reason=0 Time=0 RoamFail:Times=0 Time=0 TxDone:IsARP=0 ArrDrv=0 EnQ=0 DeQ=0 LeaveDrv=0 Curr=0 CurrTime=0
+11-26 12:20:17.410  1164  1354 E WifiStateMachine: fw log: 1 1 ScanCnt: 2900003 1 90 119 RoamCnt: 1 1 0 RFCnt: 0 0 0 0 1 CoexCnt: 26448 32973 2 LPCnt: 3532 4590 7 BBCnt: 3964 316 0 2133 17 3080 201 50479136 41877504 5752224 3238239 24 MacRXCnt: 19347 513928 0 0 3095473869 237 237 237 237 237 55125975 0 0 MacTXCnt: 4269302931 3285738206 
+11-26 12:20:17.411  1164  1354 E WifiConfigStore: updateConfiguration freq=2412 BSSID=00:fe:c8:d5:92:84 RSSI=-52 "JD_mobile"WPA_EAP
+11-26 12:20:17.413 12530 12530 W System.err: org.json.JSONException: No value for preSaleSkuInfo
+11-26 12:20:17.414 12530 12530 W System.err: 	at org.json.JSONObject.get(JSONObject.java:389)
+11-26 12:20:17.414 12530 12530 W System.err: 	at org.json.JSONObject.getString(JSONObject.java:550)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jingdong.common.utils.JSONObjectProxy.getString(JSONObjectProxy.java:196)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$WareInfo.<init>(ProductObject.java:1844)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:193)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:17.414 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:17.414 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:17.415 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:17.415 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:17.415 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:17.415 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:17.415 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:17.415 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:17.415 12530 12530 W System.err: java.lang.NullPointerException: Attempt to invoke virtual method 'int com.jingdong.common.utils.JSONArrayPoxy.length()' on a null object reference
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.initProductSource(ProductObject.java:306)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:296)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:17.416 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:17.416 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:17.416 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:17.416 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:17.416 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:17.417 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:17.417 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:17.417 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:17.423  1679  2740 I NetworkController: onReceive: intent=Intent { act=android.net.wifi.RSSI_CHANGED flg=0x4000010 FromType=0xffffffff mCallingUid=1000 (has extras) }
+11-26 12:20:17.430 12530 12530 I TrackUtil: -----Send click data start -----
+11-26 12:20:17.436 12530 12530 I TrackUtil: pin=jd_64aa7bd58f909, page_id=0005, event_id=zgb_2017102519|16, event_param=, skuid=, map={bpin=xtl_tyEGtnS, sku=4758621|6.60|true|1|true, sale_ord_id=, sku_id=, area=1|2816|6667|0}, orderid=
+11-26 12:20:17.448 12530 12530 I TrackUtil: -----Send click data end -----true
+11-26 12:20:17.455  1164  1164 E WifiTrafficPoller: TRAFFIC_STATS_POLL true Token 386 num clients 21
+11-26 12:20:17.455  1164  1164 E WifiTrafficPoller:  packet count Tx=993511 Rx=911661
+--
+11-26 12:20:19.510 12530 12530 I HttpGroup: Gifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":7,"wareSaleAttrVos":[{"orderNum":0,"saleName":"特薄夜用"},{"orderNum":1,"saleName":"275mm10片"}]},{"name":"绢爽网面夜用 275mm10片","skuId":"4758735","price":"8.40","jdPrice":"7.90","marketPrice":"9.90","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":8,"wareSaleAttrVos":[{"orderNum":0,"saleName":"绢爽网面夜用"},{"orderNum":1,"saleName":"275mm10片"}]},{"name":"特薄日用 245mm10片","skuId":"4758709","price":"9.20","jdPrice":"8.60","marketPrice":"10.50","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":9,"wareSaleAttrVos":[{"orderNum":0,"saleName":"特薄日用"},{"orderNum":1,"saleName":"245mm10片"}]},{"name":"绢爽网面日用 245mm10片","skuId":"4758657","price":"7.50","jdPrice":"7.00","marketPrice":"8.90","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":10,"wareSaleAttrVos":[{"orderNum":0,"saleName":"绢爽网面日用"},{"orderNum":1,"saleName":"245mm10片"}]},{"name":"护垫纯棉表层 155mm18片","skuId":"4758767","price":"4.50","jdPrice":"3.80","marketPrice":"5.20","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":11,"wareSaleAttrVos":[{"orderNum":0,"saleName":"护垫纯棉表层"},{"orderNum":1,"saleName":"155mm18片"}]},{"name":"冰感护垫1 155mm18片","skuId":"5366006","price":"4.00","jdPrice":"3.80","marketPrice":"5.00","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":12,"wareSaleAttrVos":[{"orderNum":0,"saleName":"冰感护垫1"},{"orderNum":1,"saleName":"155mm18片"}]}]},"success
+11-26 12:20:19.510 12530 12530 I HttpGroup: ":true},"code":"0"}
+11-26 12:20:19.515  3148  3183 I PerfService: PerfServiceNative_userEnableTimeoutMs:24, 1050
+11-26 12:20:19.536 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@cd2f6a6completesCount:1, httpCount:1
+11-26 12:20:19.547 12530 14553 I System.out: close [socket][/10.14.170.150:48752]
+11-26 12:20:19.550 12530 12530 I HttpGroup: id:40- onEnd -->> 
+11-26 12:20:19.566 12530 12530 I HttpGroup: id:41--FunctionId--one.cart- StringCallback -->> {"data":{"currentTime":1543206021245,"bottomTitle":"快去选购商品参加促销活动吧","cartNum":107},"code":"0"}
+11-26 12:20:19.580 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@aa0eddfcompletesCount:1, httpCount:1
+11-26 12:20:19.596 12530 12530 I HttpGroup: id:41- onEnd -->> 
+11-26 12:20:19.607 12530 14497 I System.out: close [socket][/10.14.170.150:33749]
+11-26 12:20:19.709   426   455 I hwcomposer: Adjust vsync offset: old[8300000] new[0]
+11-26 12:20:19.743 12530 12530 I HttpGroup: id:39--FunctionId--one.skudetail- StringCallback -->> {"data":{"shareNode":{"slogan":"京东掌柜宝的这个商品真不错，特适合在咱小店卖，快来进货吧。","shareUrl":"https://h5zgbgwb.m.jd.com/detail.html?id=4758651&showtip=1"},"taskCard":[],"freightFee":{"yunFeeTips":"满600元免运费，不足600元运费10元","yunFeeLimit":600,"userLevel":"XB_OLD_USER","defaultYunFee":10,"needMoneyTips":"此单还差{0}元即免运费","isShow":false,"isPopWare":false,"freightText":[{"text":"满600元免运费，不足600元运费10元"}],"priceType":0,"ifShowPrice":false,"isUserFree":false,"isNewUser":false},"type":1,"adwords":[{"text":"爆款直降！","color":"#FF5745","backColor":"#F3F3F4"},{"text":"更多优惠请点击》》","color":"#FF5745","backColor":"#F3F3F4","href":"http://esale.jd.com/zgb/m/fpgkJHUY6ywBSm.html"}],"contact":{"contactTel":"400-625-8811","contactUrl":"http://h5zgbgwb.m.jd.com/my_service.html","contactTitle":"客服时间: 周一至周日 9:00-22:00"},"promiseResult":"18:00前下单,预计明天(11月27日)送达","stock":{"isStock":true,"stockType":1,"remainNum":-1,"wareHouseId":"35","parallelWareHouseId":"35","wareHouseType":"0","parallelWareHouseType":"0","distributionCenterId":"682","parallelDistributionCenterId":"682"},"showAddress":true,"notice":"不支持7天无理由退货","addressList":null,"detailUrl":"https://h5zgbgwb.m.jd.com/goodDetail.html?goodId=4758651","isFav":false,"packFee":{"feeTip":"满600元免运费，不足600元运费10元"},"isSupportShipPay":true,"jdzs":0,"wareInfo":{"name":"【自营】七度空间 卫生巾 少女系列 纯棉表层 超薄 日用 245mm 10片 QSC6110（新老品随机发货）","skuId":"4758651","imageUrl":"http://img11.360buyimg.com/n7/jfs/t18565/98/2250606358/341635/53adad1a/5aeaddfbN3593024e.jpg","price":"7.30","jdPrice":"6.85","marketPrice":"8.90 元/包","showOriginPrice":false,"adword":"爆款直降！","addCart":true,"addCartTip":"加入购物车","available":1,"sales":2,"status":1,"lowPurchaseCount":8,"firstCatId":16750,"secondCatId":16754,"thirdCatId":16800,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isCanUseDq":1,"isCanUseJq":1,"isSevenReturn":0,"zgbUpcCode":"6903244370950","isTopSku":false,"jdsy":0,"reduceLimitShowTexts":{"color":"#aaaaaa"},"firstReduceInfo":{"isFirstReduce":false},"venderId":0,"type":1,"multBuyNum":1,"packageSize":"24包/箱","shelfLife":"三年","directReduce":true,"labelList":[{"text":"8包起订","color":"#FF5745","backColor":"#FFFFFF"}],"isCanBook":false,"stockType":"现货","saleUnit":"包","produceDate":"2018-09","isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"hasChild":false,"brandId":14108,"isShowMarkingPrice":true},"tipsList":[{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"由京东发货&售后","order":5},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"货到付款","order":10},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"满600元免运费","order":20},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2851/135/4294207310/1147/1bfecc8b/57b58643N690fcf89.jpg","text":"不支持无理由退换货","order":30}],"currentTime":1543206021261,"address":{"id":978383,"addressDefault":false,"name":"无效店铺1","provinceId":1,"provinceName":"北京",
+11-26 12:20:19.743 12530 12530 I HttpGroup: "cityId":2816,"cityName":"密云区","countyId":6667,"countyName":"城区","townId":0,"fullAddress":"北京密云区城区新南路109密云区路政局","addressDetail":"新南路109密云区路政局","mobile":"134*****835","phone":"134*****835","status":1,"hasChanged":false,"storeId":978383,"bpin":"xtl_tyEGtnS","appAreaId":"11b73aed-addb-4950-ad0c-49eed66fd241","isShowQhdzButton":false,"isShowEditButton":false,"isShowFpButton":false,"isShowAddBtton":false,"isSelectionStore":false,"totalCount":0,"storeStatus":1},"shopInfo":null,"priceReport":"https://h5zgbgwb.m.jd.com/report.html?skuId=4758651","isSkusNotic":false,"contactType":1,"images":[{"path":"http://img11.360buyimg.com/n0/jfs/t18565/98/2250606358/341635/53adad1a/5aeaddfbN3593024e.jpg","isPrimary":true},{"path":"http://img11.360buyimg.com/n0/jfs/t17230/288/2199377393/276450/c07a2710/5aeaddf7Nf83749e1.jpg","isPrimary":false,"index":1},{"path":"http://img11.360buyimg.com/n0/jfs/t16966/241/2202338363/249668/b38a3875/5aeaddf3Nd634a3d2.jpg","isPrimary":false,"index":2},{"path":"http://img11.360buyimg.com/n0/jfs/t7303/302/351044068/124944/71bc9c7f/59924f28N208cde32.jpg","isPrimary":false,"index":3},{"path":"http://img11.360buyimg.com/n0/jfs/t7465/336/359115235/112599/e64ff390/59924f33Nab0bd3e2.jpg","isPrimary":false,"index":4}],"showDelivery":true,"success":true,"JDService":{"content":"由京东配送并提供售后服务","moreContent":[{"key":"货到付款","value":"支持送货上门后再收款，支持现金，POS机刷卡等方式"}]},"skuMaxNum":500},"code":"0"}
+11-26 12:20:19.763 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@5948eaecompletesCount:1, httpCount:1
+11-26 12:20:19.769  3148  3183 I PerfService: PerfServiceNative_userEnableTimeoutMs:24, 1050
+11-26 12:20:19.775 12530 12530 I HttpGroup: id:39- onEnd -->> 
+11-26 12:20:19.781 12530 12530 W System.err: org.json.JSONException: No value for preSaleSkuInfo
+11-26 12:20:19.781 12530 12530 W System.err: 	at org.json.JSONObject.get(JSONObject.java:389)
+11-26 12:20:19.781 12530 12530 W System.err: 	at org.json.JSONObject.getString(JSONObject.java:550)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jingdong.common.utils.JSONObjectProxy.getString(JSONObjectProxy.java:196)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$WareInfo.<init>(ProductObject.java:1844)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:193)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:19.782 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:19.782 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:19.783 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:19.783 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:19.783 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:19.783 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:19.783 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:19.783 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:19.783 12530 12530 W System.err: java.lang.NullPointerException: Attempt to invoke virtual method 'int com.jingdong.common.utils.JSONArrayPoxy.length()' on a null object reference
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.initProductSource(ProductObject.java:306)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:296)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:19.784 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:19.785 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:19.785 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:19.785 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:19.785 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:19.785 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:19.785 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:19.785 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:19.788  1164  2168 I InputDispatcher: injectInputEvent  motion-p=(70,1192),action=0, pointerCount=1,EventTime=163982409000000, DownTime=163982409000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:19.792  1164  1726 I InputDispatcher: injectInputEvent  motion-p=(72,1203),action=2, pointerCount=1,EventTime=163982414000000, DownTime=163982409000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:19.794  1164  1645 I InputDispatcher: injectInputEvent  motion-p=(73,1214),action=2, pointerCount=1,EventTime=163982415000000, DownTime=163982409000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:19.795 12530 12530 I TrackUtil: -----Send click data start -----
+11-26 12:20:19.795  1164  2216 I InputDispatcher: injectInputEvent  motion-p=(78,1223),action=2, pointerCount=1,EventTime=163982417000000, DownTime=163982409000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:19.797  1164  2198 I InputDispatcher: injectInputEvent  motion-p=(82,1224),action=2, pointerCount=1,EventTime=163982418000000, DownTime=163982409000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+--
+11-26 12:20:23.018 12530 14497 I System.out: close [socket][/10.14.170.150:46619]
+11-26 12:20:23.040  3148  3183 I PerfService: PerfServiceNative_userEnableTimeoutMs:24, 1050
+11-26 12:20:23.056 12530 12530 I HttpGroup: id:43--FunctionId--one.queryRelativeWares- StringCallback -->> {"data":{"currentTime":1543206024703,"model":{"title":"相关产品","skuList":[{"name":"纯棉日用 245mm*10","skuId":"4758651","price":"7.30","jdPrice":"6.85","marketPrice":"8.90","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":1,"wareSaleAttrVos":[{"orderNum":0,"saleName":"纯棉日用"},{"orderNum":1,"saleName":"245mm*10"}]},{"name":"丝柔夜用 10片275mm","skuId":"4758621","price":"6.90","jdPrice":"6.60","marketPrice":"8.80","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":3,"wareSaleAttrVos":[{"orderNum":0,"saleName":"丝柔夜用"},{"orderNum":1,"saleName":"10片275mm"}]},{"name":"甜睡绢爽网面 338mm8片","skuId":"4758465","price":"7.50","jdPrice":"7.00","marketPrice":"10.90","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":4,"wareSaleAttrVos":[{"orderNum":0,"saleName":"甜睡绢爽网面"},{"orderNum":1,"saleName":"338mm8片"}]},{"name":"夜用纯棉表层 8片338mm","skuId":"4695281","price":"7.30","jdPrice":"6.80","marketPrice":"9.90","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":5,"wareSaleAttrVos":[{"orderNum":0,"saleName":"夜用纯棉表层"},{"orderNum":1,"saleName":"8片338mm"}]},{"name":"净爽网面夜用 338mm8片","skuId":"5365964","price":"7.30","jdPrice":"6.90","marketPrice":"8.50","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":6,"wareSaleAttrVos":[{"orderNum":0,"saleName":"净爽网面夜用"},{"orderNum":1,"saleName":"338mm8片"}]},{"name":"特薄夜用 275mm10片","skuId":"4780127","price":"9.90","jdPrice":"9.40","marketPrice":"10.50","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"full
+11-26 12:20:23.057 12530 12530 I HttpGroup: Gifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":7,"wareSaleAttrVos":[{"orderNum":0,"saleName":"特薄夜用"},{"orderNum":1,"saleName":"275mm10片"}]},{"name":"绢爽网面夜用 275mm10片","skuId":"4758735","price":"8.40","jdPrice":"7.90","marketPrice":"9.90","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":8,"wareSaleAttrVos":[{"orderNum":0,"saleName":"绢爽网面夜用"},{"orderNum":1,"saleName":"275mm10片"}]},{"name":"特薄日用 245mm10片","skuId":"4758709","price":"9.20","jdPrice":"8.60","marketPrice":"10.50","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":9,"wareSaleAttrVos":[{"orderNum":0,"saleName":"特薄日用"},{"orderNum":1,"saleName":"245mm10片"}]},{"name":"绢爽网面日用 245mm10片","skuId":"4758657","price":"7.50","jdPrice":"7.00","marketPrice":"8.90","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":10,"wareSaleAttrVos":[{"orderNum":0,"saleName":"绢爽网面日用"},{"orderNum":1,"saleName":"245mm10片"}]},{"name":"护垫纯棉表层 155mm18片","skuId":"4758767","price":"4.50","jdPrice":"3.80","marketPrice":"5.20","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":11,"wareSaleAttrVos":[{"orderNum":0,"saleName":"护垫纯棉表层"},{"orderNum":1,"saleName":"155mm18片"}]},{"name":"冰感护垫1 155mm18片","skuId":"5366006","price":"4.00","jdPrice":"3.80","marketPrice":"5.00","showOriginPrice":false,"addCart":true,"addCartTip":"加入购物车","available":1,"status":1,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isTopSku":false,"firstReduceInfo":{"isFirstReduce":false},"type":0,"multBuyNum":1,"directReduce":false,"isCanBook":false,"isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"orderNum":12,"wareSaleAttrVos":[{"orderNum":0,"saleName":"冰感护垫1"},{"orderNum":1,"saleName":"155mm18片"}]}]},"success
+11-26 12:20:23.057 12530 12530 I HttpGroup: ":true},"code":"0"}
+11-26 12:20:23.090 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@dcb932ccompletesCount:1, httpCount:1
+11-26 12:20:23.109 12530 12530 I HttpGroup: id:43- onEnd -->> 
+11-26 12:20:23.127 12530 14553 I System.out: close [socket][/10.14.170.150:52219]
+11-26 12:20:23.249  8350  8350 I ADB_SERVICES: service_to_fd shell:dumpsys iphonesubinfo
+11-26 12:20:23.250  8350  8350 I ADB_SERVICES: create_subproc ret_fd=20 pid=14813
+11-26 12:20:23.270 12530 12530 I HttpGroup: id:42--FunctionId--one.skudetail- StringCallback -->> {"data":{"shareNode":{"slogan":"京东掌柜宝的这个商品真不错，特适合在咱小店卖，快来进货吧。","shareUrl":"https://h5zgbgwb.m.jd.com/detail.html?id=4758623&showtip=1"},"taskCard":[],"freightFee":{"yunFeeTips":"满600元免运费，不足600元运费10元","yunFeeLimit":600,"userLevel":"XB_OLD_USER","defaultYunFee":10,"needMoneyTips":"此单还差{0}元即免运费","isShow":false,"isPopWare":false,"freightText":[{"text":"满600元免运费，不足600元运费10元"}],"priceType":0,"ifShowPrice":false,"isUserFree":false,"isNewUser":false},"type":1,"adwords":[{"text":"爆款直降，速速抢购！","color":"#FF5745","backColor":"#F3F3F4"},{"text":"更多优惠请点击》》","color":"#FF5745","backColor":"#F3F3F4","href":"http://esale.jd.com/zgb/m/fpgkJHUY6ywBSm.html"}],"contact":{"contactTel":"400-625-8811","contactUrl":"http://h5zgbgwb.m.jd.com/my_service.html","contactTitle":"客服时间: 周一至周日 9:00-22:00"},"promiseResult":"18:00前下单,预计明天(11月27日)送达","stock":{"isStock":true,"stockType":1,"remainNum":-1,"wareHouseId":"35","parallelWareHouseId":"35","wareHouseType":"0","parallelWareHouseType":"0","distributionCenterId":"682","parallelDistributionCenterId":"682"},"showAddress":true,"notice":"不支持7天无理由退货","addressList":null,"detailUrl":"https://h5zgbgwb.m.jd.com/goodDetail.html?goodId=4758623","isFav":false,"packFee":{"feeTip":"满600元免运费，不足600元运费10元"},"isSupportShipPay":true,"jdzs":0,"wareInfo":{"name":"【自营】七度空间 卫生巾 优雅系列 丝柔超薄 日用 245mm 10片 QUC8110（新老品随机发货）","skuId":"4758623","imageUrl":"http://img13.360buyimg.com/n7/jfs/t25615/68/2354487101/288998/640b2608/5be3fdc6N6f7af960.jpg","price":"6.20","jdPrice":"5.80","marketPrice":"8.00 元/包","showOriginPrice":false,"adword":"爆款直降，速速抢购！","addCart":true,"addCartTip":"加入购物车","available":1,"sales":2,"status":1,"lowPurchaseCount":6,"firstCatId":16750,"secondCatId":16754,"thirdCatId":16800,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isCanUseDq":1,"isCanUseJq":1,"isSevenReturn":0,"zgbUpcCode":"6903244370424","isTopSku":false,"jdsy":0,"reduceLimitShowTexts":{"color":"#aaaaaa"},"firstReduceInfo":{"isFirstReduce":false},"venderId":0,"type":1,"multBuyNum":1,"packageSize":"24包/箱","shelfLife":"三年","directReduce":true,"labelList":[{"text":"6包起订","color":"#FF5745","backColor":"#FFFFFF"}],"isCanBook":false,"stockType":"现货","saleUnit":"包","produceDate":"2018-10","isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"hasChild":false,"brandId":14108,"isShowMarkingPrice":true},"tipsList":[{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"由京东发货&售后","order":5},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"货到付款","order":10},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"满600元免运费","order":20},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2851/135/4294207310/1147/1bfecc8b/57b58643N690fcf89.jpg","text":"不支持无理由退换货","order":30}],"currentTime":1543206024808,"address":{"id":978383,"addressDefault":false,"name":"无效店铺1","provinceId":1,"provinceName
+11-26 12:20:23.270 12530 12530 I HttpGroup: ":"北京","cityId":2816,"cityName":"密云区","countyId":6667,"countyName":"城区","townId":0,"fullAddress":"北京密云区城区新南路109密云区路政局","addressDetail":"新南路109密云区路政局","mobile":"134*****835","phone":"134*****835","status":1,"hasChanged":false,"storeId":978383,"bpin":"xtl_tyEGtnS","appAreaId":"11b73aed-addb-4950-ad0c-49eed66fd241","isShowQhdzButton":false,"isShowEditButton":false,"isShowFpButton":false,"isShowAddBtton":false,"isSelectionStore":false,"totalCount":0,"storeStatus":1},"shopInfo":null,"priceReport":"https://h5zgbgwb.m.jd.com/report.html?skuId=4758623","isSkusNotic":false,"contactType":1,"images":[{"path":"http://img13.360buyimg.com/n0/jfs/t25615/68/2354487101/288998/640b2608/5be3fdc6N6f7af960.jpg","isPrimary":true},{"path":"http://img13.360buyimg.com/n0/jfs/t19915/64/1641116314/254147/236e7d41/5b4d52b5Nea457de3.jpg","isPrimary":false,"index":1},{"path":"http://img13.360buyimg.com/n0/jfs/t20530/184/2278061861/248666/97046b9d/5b4d52b2N7dc33168.jpg","isPrimary":false,"index":2},{"path":"http://img13.360buyimg.com/n0/jfs/t7399/55/355622065/107202/437fd66/59924ff2N0fb70977.jpg","isPrimary":false,"index":3},{"path":"http://img13.360buyimg.com/n0/jfs/t21337/186/2232762918/275573/51d6ebbc/5b4d52b0N49a0ca3c.jpg","isPrimary":false,"index":4}],"showDelivery":true,"success":true,"JDService":{"content":"由京东配送并提供售后服务","moreContent":[{"key":"货到付款","value":"支持送货上门后再收款，支持现金，POS机刷卡等方式"}]},"skuMaxNum":500},"code":"0"}
+11-26 12:20:23.294  3148  3183 I PerfService: PerfServiceNative_userEnableTimeoutMs:24, 1050
+11-26 12:20:23.297 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@a15c36bcompletesCount:1, httpCount:1
+11-26 12:20:23.317  8350 14814 I ADB_SERVICES: shell exited fd=20 of pid=14813 err=0
+11-26 12:20:23.319 12530 12530 I HttpGroup: id:42- onEnd -->> 
+11-26 12:20:23.330 12530 12530 W System.err: org.json.JSONException: No value for preSaleSkuInfo
+11-26 12:20:23.331 12530 12530 W System.err: 	at org.json.JSONObject.get(JSONObject.java:389)
+11-26 12:20:23.331 12530 12530 W System.err: 	at org.json.JSONObject.getString(JSONObject.java:550)
+11-26 12:20:23.331 12530 12530 W System.err: 	at com.jingdong.common.utils.JSONObjectProxy.getString(JSONObjectProxy.java:196)
+11-26 12:20:23.331 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$WareInfo.<init>(ProductObject.java:1844)
+11-26 12:20:23.331 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:193)
+11-26 12:20:23.331 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:23.331 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:23.331 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:23.332 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:23.332 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:23.332 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:23.332 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:23.332 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:23.332 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:23.332 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:23.332 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:23.332 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:23.333 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:23.333 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:23.333 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:23.333 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:23.333 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:23.334 12530 12530 W System.err: java.lang.NullPointerException: Attempt to invoke virtual method 'int com.jingdong.common.utils.JSONArrayPoxy.length()' on a null object reference
+11-26 12:20:23.334 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.initProductSource(ProductObject.java:306)
+11-26 12:20:23.334 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:296)
+11-26 12:20:23.334 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:23.335 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:23.335 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:23.335 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:23.335 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:23.335 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:23.335 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:23.335 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:23.335 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:23.335 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:23.336 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:23.336 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:23.336 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:23.336 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:23.336 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:23.336 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:23.336 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:23.338  1164  1616 I libPerfService: [perfScnDisable] scenario:23
+11-26 12:20:23.348 12530 12530 I TrackUtil: -----Send click data start -----
+11-26 12:20:23.363 12530 12530 I TrackUtil: pin=jd_64aa7bd58f909, page_id=0005, event_id=zgb_2017102519|16, event_param=, skuid=, map={bpin=xtl_tyEGtnS, sku=4758623|5.80|true|1|true, sale_ord_id=, sku_id=, area=1|2816|6667|0}, orderid=
+11-26 12:20:23.382 12530 12530 I TrackUtil: -----Send click data end -----true
+11-26 12:20:23.400  1164  2200 I InputDispatcher: injectInputEvent  motion-p=(858,1652),action=0, pointerCount=1,EventTime=163986020000000, DownTime=163986020000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:23.405  1164  1782 I InputDispatcher: injectInputEvent  motion-p=(859,1651),action=1, pointerCount=1,EventTime=163986026000000, DownTime=163986020000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+--
+11-26 12:20:31.659 12530 12530 I HttpGroup: id:48--FunctionId--one.skudetail- StringCallback -->> {"data":{"shareNode":{"slogan":"京东掌柜宝的这个商品真不错，特适合在咱小店卖，快来进货吧。","shareUrl":"https://h5zgbgwb.m.jd.com/detail.html?id=4758621&showtip=1"},"taskCard":[],"freightFee":{"yunFeeTips":"满600元免运费，不足600元运费10元","yunFeeLimit":600,"userLevel":"XB_OLD_USER","defaultYunFee":10,"needMoneyTips":"此单还差{0}元即免运费","isShow":false,"isPopWare":false,"freightText":[{"text":"满600元免运费，不足600元运费10元"}],"priceType":0,"ifShowPrice":false,"isUserFree":false,"isNewUser":false},"type":1,"adwords":[{"text":"爆款直降，速速抢购！","color":"#FF5745","backColor":"#F3F3F4"},{"text":"更多优惠请点击》》","color":"#FF5745","backColor":"#F3F3F4","href":"http://esale.jd.com/zgb/m/3XHkcb61C0jaN5.html"}],"contact":{"contactTel":"400-625-8811","contactUrl":"http://h5zgbgwb.m.jd.com/my_service.html","contactTitle":"客服时间: 周一至周日 9:00-22:00"},"promiseResult":"18:00前下单,预计明天(11月27日)送达","stock":{"isStock":true,"stockType":1,"remainNum":-1,"wareHouseId":"35","parallelWareHouseId":"35","wareHouseType":"0","parallelWareHouseType":"0","distributionCenterId":"682","parallelDistributionCenterId":"682"},"showAddress":true,"notice":"不支持7天无理由退货","addressList":null,"detailUrl":"https://h5zgbgwb.m.jd.com/goodDetail.html?goodId=4758621","isFav":false,"packFee":{"feeTip":"满600元免运费，不足600元运费10元"},"isSupportShipPay":true,"jdzs":0,"wareInfo":{"name":"【自营】七度空间 卫生巾 优雅系列 丝柔超薄 夜用 275mm*10片 QUC8210(新老品随机发货)","skuId":"4758621","imageUrl":"http://img11.360buyimg.com/n7/jfs/t27013/342/1474798120/302293/526f7e56/5be3ff42Naa23854b.jpg","price":"6.90","jdPrice":"6.60","marketPrice":"8.80 元/包","showOriginPrice":false,"adword":"爆款直降，速速抢购！","addCart":true,"addCartTip":"加入购物车","available":1,"sales":2,"status":1,"lowPurchaseCount":6,"firstCatId":16750,"secondCatId":16754,"thirdCatId":16800,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isCanUseDq":1,"isCanUseJq":1,"isSevenReturn":0,"zgbUpcCode":"6903244370431","isTopSku":false,"jdsy":0,"reduceLimitShowTexts":{"color":"#aaaaaa"},"firstReduceInfo":{"isFirstReduce":false},"venderId":0,"type":1,"multBuyNum":1,"packageSize":"24包/箱","shelfLife":"三年","directReduce":true,"labelList":[{"text":"6包起订","color":"#FF5745","backColor":"#FFFFFF"}],"isCanBook":false,"stockType":"现货","saleUnit":"包","produceDate":"2018-10","isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"hasChild":false,"brandId":14108,"isShowMarkingPrice":true},"tipsList":[{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"由京东发货&售后","order":5},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"货到付款","order":10},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"满600元免运费","order":20},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2851/135/4294207310/1147/1bfecc8b/57b58643N690fcf89.jpg","text":"不支持无理由退换货","order":30}],"currentTime":1543206033343,"address":{"id":978383,"addressDefault":false,"name":"无效店铺1","provinceId":1,"provinceNam
+11-26 12:20:31.659 12530 12530 I HttpGroup: e":"北京","cityId":2816,"cityName":"密云区","countyId":6667,"countyName":"城区","townId":0,"fullAddress":"北京密云区城区新南路109密云区路政局","addressDetail":"新南路109密云区路政局","mobile":"134*****835","phone":"134*****835","status":1,"hasChanged":false,"storeId":978383,"bpin":"xtl_tyEGtnS","appAreaId":"11b73aed-addb-4950-ad0c-49eed66fd241","isShowQhdzButton":false,"isShowEditButton":false,"isShowFpButton":false,"isShowAddBtton":false,"isSelectionStore":false,"totalCount":0,"storeStatus":1},"shopInfo":null,"priceReport":"https://h5zgbgwb.m.jd.com/report.html?skuId=4758621","isSkusNotic":false,"contactType":1,"images":[{"path":"http://img11.360buyimg.com/n0/jfs/t27013/342/1474798120/302293/526f7e56/5be3ff42Naa23854b.jpg","isPrimary":true},{"path":"http://img11.360buyimg.com/n0/jfs/t23680/239/1056374737/276773/17844103/5b502e2cN8a135f7e.jpg","isPrimary":false,"index":1},{"path":"http://img11.360buyimg.com/n0/jfs/t22654/252/1087376770/278581/868ff3e5/5b502e30Nddd58006.jpg","isPrimary":false,"index":2},{"path":"http://img11.360buyimg.com/n0/jfs/t7432/305/358661504/114257/dc744325/59925058Nc5e805df.jpg","isPrimary":false,"index":3},{"path":"http://img11.360buyimg.com/n0/jfs/t22885/205/1089484661/286532/fe02e9e9/5b502e2eN74633993.jpg","isPrimary":false,"index":4}],"showDelivery":true,"success":true,"JDService":{"content":"由京东配送并提供售后服务","moreContent":[{"key":"货到付款","value":"支持送货上门后再收款，支持现金，POS机刷卡等方式"}]},"skuMaxNum":500},"code":"0"}
+11-26 12:20:31.672  1164  2042 I InputDispatcher: injectInputEvent  motion-p=(-0,-2),action=2, pointerCount=1,EventTime=163994293000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.676  1164  1831 I InputDispatcher: injectInputEvent  motion-p=(-2,-2),action=2, pointerCount=1,EventTime=163994297000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.679  1164  1830 I InputDispatcher: injectInputEvent  motion-p=(-2,4),action=2, pointerCount=1,EventTime=163994300000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.682  1164  1174 I InputDispatcher: injectInputEvent  motion-p=(-4,-0),action=2, pointerCount=1,EventTime=163994303000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.683 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@7395e98completesCount:1, httpCount:1
+11-26 12:20:31.684  1164  2168 I InputDispatcher: injectInputEvent  motion-p=(4,-4),action=2, pointerCount=1,EventTime=163994305000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.686  1164  2200 I InputDispatcher: injectInputEvent  motion-p=(2,-4),action=2, pointerCount=1,EventTime=163994307000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.688  1164  2042 I InputDispatcher: injectInputEvent  motion-p=(0,-0),action=2, pointerCount=1,EventTime=163994309000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.689  1164  1644 I InputDispatcher: injectInputEvent  motion-p=(-2,-0),action=2, pointerCount=1,EventTime=163994310000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.691  1164  1830 I InputDispatcher: injectInputEvent  motion-p=(4,-2),action=2, pointerCount=1,EventTime=163994312000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.693  1164  1732 I InputDispatcher: injectInputEvent  motion-p=(2,-4),action=2, pointerCount=1,EventTime=163994314000000, DownTime=-1000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.695 12530 12530 I HttpGroup: id:48- onEnd -->> 
+11-26 12:20:31.695  1164  2168 I InputDispatcher: injectInputEvent  motion-p=(244,400),action=0, pointerCount=1,EventTime=163994317000000, DownTime=163994317000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.698  1164  2216 I InputDispatcher: injectInputEvent  motion-p=(238,395),action=1, pointerCount=1,EventTime=163994319000000, DownTime=163994317000000, injectorPid=14427, injectorUid=2000, syncMode=1, timeoutMillis=30000, policyFlags=0x08000000
+11-26 12:20:31.701 12530 12530 W System.err: org.json.JSONException: No value for preSaleSkuInfo
+11-26 12:20:31.702 12530 12530 W System.err: 	at org.json.JSONObject.get(JSONObject.java:389)
+11-26 12:20:31.702 12530 12530 W System.err: 	at org.json.JSONObject.getString(JSONObject.java:550)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jingdong.common.utils.JSONObjectProxy.getString(JSONObjectProxy.java:196)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$WareInfo.<init>(ProductObject.java:1844)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:193)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:31.702 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:31.702 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:31.703 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:31.703 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:31.703 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:31.703 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:31.703 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:31.703 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:31.703 12530 12530 W System.err: java.lang.NullPointerException: Attempt to invoke virtual method 'int com.jingdong.common.utils.JSONArrayPoxy.length()' on a null object reference
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.initProductSource(ProductObject.java:306)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:296)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:31.704 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:31.704 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:31.704 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:31.704 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:31.704 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:31.704 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:31.705 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:31.711 12530 12530 I TrackUtil: -----Send click data start -----
+11-26 12:20:31.717 12530 12530 I TrackUtil: pin=jd_64aa7bd58f909, page_id=0005, event_id=zgb_2017102519|16, event_param=, skuid=, map={bpin=xtl_tyEGtnS, sku=4758621|6.60|true|1|true, sale_ord_id=, sku_id=, area=1|2816|6667|0}, orderid=
+11-26 12:20:31.728 12530 12530 I TrackUtil: -----Send click data end -----true
+11-26 12:20:31.730 12530 12530 I ViewRootImpl: finishMotionEvent: handled = true stage=10: View Post IME stage,inputElapseTime=0 eventTime = 163994317 downTime = 163994317 title= com.jd.b2b/com.jd.b2b.activity.ProductDetailActivity
+11-26 12:20:31.746 12530 14598 W Bitmap  : Called reconfigure on a bitmap that is in use! This may cause graphical corruption!
+11-26 12:20:31.755 12530 14587 W Bitmap  : Called reconfigure on a bitmap that is in use! This may cause graphical corruption!
+--
+11-26 12:20:38.689   426   457 I [MALI][Gralloc]: [-]hnd(0x7f98414dc0), client(23), share_fd(221)
+11-26 12:20:38.690   426   457 I [MALI][Gralloc]: [+]hnd(0x7f98414dc0), client(23), share_fd(219), hnd->flags:4
+11-26 12:20:38.692  1679  2417 I [MALI][Gralloc]: [+]r_hnd(0x7f81cefe40), client(42), share_fd(97)
+11-26 12:20:38.695 12530 12530 I HttpGroup: id:54- onEnd -->> 
+11-26 12:20:38.700   426  8201 I BufferQueueProducer: [VolumeDialog](this:0x7f857a4400,id:6227,api:1,p:1679,c:426) new GraphicBuffer needed
+11-26 12:20:38.700   426  8201 I [MALI][Gralloc]: [-]hnd(0x7f98414b40), client(23), share_fd(235)
+11-26 12:20:38.701   426  8201 I [MALI][Gralloc]: [+]hnd(0x7f98414b40), client(23), share_fd(232), hnd->flags:4
+11-26 12:20:38.705  1679  2417 I [MALI][Gralloc]: [+]r_hnd(0x7f81ced5a0), client(42), share_fd(99)
+11-26 12:20:38.722 12530 12530 I HttpGroup: id:55--FunctionId--one.cart- StringCallback -->> {"data":{"currentTime":1543206040317,"bottomTitle":"快去选购商品参加促销活动吧","cartNum":107},"code":"0"}
+11-26 12:20:38.724 12530 14601 W Bitmap  : Called reconfigure on a bitmap that is in use! This may cause graphical corruption!
+11-26 12:20:38.768 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@bfa9467completesCount:1, httpCount:1
+11-26 12:20:38.799 12530 12530 I HttpGroup: id:55- onEnd -->> 
+11-26 12:20:38.818 12530 12530 I HttpGroup: id:53--FunctionId--one.skudetail- StringCallback -->> {"data":{"shareNode":{"slogan":"京东掌柜宝的这个商品真不错，特适合在咱小店卖，快来进货吧。","shareUrl":"https://h5zgbgwb.m.jd.com/detail.html?id=4758651&showtip=1"},"taskCard":[],"freightFee":{"yunFeeTips":"满600元免运费，不足600元运费10元","yunFeeLimit":600,"userLevel":"XB_OLD_USER","defaultYunFee":10,"needMoneyTips":"此单还差{0}元即免运费","isShow":false,"isPopWare":false,"freightText":[{"text":"满600元免运费，不足600元运费10元"}],"priceType":0,"ifShowPrice":false,"isUserFree":false,"isNewUser":false},"type":1,"adwords":[{"text":"爆款直降！","color":"#FF5745","backColor":"#F3F3F4"},{"text":"更多优惠请点击》》","color":"#FF5745","backColor":"#F3F3F4","href":"http://esale.jd.com/zgb/m/fpgkJHUY6ywBSm.html"}],"contact":{"contactTel":"400-625-8811","contactUrl":"http://h5zgbgwb.m.jd.com/my_service.html","contactTitle":"客服时间: 周一至周日 9:00-22:00"},"promiseResult":"18:00前下单,预计明天(11月27日)送达","stock":{"isStock":true,"stockType":1,"remainNum":-1,"wareHouseId":"35","parallelWareHouseId":"35","wareHouseType":"0","parallelWareHouseType":"0","distributionCenterId":"682","parallelDistributionCenterId":"682"},"showAddress":true,"notice":"不支持7天无理由退货","addressList":null,"detailUrl":"https://h5zgbgwb.m.jd.com/goodDetail.html?goodId=4758651","isFav":false,"packFee":{"feeTip":"满600元免运费，不足600元运费10元"},"isSupportShipPay":true,"jdzs":0,"wareInfo":{"name":"【自营】七度空间 卫生巾 少女系列 纯棉表层 超薄 日用 245mm 10片 QSC6110（新老品随机发货）","skuId":"4758651","imageUrl":"http://img11.360buyimg.com/n7/jfs/t18565/98/2250606358/341635/53adad1a/5aeaddfbN3593024e.jpg","price":"7.30","jdPrice":"6.85","marketPrice":"8.90 元/包","showOriginPrice":false,"adword":"爆款直降！","addCart":true,"addCartTip":"加入购物车","available":1,"sales":2,"status":1,"lowPurchaseCount":8,"firstCatId":16750,"secondCatId":16754,"thirdCatId":16800,"gifts":false,"isSuit":false,"fullGifts":false,"isCanUseDetailCoupon":false,"isCanUseDq":1,"isCanUseJq":1,"isSevenReturn":0,"zgbUpcCode":"6903244370950","isTopSku":false,"jdsy":0,"reduceLimitShowTexts":{"color":"#aaaaaa"},"firstReduceInfo":{"isFirstReduce":false},"venderId":0,"type":1,"multBuyNum":1,"packageSize":"24包/箱","shelfLife":"三年","directReduce":true,"labelList":[{"text":"8包起订","color":"#FF5745","backColor":"#FFFFFF"}],"isCanBook":false,"stockType":"现货","saleUnit":"包","produceDate":"2018-09","isCanSale":true,"isCwAddPopIcon":false,"selectedFlag":false,"hasChild":false,"brandId":14108,"isShowMarkingPrice":true},"tipsList":[{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"由京东发货&售后","order":5},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"货到付款","order":10},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2659/257/4316442611/1188/8a86861c/57b58627Na717f5c3.jpg","text":"满600元免运费","order":20},{"icon":"https://img30.360buyimg.com/mobilecms/jfs/t2851/135/4294207310/1147/1bfecc8b/57b58643N690fcf89.jpg","text":"不支持无理由退换货","order":30}],"currentTime":1543206040331,"address":{"id":978383,"addressDefault":false,"name":"无效店铺1","provinceId":1,"provinceName":"北京",
+11-26 12:20:38.818 12530 12530 I HttpGroup: "cityId":2816,"cityName":"密云区","countyId":6667,"countyName":"城区","townId":0,"fullAddress":"北京密云区城区新南路109密云区路政局","addressDetail":"新南路109密云区路政局","mobile":"134*****835","phone":"134*****835","status":1,"hasChanged":false,"storeId":978383,"bpin":"xtl_tyEGtnS","appAreaId":"11b73aed-addb-4950-ad0c-49eed66fd241","isShowQhdzButton":false,"isShowEditButton":false,"isShowFpButton":false,"isShowAddBtton":false,"isSelectionStore":false,"totalCount":0,"storeStatus":1},"shopInfo":null,"priceReport":"https://h5zgbgwb.m.jd.com/report.html?skuId=4758651","isSkusNotic":false,"contactType":1,"images":[{"path":"http://img11.360buyimg.com/n0/jfs/t18565/98/2250606358/341635/53adad1a/5aeaddfbN3593024e.jpg","isPrimary":true},{"path":"http://img11.360buyimg.com/n0/jfs/t17230/288/2199377393/276450/c07a2710/5aeaddf7Nf83749e1.jpg","isPrimary":false,"index":1},{"path":"http://img11.360buyimg.com/n0/jfs/t16966/241/2202338363/249668/b38a3875/5aeaddf3Nd634a3d2.jpg","isPrimary":false,"index":2},{"path":"http://img11.360buyimg.com/n0/jfs/t7303/302/351044068/124944/71bc9c7f/59924f28N208cde32.jpg","isPrimary":false,"index":3},{"path":"http://img11.360buyimg.com/n0/jfs/t7465/336/359115235/112599/e64ff390/59924f33Nab0bd3e2.jpg","isPrimary":false,"index":4}],"showDelivery":true,"success":true,"JDService":{"content":"由京东配送并提供售后服务","moreContent":[{"key":"货到付款","value":"支持送货上门后再收款，支持现金，POS机刷卡等方式"}]},"skuMaxNum":500},"code":"0"}
+11-26 12:20:38.851 12530 12530 I HttpGroup: addCompletesCount -->> com.jingdong.common.utils.HttpGroup$HttpGroupaAsynPool@a75b8b2completesCount:1, httpCount:1
+11-26 12:20:38.871 12530 12530 I HttpGroup: id:53- onEnd -->> 
+11-26 12:20:38.882 12530 12530 W System.err: org.json.JSONException: No value for preSaleSkuInfo
+11-26 12:20:38.882 12530 12530 W System.err: 	at org.json.JSONObject.get(JSONObject.java:389)
+11-26 12:20:38.882 12530 12530 W System.err: 	at org.json.JSONObject.getString(JSONObject.java:550)
+11-26 12:20:38.882 12530 12530 W System.err: 	at com.jingdong.common.utils.JSONObjectProxy.getString(JSONObjectProxy.java:196)
+11-26 12:20:38.882 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$WareInfo.<init>(ProductObject.java:1844)
+11-26 12:20:38.882 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:193)
+11-26 12:20:38.882 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:38.883 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:38.883 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:38.883 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:38.883 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:38.883 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:38.883 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:38.884 12530 12530 W System.err: java.lang.NullPointerException: Attempt to invoke virtual method 'int com.jingdong.common.utils.JSONArrayPoxy.length()' on a null object reference
+11-26 12:20:38.884  3148  3183 I PerfService: PerfServiceNative_notifyDisplayType:0
+11-26 12:20:38.884 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.initProductSource(ProductObject.java:306)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:296)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject$Data.<init>(ProductObject.java:48)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jd.b2b.modle.ProductObject.<init>(ProductObject.java:29)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jd.b2b.activity.ProductDetailActivity$getProductDetailListener.onEnd(ProductDetailActivity.java:2846)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jingdong.common.utils.DefaultEffectHttpListener.onEnd(DefaultEffectHttpListener.java:361)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpSetting.onEnd(HttpGroup.java:5988)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.callBack(HttpGroup.java:1640)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest.access$1900(HttpGroup.java:589)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2923)
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.jingdong.common.utils.HttpGroup$HttpRequest$19.onResponse(HttpGroup.java:2870)
+11-26 12:20:38.885  1164  2195 I libPerfService: perfNotifyDisplayType - type:0
+11-26 12:20:38.885 12530 12530 W System.err: 	at com.zhy.http.okhttp.OkHttpUtils$3.run(OkHttpUtils.java:186)
+11-26 12:20:38.885  1164  2195 I libPerfService: [perfScnEnable] scenario:7
+11-26 12:20:38.885 12530 12530 W System.err: 	at android.os.Handler.handleCallback(Handler.java:815)
+11-26 12:20:38.885 12530 12530 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:104)
+11-26 12:20:38.885 12530 12530 W System.err: 	at android.os.Looper.loop(Looper.java:207)
+11-26 12:20:38.886 12530 12530 W System.err: 	at android.app.ActivityThread.main(ActivityThread.java:5996)
+11-26 12:20:38.886 12530 12530 W System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+11-26 12:20:38.886 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:888)
+11-26 12:20:38.886 12530 12530 W System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:749)
+11-26 12:20:38.886  1164  2195 I libPerfService: 7: set max: -1, 0, -1, 
+11-26 12:20:38.894 12530 12530 I TrackUtil: -----Send click data start -----
+11-26 12:20:38.898 10647 10668 E ScreenOnOffReceiver: Scroll Play HotWord thread run
+11-26 12:20:38.902 12530 12530 I TrackUtil: pin=jd_64aa7bd58f909, page_id=0005, event_id=zgb_2017102519|16, event_param=, skuid=, map={bpin=xtl_tyEGtnS, sku=4758651|6.85|true|1|true, sale_ord_id=, sku_id=, area=1|2816|6667|0}, orderid=

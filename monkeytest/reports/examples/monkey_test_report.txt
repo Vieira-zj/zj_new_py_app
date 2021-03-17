@@ -1,0 +1,10 @@
+TEST PACKAGE: com.jd.b2b
+RUN TIME (minutes): 3
+
+APP exceptions summary info:
+total: 1, desc: java.lang.NullPointerException: Attempt to invoke interface method 'java.lang.Object java.util.List.get(int)' on a null object ref
+total: 2, desc: net.grandcentrix.tray.core.TrayException: could not access stored data with uri content://com.jd.b2b.app.B2bApp.net.grandcentrix.tray/intern
+total: 6, desc: org.json.JSONException: No value for preSaleSkuInfo
+total: 6, desc: java.lang.NullPointerException: Attempt to invoke virtual method 'int com.jingdong.common.utils.JSONArrayPoxy.length()' on a null 
+APP ANR summary info:
+Total ANR: 0

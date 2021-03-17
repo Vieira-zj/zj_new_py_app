@@ -1,0 +1,51 @@
+Mon, 26 Nov 2018 12:19:36 adb_utils.py[line:48] INFO: connected devices: 
+List of devices attached
+LP036878A7130018825    device product:X7_CN model:LEX651 device:le_x7 transport_id:1
+Mon, 26 Nov 2018 12:19:36 sys_utils.py[line:51] WARNING: The output is empty for command => adb shell "rm -rf /data/local/tmp/monkey_test_logs 2>/dev/null"
+Mon, 26 Nov 2018 12:19:37 sys_utils.py[line:51] WARNING: The output is empty for command => adb shell "mkdir /data/local/tmp/monkey_test_logs 2>/dev/null"
+Mon, 26 Nov 2018 12:19:43 monkey_test.py[line:201] INFO: Start logcat process.
+Mon, 26 Nov 2018 12:19:43 monkey_test.py[line:203] INFO: Start monkey main process.
+Mon, 26 Nov 2018 12:19:43 monkey_test.py[line:97] INFO: Run monkey command: adb shell "monkey --throttle 500 -p com.jd.b2b -c android.intent.category.MONKEY -c android.intent.category.LAUNCHER -c android.intent.category.DEFAULT --monitor-native-crashes --kill-process-after-error --ignore-crashes --ignore-timeouts --ignore-security-exceptions --ignore-native-crashes --pct-touch 60 --pct-motion 20 --pct-trackball 5 --pct-nav 0 --pct-majornav 5 --pct-syskeys 5 --pct-appswitch 5 --pct-anyevent 0 -v -v -v 1000000 > /data/local/tmp/monkey_test_logs/monkey_log.log"
+Mon, 26 Nov 2018 12:19:43 monkey_test.py[line:206] INFO: Start monkey monitor process.
+Mon, 26 Nov 2018 12:19:43 monkey_test.py[line:211] INFO: Start APP profile monitor process.
+Mon, 26 Nov 2018 12:19:46 monkey_monitor.py[line:67] INFO: Monkey is running... 0 minutes and 0 seconds
+Mon, 26 Nov 2018 12:19:58 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-20-05
+Mon, 26 Nov 2018 12:20:02 monkey_monitor.py[line:67] INFO: Monkey is running... 0 minutes and 15 seconds
+Mon, 26 Nov 2018 12:20:02 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-20-09
+Mon, 26 Nov 2018 12:20:17 monkey_monitor.py[line:67] INFO: Monkey is running... 0 minutes and 30 seconds
+Mon, 26 Nov 2018 12:20:18 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-20-24
+Mon, 26 Nov 2018 12:20:22 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-20-27
+Mon, 26 Nov 2018 12:20:32 monkey_monitor.py[line:67] INFO: Monkey is running... 0 minutes and 46 seconds
+Mon, 26 Nov 2018 12:20:37 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-20-42
+Mon, 26 Nov 2018 12:20:42 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-20-48
+Mon, 26 Nov 2018 12:20:47 monkey_monitor.py[line:67] INFO: Monkey is running... 1 minutes and 1 seconds
+Mon, 26 Nov 2018 12:20:57 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-21-03
+Mon, 26 Nov 2018 12:21:01 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-21-09
+Mon, 26 Nov 2018 12:21:03 monkey_monitor.py[line:67] INFO: Monkey is running... 1 minutes and 16 seconds
+Mon, 26 Nov 2018 12:21:16 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-21-24
+Mon, 26 Nov 2018 12:21:18 monkey_monitor.py[line:67] INFO: Monkey is running... 1 minutes and 31 seconds
+Mon, 26 Nov 2018 12:21:20 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-21-27
+Mon, 26 Nov 2018 12:21:33 monkey_monitor.py[line:67] INFO: Monkey is running... 1 minutes and 47 seconds
+Mon, 26 Nov 2018 12:21:36 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-21-42
+Mon, 26 Nov 2018 12:21:40 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-21-48
+Mon, 26 Nov 2018 12:21:48 monkey_monitor.py[line:67] INFO: Monkey is running... 2 minutes and 2 seconds
+Mon, 26 Nov 2018 12:21:55 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-22-03
+Mon, 26 Nov 2018 12:22:00 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-22-06
+Mon, 26 Nov 2018 12:22:04 monkey_monitor.py[line:67] INFO: Monkey is running... 2 minutes and 17 seconds
+Mon, 26 Nov 2018 12:22:15 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-22-21
+Mon, 26 Nov 2018 12:22:19 monkey_monitor.py[line:67] INFO: Monkey is running... 2 minutes and 32 seconds
+Mon, 26 Nov 2018 12:22:19 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-22-27
+Mon, 26 Nov 2018 12:22:34 monkey_monitor.py[line:67] INFO: Monkey is running... 2 minutes and 47 seconds
+Mon, 26 Nov 2018 12:22:34 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-22-42
+Mon, 26 Nov 2018 12:22:38 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-22-45
+Mon, 26 Nov 2018 12:22:49 monkey_monitor.py[line:67] INFO: Monkey is running... 3 minutes and 3 seconds
+Mon, 26 Nov 2018 12:22:54 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-23-00
+Mon, 26 Nov 2018 12:22:58 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-23-03
+Mon, 26 Nov 2018 12:22:58 profile_monitor.py[line:98] INFO: before time: 2018-11-26-12-23-06
+Mon, 26 Nov 2018 12:23:02 profile_monitor.py[line:101] INFO: after time: 2018-11-26-12-23-09
+Mon, 26 Nov 2018 12:23:02 adb_utils.py[line:48] INFO: connected devices: 
+List of devices attached
+LP036878A7130018825    device product:X7_CN model:LEX651 device:le_x7 transport_id:1
+Mon, 26 Nov 2018 12:23:13 sys_utils.py[line:43] WARNING: Failed, run command => adb pull /data/tombstones D:\ZJWorkspaces\ZjPy3Project\MonkeyReports\18-11-26_121936, return code is 1
+Mon, 26 Nov 2018 12:23:13 monkey_test.py[line:138] WARNING: Pull tombstone file failed!
+Mon, 26 Nov 2018 12:23:13 sys_utils.py[line:51] WARNING: The output is empty for command => adb shell "find /data/anr/ -name *.txt -mtime -1 2>/dev/null"
