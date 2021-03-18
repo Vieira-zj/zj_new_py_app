@@ -9,7 +9,7 @@ import os
 
 import git
 import gitlab
-from gitlab.exceptions import GitlabCherryPickError
+from gitlab.exceptions import GitlabCherryPickError, GitlabGetError
 from loguru import logger
 
 
@@ -121,12 +121,6 @@ class GitlabTool(object):
 
     def set_project(self, project_name, group_name=''):
         projects = self._gitlab.projects.list(search=project_name)
-        if len(projects) == 0:
-            raise Exception(f'no projects found for [{project_name}]')
-        if len(projects) == 1:
-            self._project = projects[0]
-            return
-
         matched_pattern = project_name
         if len(group_name) > 0:
             matched_pattern = group_name + '/' + matched_pattern
@@ -142,6 +136,9 @@ class GitlabTool(object):
             raise Exception(
                 f'more than one projects found for {matched_pattern}: {found_projects}')
 
+        if len(projects) > 1:
+            raise Exception('more than one projects found: ' +
+                            [prj.name for prj in projects])
         self._project = matched_projects[0]
 
     def get_available_projects(self):
@@ -158,7 +155,7 @@ class GitlabTool(object):
     # branch
 
     def get_all_remote_branches(self):
-        return [branch.name for branch in self._project.branches.list()]
+        return [branch.name for branch in self._project.branches.list(all=True)]
 
     def create_branch(self, src_branch, dst_branch, is_delete_existing=False):
         logger.info(f'create branch from {src_branch} to {dst_branch}.')
@@ -243,6 +240,13 @@ class GitlabTool(object):
         return True
 
     # file
+
+    def get_a_file(self, file_path, branch_name):
+        try:
+            return self._project.files.get(file_path=file_path, ref=branch_name)
+        except GitlabGetError as e:
+            logger.warning(e.error_message + ': ' + file_path)
+            return None
 
     def commit_a_file(self, commit_data: dict):
         """
