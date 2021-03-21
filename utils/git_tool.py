@@ -398,10 +398,10 @@ class VersionNumber(object):
 
 
 repo_urls = [
-    'gitlab@git.xxxxx.com:jin.zheng/zhengjin_worksapce.git',
+    os.getenv('GITLAB_SSH_ADDR') + ':jin.zheng/zhengjin_worksapce.git',
 ]
-gitlab_url = 'https://git.xxxxx.com/'
-private_token = 'token'
+gitlab_url = os.getenv('GITLAB_URL')
+private_token = os.getenv('GITLAB_TOKEN')
 
 
 def test_git_tool():
@@ -499,14 +499,23 @@ def main_check_all_projects():
             ('http' in line, not line.startswith('#')))]
     repos = [get_repo_name_from_web_url(url) for url in web_urls]
 
+    tool = GitlabTool(gitlab_url, private_token)
+    failed_repos = []
     for repo in repos:
-        tool = GitlabTool(gitlab_url, private_token)
-        tool.set_project(repo[1], group_name=repo[0])
+        try:
+            tool.set_project(repo[1], group_name=repo[0])
+        except Exception as e:
+            logger.error(e)
+            failed_repos.append('%s/%s' % (repo[0], repo[1]))
+            continue
         tool.print_project_info()
         branches = [br for br in tool.get_all_remote_branches()
-                    if 'label' not in br.lower()]
+                    if 'pay' not in br.lower()]
         print('branches:', branches)
         tool.print_project_hooks_info()
+
+    if len(failed_repos) > 0:
+        logger.error("check failed gitlab repos: " + failed_repos)
 
 
 def test_tag_version():

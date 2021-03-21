@@ -83,7 +83,7 @@ class TestWebdriver01(unittest.TestCase):
         executor_url = browser.command_executor._url
         session_id = browser.session_id
 
-        url = 'https://git.xxxxx.com/project/service'
+        url = "https://git.xxxxx.com/project/service"
         browser.get(url)
         print("\nexecutor_url:", executor_url)
         print("session_id:", session_id)
@@ -150,7 +150,7 @@ class TestWebdriver02(unittest.TestCase):
         print("attach to browser with debugger addr:",
               br_options.experimental_options)
 
-        url = 'https://confluence.xxxxxx.io/pages/viewpage.action?pageId=123456'
+        url = "https://confluence.xxxxxx.io/pages/viewpage.action?pageId=123456"
         browser.get(url)
         print("page title:", browser.title)
         print("cookies:", browser.get_cookies())
