@@ -109,15 +109,19 @@ class GitlabTool(object):
     api docs: https://python-gitlab.readthedocs.io/en/stable/gl_objects/mrs.html
     """
 
-    def __init__(self, url, private_token, project_name, group_name=''):
+    def __init__(self, url, private_token, project_id=''):
         self._gitlab = gitlab.Gitlab(url, private_token=private_token)
-        self.set_project(project_name, group_name)
+        if len(project_id) > 0:
+            self.set_project_by_id(project_id)
 
     @property
     def gitlab(self):
         return self._gitlab
 
     # project
+
+    def set_project_by_id(self, project_id):
+        self._project = self._gitlab.projects.get(id=project_id)
 
     def set_project(self, project_name, group_name=''):
         projects = self._gitlab.projects.list(search=project_name)
@@ -126,7 +130,7 @@ class GitlabTool(object):
             matched_pattern = group_name + '/' + matched_pattern
         matched_projects = []
         for project in projects:
-            if all((project.name == project_name, matched_pattern in project.web_url)):
+            if project.web_url.endswith(matched_pattern):
                 matched_projects.append(project)
         if len(matched_projects) == 0:
             raise Exception(f'no projects found for [{matched_pattern}]')
@@ -136,9 +140,6 @@ class GitlabTool(object):
             raise Exception(
                 f'more than one projects found for {matched_pattern}: {found_projects}')
 
-        if len(projects) > 1:
-            raise Exception('more than one projects found: ' +
-                            [prj.name for prj in projects])
         self._project = matched_projects[0]
 
     def get_available_projects(self):
@@ -154,36 +155,53 @@ class GitlabTool(object):
 
     # branch
 
+    def get_a_branch(self, branch_name):
+        try:
+            return self._project.branches.get(branch_name)
+        except GitlabGetError as e:
+            logger.info(e.error_message + ": " + branch_name)
+
     def get_all_remote_branches(self):
         return [branch.name for branch in self._project.branches.list(all=True)]
 
     def create_branch(self, src_branch, dst_branch, is_delete_existing=False):
-        logger.info(f'create branch from {src_branch} to {dst_branch}.')
+        logger.info(
+            f'repo [{self._project.name}]: create branch from [{src_branch}] to [{dst_branch}].')
+        branch = self.get_a_branch(dst_branch)
+        if branch:
+            if is_delete_existing:
+                backup_br = dst_branch+'-backup'
+                logger.info(
+                    f'branch [{dst_branch}] is exsit, and backup to [{backup_br}]')
+                self._project.branches.create(
+                    {'branch': backup_br, 'ref': dst_branch})
+                self._project.branches.delete(dst_branch)
+            else:
+                logger.info(f'branch [{dst_branch}] already exists.')
+                return
+
         data = {
             'branch': dst_branch,
             'ref': src_branch,
         }
-        branch = self._project.branches.get(dst_branch)
-        if branch:
-            if is_delete_existing:
-                logger.warning(
-                    f'backup old branch [{dst_branch}], and create new.')
-                self._project.branches.create(
-                    {'branch': dst_branch+'-backup', 'ref': dst_branch})
-                self._project.branches.delete(dst_branch)
-            else:
-                logger.warning(
-                    f'create branch [{dst_branch}] failed, already exists.')
-                return
-
         return self._project.branches.create(data)
 
     # tag
+
+    def get_a_tag(self, tag_name):
+        try:
+            return self._project.tags.get(tag_name)
+        except GitlabGetError as e:
+            logger.info(e.error_message + ": " + tag_name)
 
     def get_tags(self):
         return self._project.tags.list()
 
     def create_tag(self, tag_name, commit_sha):
+        if self.get_a_tag(tag_name):
+            logger.info(f"tag [{tag_name}] already exist.")
+            return
+
         logger.info(f'create tag [{tag_name}] for commit [{commit_sha}].')
         data = {'tag_name': tag_name, 'ref': commit_sha}
         return self._project.tags.create(data)
@@ -246,7 +264,6 @@ class GitlabTool(object):
             return self._project.files.get(file_path=file_path, ref=branch_name)
         except GitlabGetError as e:
             logger.warning(e.error_message + ': ' + file_path)
-            return None
 
     def commit_a_file(self, commit_data: dict):
         """
@@ -260,11 +277,23 @@ class GitlabTool(object):
             'commit_message': 'Create testfile'
         }
         """
+        f = self.get_a_file(commit_data["file_path"], commit_data["branch"])
+        if f:
+            logger.info(
+                "file [%s] already exist, and not do commit." % commit_data["file_path"])
+            return
+        logger.info("commit a file [%s]" % commit_data["file_path"])
         return self._project.files.create(commit_data)
 
     # hook
 
     def create_project_hook(self, url, enable_events, disable_events):
+        hooks = self._project.hooks.list()
+        for hook in hooks:
+            if hook.url == url:
+                logger.info("hook [%s] already exist." % url)
+                return
+
         data = {
             'url': url,
         }
@@ -272,7 +301,7 @@ class GitlabTool(object):
             data[event] = 1
         for event in disable_events:
             data[event] = 0
-        self._project.hooks.create(data)
+        return self._project.hooks.create(data)
 
     def print_project_hooks_info(self):
         hooks = self._project.hooks.list()
@@ -387,8 +416,8 @@ def test_gitlab_tool():
     group_name = ''
     project_names = ['zhengjin_worksapce']
     for prj_name in project_names:
-        tool = GitlabTool(gitlab_url, private_token,
-                          prj_name, group_name=group_name)
+        tool = GitlabTool(gitlab_url, private_token)
+        tool.set_project(prj_name, group_name=group_name)
         tool.print_project_info()
 
         if False:
@@ -471,8 +500,8 @@ def main_check_all_projects():
     repos = [get_repo_name_from_web_url(url) for url in web_urls]
 
     for repo in repos:
-        tool = GitlabTool(gitlab_url, private_token,
-                          repo[1], group_name=repo[0])
+        tool = GitlabTool(gitlab_url, private_token)
+        tool.set_project(repo[1], group_name=repo[0])
         tool.print_project_info()
         branches = [br for br in tool.get_all_remote_branches()
                     if 'label' not in br.lower()]
