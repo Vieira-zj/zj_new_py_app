@@ -91,6 +91,9 @@ def create_repos() -> List[Repo]:
 
 def main_deploy_parse():
     """
+    解析发布过程中 task,mr,repo 的关系，以 repo-task-mr 的方式输出。
+
+    结果：
     repo1: task1,mr1,mr3 task2,rm7
     repo2: task1,mr2 task3,mr6
     repo3: task1,mr5 task2,mr4
@@ -121,8 +124,8 @@ def main_deploy_parse():
             tmp = task_mr_dict.setdefault(mr.task_id, [])
             tmp.append(mr.mr_id)
 
-        for k, v in task_mr_dict.items():
-            print('\t', k, ','.join(v))
+        for task_id, mr_ids in task_mr_dict.items():
+            print('\t', task_id, ','.join(mr_ids))
     print()
 
     print('deploy table of services:')

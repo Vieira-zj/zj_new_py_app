@@ -1,3 +1,5 @@
+# coding=utf-8
+
 class Cat(object):
 
     def __init__(self, name):
@@ -15,7 +17,7 @@ class Cat(object):
 
 
 class CatProxy(object):
-    """ 动态代理 Cat 类的行为 """
+    """ 动态代理 Cat 类的行为。 """
 
     def __init__(self, cat: Cat):
         self._cat = cat
@@ -41,10 +43,26 @@ if __name__ == '__main__':
 
     cat = Cat('miroo')
     proxy = CatProxy(cat)
+
     proxy.sayHi()
     print(proxy.sayHi.__name__)
     proxy.run(10)
+    print()
 
-    proxy.test()  # func not exist
+    # dyn invoke
+    fn_sayhi = getattr(proxy, 'sayHi')
+    if callable(fn_sayhi):
+        fn_sayhi()
+        print(fn_sayhi.__name__)
+    fn_run = getattr(proxy, 'run')
+    if callable(fn_run):
+        fn_run(20)
+    print()
+
+    # invoke func not exist
+    fn_test = getattr(proxy, 'test')
+    print(fn_test.__name__)
+    if callable(fn_test):
+        fn_test()
 
     print('proxy demo done.')

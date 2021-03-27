@@ -5,11 +5,11 @@ Created on 2018-10-31
 '''
 
 from collections import deque, defaultdict, Counter
-
 from datetime import datetime
 import getopt
 import glob
 import inspect
+import json
 import os
 import sys
 import time
@@ -459,8 +459,6 @@ def py_base_ex18():
 
 # example 19, json parse
 def py_base_ex19():
-    import json
-
     input_path = os.path.join(
         os.getenv('HOME'), 'Downloads/tmp_files/test.json')
     if not os.path.exists(input_path):
@@ -930,11 +928,17 @@ def py_base_ex35():
         print(line)
 
 
-# example 36, insert item in list
+# example 36, list
 def py_base_ex36():
     test_list = ['a', 'b', 'd']
+
+    # insert item
     test_list.insert(2, 'c')
     print(test_list)
+
+    # remove item
+    test_list.remove('b')
+    print(','.join(test_list))
 
 
 # example 38, read chrome cookie (sqlite.db)
@@ -1039,7 +1043,7 @@ def py_base_ex41():
     print('\nmap built in methods:', methods)
 
 
-# example 42, typing
+# example 42, py typing
 def py_base_ex42():
     from typing import Callable, List, Union
 
@@ -1104,7 +1108,7 @@ def py_base_ex44():
         print(f"param={p.name}, default={default}, type={kind}")
 
 
-# example 45, parse py file by importlib
+# example 45, load module from py file by importlib
 def py_base_ex45():
     def printTestClass(imported):
         clazz = [item.__name__ for item in vars(imported).values() if inspect.isclass(
@@ -1166,10 +1170,23 @@ def py_base_ex46():
     print()
 
     # load json file
-    import json
     with open('/tmp/test/test.json', mode='r') as f:
         input = json.load(f)
         printDict(input)
+
+
+def py_base_ex47():
+    # get python run stack context
+    stacks = inspect.stack()
+    for stack in stacks:
+        script_path = stack.filename
+        script_name = script_path[script_path.rfind('/') + 1:]
+        function_name = stack.function
+        context_dict = {
+            'file': script_name,
+            'function': function_name
+        }
+        print(json.dumps(context_dict))
 
 
 if __name__ == '__main__':
@@ -1195,6 +1212,6 @@ if __name__ == '__main__':
     # run_mod_imports()
 
     # py_base_ex23_01()
-    py_base_ex46()
+    py_base_ex36()
 
     print('python base demo DONE.')
