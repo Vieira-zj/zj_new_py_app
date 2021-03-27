@@ -6,7 +6,8 @@ Created on 2020-05-28
 
 import sys
 import os
-sys.path.append(os.getenv('PYPATH'))
+from typing import List
+sys.path.append(os.getenv('PYROOT'))
 
 from pysort import Stack
 
@@ -174,6 +175,66 @@ def test06():
     print(''.join(ret2))
 
 
+def longest_common_prefix(strs: List[str]) -> str:
+    if not strs:
+        return ""
+    if len(strs) == 0:
+        return ""
+    if len(strs) == 1:
+        return strs[0]
+
+    minStr = strs[0]
+    for s in strs[1:]:
+        if len(s) < len(minStr):
+            minStr = s
+
+    for i in range(len(minStr), 0, -1):
+        sub = minStr[:i]
+        matched = True
+        for s in strs:
+            if not s.startswith(sub):
+                matched = False
+                break
+        if matched:
+            return sub
+    return ""
+
+
+def longest_common_prefix02(strs: List[str]) -> str:
+    # str[闭区间:开区间]
+    if not strs:
+        return ""
+    if len(strs) == 0:
+        return ""
+    if len(strs) == 1:
+        return strs[0]
+
+    prefix = strs[0]
+    for s in strs[1:]:
+        while not s.startswith(prefix):
+            prefix = prefix[:-1]
+            if len(prefix) == 0:
+                return prefix
+    return prefix
+
+
+def test07():
+    data = (
+        (["flower", "flow", "flight"], "fl"),
+        (["dog", "racecar", "car"], ""),
+        (['ab', 'a'], 'a'),
+        ([], ''),
+    )
+
+    for item in data:
+        input = item[0]
+        expect = item[1]
+        actual = longest_common_prefix02(input)
+        if actual != expect:
+            print(f'{input} failed, expect={expect}, atucal={actual}')
+        print(actual if len(actual) > 0 else 'null')
+
+
 # -----------------------------------
 # Others
 # -----------------------------------
@@ -203,5 +264,5 @@ def test04():
 
 if __name__ == '__main__':
 
-    test06()
+    test07()
     print('py alg string demo done.')
