@@ -4,6 +4,9 @@ Created on 2018-11-2
 @author: zhengjin
 '''
 
+import signal
+import threading
+
 from monkeytest import MonkeyTest
 from utils import Constants
 from utils import AdbUtils
@@ -67,10 +70,51 @@ def cmd_args_parse():
     return ret_dict
 
 
+def cmd_args_parse_v2():
+    import argparse
+
+    parser = argparse.ArgumentParser(prog='pydemo')
+
+    parser.add_argument('-V', '--version', dest='version',
+                        action='store_true', help='show version.')
+    parser.add_argument('-v', dest='verbose', action='count',
+                        default=0, help='show verbose log.')
+    parser.add_argument('-c', '--config', dest='config',
+                        help='config file path.')
+
+    args = parser.parse_args()
+    if hasattr(args, 'help'):
+        parser.print_help()
+        exit(1)
+
+    return args
+
+
 if __name__ == '__main__':
 
-    test_mod_imports_03()
+    # test_mod_imports_03()
 
     # args_dict = cmd_args_parse()
     # run_monkey_test(args_dict)
-    print('Python main DONE.')
+
+    args = cmd_args_parse_v2()
+
+    if args.version:
+        print('v1.0.0')
+        exit(1)
+
+    if args.verbose > 0:
+        print('verbose level: %d' % args.verbose)
+
+    if args.config and len(args.config):
+        print('config file:', args.config)
+
+    def signal_handler(signum, frame):
+        threading.Event().set()
+        print('ctrl-C pressed, and stop!')
+        exit(1)
+
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    print('wait for cancel...')
+    threading.Event().wait()
