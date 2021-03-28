@@ -940,6 +940,10 @@ def py_base_ex36():
     test_list.remove('b')
     print(','.join(test_list))
 
+    # iterator with index
+    for idx, val in enumerate(test_list):
+        print('iterator at %d: %s' % (idx, val))
+
 
 # example 38, read chrome cookie (sqlite.db)
 def py_base_ex38():
