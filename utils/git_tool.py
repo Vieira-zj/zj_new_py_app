@@ -186,6 +186,30 @@ class GitlabTool(object):
         }
         return self._project.branches.create(data)
 
+    def protect_branch(self, branch_name, merge_access_level, push_access_level, allowed_user_ids: list):
+        """
+        Gitlab operation: Settings => Repository => Protected Branches
+        """
+        try:
+            br = self._project.protectedbranches.get(branch_name)
+            if br:
+                logger.warning('protect branch [%s] is exsit' % branch_name)
+                return
+        except GitlabGetError:
+            pass
+
+        data = {
+            'name': branch_name,
+            'merge_access_level': merge_access_level,
+            'push_access_level': push_access_level,
+        }
+        if branch_name != 'master':
+            allowed_users = [{'user_id': user_id}
+                             for user_id in allowed_user_ids]
+            data['allowed_to_push'] = allowed_users
+            data['allowed_to_merge'] = allowed_users
+        return self._project.protectedbranches.create(data)
+
     # tag
 
     def get_a_tag(self, tag_name):
@@ -288,6 +312,9 @@ class GitlabTool(object):
     # hook
 
     def create_project_hook(self, url, enable_events, disable_events):
+        """
+        Gitlab operation: Settings => Webhooks
+        """
         hooks = self._project.hooks.list()
         for hook in hooks:
             if hook.url == url:
