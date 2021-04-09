@@ -1,0 +1,76 @@
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flask SocketIO Test</title>
+  </head>
+
+  <style>
+    ul {
+      text-align: left;
+      margin-left: 10px;
+      list-style-type: none;
+    }
+    body {
+      text-align: center;
+    }
+    #show,
+    #bottom {
+      width: 600px;
+      background-color: azure;
+      padding: 15px;
+    }
+    #show {
+      height: 400px;
+    }
+    #bottom {
+      height: 30px;
+    }
+    input {
+      width: 520px;
+    }
+  </style>
+
+  <body>
+    <div id="show">
+      <ul></ul>
+    </div>
+    <div id="bottom"><input id="text" /><button id="submit">发送</button></div>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/socket.io.min.js"></script>
+    <script>
+      $(function () {
+        let url = "http://" + document.domain + ":" + location.port;
+        console.log(url);
+        let io_client = io.connect(url);
+
+        // 连接成功时的事件
+        io_client.on("connect", function () {
+          io_client.emit("login", { data: "I'm connected!" });
+        });
+
+        io_client.on("login", function (resp) {
+          resp = JSON.parse(resp);
+          console.log(resp["message"]);
+        });
+
+        // 绑定的事件, 对应py文件中的event参数的值
+        io_client.on("msg", function (resp) {
+          $("#show ul").append(`<li>${resp}</li>`);
+        });
+
+        $("#submit").click(function () {
+          let text = $.trim($("#text").val());
+          $.post("/listen", { data: text }, function (resp) {
+            resp = JSON.parse(resp);
+            let status = resp["message"];
+            if (status == "success") {
+              $("#text").val("");
+            } else {
+              alert(status);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
