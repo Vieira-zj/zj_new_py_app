@@ -8,7 +8,7 @@ import time
 class JiraTools(object):
 
     _jira_host = 'https://jira.xxxxx.io'
-    _jira_rest_api_url = f'{_jira_host}/rest/api'
+    _jira_rest_api_url = f'{_jira_host}/rest/api/latest'
     _jira_webhook_url = f'{_jira_host}/rest/webhooks/1.0/webhook'
     # token: echo -n 'username:password' | base64
     _auth_token = 'base64_token'
@@ -24,7 +24,7 @@ class JiraTools(object):
     '''
 
     def search(self, query: str, limit=3, fields=['id', 'key']):
-        url = f'{self._jira_rest_api_url}/2/search'
+        url = f'{self._jira_rest_api_url}/search'
         query_dict = {
             'jql': query,
             'maxResults': limit,
@@ -36,7 +36,7 @@ class JiraTools(object):
 
     def get_issue(self, issue_id, expand_fields: list):
         expend = ','.join(expand_fields)
-        url = f'{self._jira_rest_api_url}/latest/issue/{issue_id}?expand={expend}'
+        url = f'{self._jira_rest_api_url}/issue/{issue_id}?expand={expend}'
         resp = self._sess.get(url)
         assert(resp.status_code >= 200)
 
@@ -54,7 +54,7 @@ class JiraTools(object):
     '''
 
     def add_remote_issue_link(self, issue_id, link, title):
-        url = f'{self._jira_rest_api_url}/latest/issue/{issue_id}/remotelink'
+        url = f'{self._jira_rest_api_url}/issue/{issue_id}/remotelink'
         favicon_url = 'https://git.xxxxx.com/assets/favicon-7901bd695fb93edb07975966062049829afb56cf11511236e61bcf425070e36e.png'
         link_data = {
             'object': {
@@ -70,12 +70,12 @@ class JiraTools(object):
         self.resp_handler(resp)
 
     def get_remote_issue_links(self, issue_id):
-        url = f'{self._jira_rest_api_url}/latest/issue/{issue_id}/remotelink'
+        url = f'{self._jira_rest_api_url}/issue/{issue_id}/remotelink'
         resp = self._sess.get(url)
         self.resp_handler(resp)
 
     def delete_remote_issue_link(self, issue_id, link_id):
-        url = f'{self._jira_rest_api_url}/latest/issue/{issue_id}/remotelink/{link_id}'
+        url = f'{self._jira_rest_api_url}/issue/{issue_id}/remotelink/{link_id}'
         resp = self._sess.delete(url)
         self.resp_handler(resp)
 
