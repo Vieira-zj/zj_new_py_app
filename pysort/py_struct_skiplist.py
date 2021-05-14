@@ -78,7 +78,7 @@ class SkipList(object):
             if key == node.get_next_node_key(depth):
                 next_next_node = node.get_next_node(depth).get_next_node(depth)
                 node.set_next_node(depth, next_next_node)
-                if node.key == -math.inf and next_next_node.key == math.inf:
+                if self._root.get_next_node_key(depth) == math.inf and self._depth > 1:
                     self._depth -= 1
                 ret = True
         return ret
@@ -148,7 +148,7 @@ def skiplist_test02():
     sl.insert(1, "1")
     sl.insert(3, "3")
     sl.print()
-    print('\ndelete:', sl.delete(1))
+    print('\ndelete:', sl.delete(2))
     sl.print()
 
 
