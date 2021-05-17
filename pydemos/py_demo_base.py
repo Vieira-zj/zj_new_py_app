@@ -1193,6 +1193,17 @@ def py_base_ex47():
         print(json.dumps(context_dict))
 
 
+def py_base_ex48():
+    s = 'a' and 'b'
+    print('\nresult:', s)
+
+    s = 'a' or 'b'
+    print('result:', s)
+
+    s = '' or 'default'
+    print('result:', s)
+
+
 if __name__ == '__main__':
 
     def get_parent(path, level):
@@ -1216,6 +1227,6 @@ if __name__ == '__main__':
     # run_mod_imports()
 
     # py_base_ex23_01()
-    py_base_ex36()
+    py_base_ex48()
 
     print('python base demo DONE.')
