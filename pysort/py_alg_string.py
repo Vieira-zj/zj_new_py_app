@@ -7,8 +7,8 @@ Created on 2020-05-28
 import sys
 import os
 from typing import List
-sys.path.append(os.getenv('PYROOT'))
 
+sys.path.append(os.getenv('PYPROJECT'))
 from pysort import Stack
 
 # -----------------------------------
@@ -239,7 +239,6 @@ def test07():
 # Others
 # -----------------------------------
 
-
 def reverse_by_words(sentence: str) -> str:
     '''
     reverse words divied by space
@@ -262,7 +261,91 @@ def test04():
     print('text reverse by words:', reverse_by_words(sentence))
 
 
+def format_by_word_v1(content: str) -> str:
+    """
+    1. 只包含字母和数字
+    2. 前一个为非字母和数字时，该字符转换为大写，其他字符转换为小写
+    3. 转换后字符串如果首字母为大写，则转换为小写
+    """
+    ret = []
+    is_change = False
+    input = content.lower()
+    for ch in input:
+        if ch.isalnum():
+            tmp = ch
+            if ch.isalpha() and is_change:
+                tmp = ch.upper()
+            ret.append(tmp)
+            is_change = False
+        else:
+            is_change = True
+    if len(ret) == 0:
+        return 'shopee'
+
+    if 65 <= ord(ret[0]) <= 90:  # 大写字母
+        ret[0] = ret[0].lower()
+    return ''.join(ret)
+
+
+def format_by_word_v2(content: str) -> str:
+    word = []
+    words = []
+    for ch in content:
+        if ch.isalnum():
+            word.append(ch)
+        else:
+            if len(word) > 0:
+                words.append(''.join(word))
+                word = []
+    if len(word) > 0:
+        words.append(''.join(word))
+
+    if len(words) == 0:
+        return 'shopee'
+
+    ret = []
+    first_word = words[0]
+    if first_word[0].isalpha():
+        ret.append(first_word.lower())
+    else:
+        pos = 0
+        for i in range(len(first_word)):
+            if first_word[i].isdigit():
+                pos += 1
+        ret.append(first_word[:(pos + 2)] + first_word[(pos + 2):].lower())
+
+    for word in words[1:]:
+        if word[0].isalpha():
+            word = word.title()
+        else:
+            word = word.lower()
+        ret.append(word)
+    return ''.join(ret)
+
+
+def test08():
+    cases = []
+    cases.append(('', 'shopee'))
+    cases.append(('_', 'shopee'))
+    cases.append(('hello_world', 'helloWorld'))
+    cases.append(('Hello_World', 'helloWorld'))
+    cases.append(('**Hello_worLD', 'helloWorld'))
+    cases.append(('Hello_world_**python', 'helloWorldPython'))
+    cases.append(('1Hello_worLD', '1HelloWorld'))
+    cases.append(('1hello_1worLD', '1hello1world'))
+
+    for input, expect in cases:
+        res = format_by_word_v1(input)
+        print('want:%s, got:%s' % (expect, res))
+    print()
+
+    for input, expect in cases:
+        res = format_by_word_v1(input)
+        assert res, expect
+        print('want:%s, got:%s' % (expect, res))
+
+
 if __name__ == '__main__':
 
-    test07()
+    test08()
     print('py alg string demo done.')

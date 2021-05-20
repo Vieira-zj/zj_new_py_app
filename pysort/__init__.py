@@ -1,1 +1,1 @@
-from pysort.py_alg_struct import Stack
+from pysort.py_struct_base import Stack
