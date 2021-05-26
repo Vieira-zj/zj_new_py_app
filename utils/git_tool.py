@@ -428,7 +428,17 @@ repo_urls = [
     os.getenv('GITLAB_SSH_ADDR') + ':jin.zheng/zhengjin_worksapce.git',
 ]
 gitlab_url = os.getenv('GITLAB_URL')
-private_token = os.getenv('GITLAB_TOKEN')
+private_token = os.getenv('GITLAB_PRIVATE_TOKEN')
+
+
+def test_gitlab_rest_api():
+    import requests
+
+    url = f'{gitlab_url}api/v4/users/4902/projects'
+    header = {'PRIVATE-TOKEN': private_token}
+    resp = requests.get(url, headers=header)
+    print(resp.status_code)
+    print('1st project:', resp.json()[0]['name'])
 
 
 def test_git_tool():
@@ -556,6 +566,8 @@ def test_tag_version():
 
 if __name__ == '__main__':
 
+    test_gitlab_rest_api()
+
     # test_git_tool()
     # main_create_deploy_branches_by_git()
 
@@ -564,5 +576,5 @@ if __name__ == '__main__':
 
     # main_check_all_projects()
 
-    test_tag_version()
+    # test_tag_version()
     print('git tool test done.')
