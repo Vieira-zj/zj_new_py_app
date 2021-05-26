@@ -13,4 +13,4 @@ mlcode/tf/epic_num_reader.model
 pyapps/app_google_sheets/credentials.json
 pyapps/app_google_sheets/token.pickle
 
-py_env.sh
+env.sh
