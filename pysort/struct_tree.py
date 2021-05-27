@@ -1,47 +1,11 @@
-# -*- coding: utf-8 -*-
-'''
-Created on 2020-05-28
-@author: zhengjin
-'''
+# coding=utf-8
 
-# -----------------------------------
-# Stack
-# -----------------------------------
+import sys
+import os
 
+sys.path.append(os.getenv('PYPROJECT'))
+from pysort import Stack, StackEmptyException
 
-class Stack(object):
-
-    def __init__(self):
-        self.top = 0
-        self.store_list = []
-
-    def size(self):
-        return len(self.store_list)
-
-    def push(self, val):
-        self.top += 1
-        self.store_list.append(val)
-
-    def pop(self):
-        if self.top < 1:
-            raise StackEmptyException()
-        self.top -= 1
-        return self.store_list.pop(self.size() - 1)
-
-    def __repr__(self):
-        if self.size() < 1:
-            return '[]'
-        return '[%s]' % (','.join(self.store_list))
-
-
-class StackEmptyException(Exception):
-
-    def __init__(self):
-        self.value = 'stack is empty'
-
-    def __str__(self):
-        # return repr(self.value)
-        return self.value
 
 # -----------------------------------
 # 二叉树
@@ -107,7 +71,7 @@ def pre_order_bin_tree02(root):
         print('\n', e)
 
 
-def test01():
+def pre_order_bin_tree_test():
     bin_tree = create_bin_tree(range(0, 10))
     print('#1. print bin tree by pre order:')
     pre_order_bin_tree01(bin_tree)
@@ -129,12 +93,13 @@ def get_tree_max_depth(root: BinTreeNode) -> int:
     return max(l_depth, r_depth)
 
 
-def test02():
+def get_tree_max_depth_test():
     bin_tree = create_bin_tree(range(0, 10))
     print('max tree depth:', get_tree_max_depth(bin_tree))
 
 
 if __name__ == '__main__':
 
-    test02()
-    print('py alg struct demo done.')
+    # pre_order_bin_tree_test()
+    get_tree_max_depth_test()
+    print('py struct tree demo done.')

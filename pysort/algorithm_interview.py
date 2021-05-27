@@ -155,4 +155,4 @@ def alg_test05():
 if __name__ == '__main__':
 
     alg_test05()
-    print('py alg demo done.')
+    print('py alg interview demo done.')

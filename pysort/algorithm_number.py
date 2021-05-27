@@ -57,4 +57,4 @@ def test03():
 if __name__ == '__main__':
 
     test01()
-    print('py alg int demo done.')
+    print('py alg number demo done.')

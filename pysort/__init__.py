@@ -1,1 +1,1 @@
-from pysort.py_struct_base import Stack
+from pysort.struct_base import Stack, StackEmptyException
