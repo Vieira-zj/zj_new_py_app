@@ -3,7 +3,7 @@
 import sys
 import os
 
-sys.path.append(os.getenv('PYPROJECT'))
+sys.path.append(os.getenv('PYROOT'))
 from pysort import Stack, StackEmptyException
 
 

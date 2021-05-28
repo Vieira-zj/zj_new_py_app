@@ -46,7 +46,7 @@ class LinkedList(object):
     def append(self, value):
         node = LinkedListNode()
         node.value = value
-        if not self._head:
+        if self._head is None:
             self._head = node
         else:
             self._last.next = node
@@ -59,18 +59,21 @@ class LinkedList(object):
         cur = self._head
         node = LinkedListNode()
         node.value = value
-        if not cur:
+        if cur is None:
             self._head = node
             self._last = node
             return
 
+        # insert head
         if value < cur.value:
             node.next = self._head
             self._head = node
             return
 
-        while cur.next is not None and (cur.next.value < value):
+        # base cur node, check next node
+        while cur.next and (cur.next.value < value):
             cur = cur.next
+        # insert tailer
         if not cur.next:
             cur.next = node
             self._last = node
@@ -82,20 +85,20 @@ class LinkedList(object):
     def size(self):
         ret = 0
         cur = self._head
+        # base cur node, check cur node
         while cur:
-            cur = cur.next
             ret += 1
+            cur = cur.next
         return ret
 
     def __str__(self):
+        ret_values = []
         cur = self._head
-        if not cur:
-            return 'null'
-
-        ret_values = [cur.value]
-        while cur.next:
-            ret_values.append(cur.next.value)
+        while cur:
+            ret_values.append(cur.value)
             cur = cur.next
+        if len(ret_values) == 0:
+            return 'null'
         return ','.join([str(val) for val in ret_values])
 
 
@@ -106,7 +109,7 @@ def linkedlist_test():
     print(l1)
 
     l2 = LinkedList()
-    for val in (4, 7, 10, 8, 3, 4, 1, 2, 20, 11, 39):
+    for val in (4, 7, 10, 8, 3, 4, 1, 2, 20, 4, 11, 39):
         l2.insert(val)
     print(l2)
 
@@ -119,16 +122,14 @@ def distinct_linkedlist(l: LinkedList):
         return l
 
     cur = l.head
-    d = {}
-    d[cur.value] = 1
-    while cur.next is not None:
+    d = {cur.value: 1}
+    # base cur node, check next node
+    while cur.next:
         tmp = d.get(cur.next.value, 0)
         if tmp == 1:
-            if not cur.next.next:
-                cur.next = None
+            cur.next = cur.next.next
+            if cur.next is None:
                 return l
-            else:
-                cur.next = cur.next.next
         else:
             d[cur.next.value] = 1
             cur = cur.next

@@ -8,7 +8,7 @@ import sys
 import os
 from typing import List
 
-sys.path.append(os.getenv('PYPROJECT'))
+sys.path.append(os.getenv('PYROOT'))
 from pysort import Stack
 
 # -----------------------------------
