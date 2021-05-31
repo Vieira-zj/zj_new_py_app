@@ -1179,8 +1179,8 @@ def py_base_ex46():
         printDict(input)
 
 
+# example 47, get python run stack context
 def py_base_ex47():
-    # get python run stack context
     stacks = inspect.stack()
     for stack in stacks:
         script_path = stack.filename
@@ -1202,6 +1202,55 @@ def py_base_ex48():
 
     s = '' or 'default'
     print('result:', s)
+
+
+# example 49, status by binary
+class Operation(object):
+    Create = 1
+    Write = 1 << 1
+    Remove = 1 << 2
+    Rename = 1 << 3
+
+    def __init__(self):
+        self._value = 0
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, val: int):
+        self._value += val
+
+    def has_create(self):
+        return True if self._value & self.Create != 0 else False
+
+    def has_wirte(self):
+        return True if self._value & self.Write != 0 else False
+
+    def __str__(self):
+        ret = ''
+        if (self._value & self.Create) == self.Create:
+            ret += '|Create'
+        if (self._value & self.Write) == self.Write:
+            ret += '|Write'
+        if (self._value & self.Remove) == self.Remove:
+            ret += '|Remove'
+        if (self._value & self.Rename) == self.Rename:
+            ret += '|Rename'
+        return ret[1:]
+
+
+def py_base_ex49():
+    print('\nall operations: create=%s, write=%s, remove=%s, rename=%s'
+          % (bin(Operation.Create), bin(Operation.Write), bin(Operation.Remove), bin(Operation.Rename)))
+    op = Operation()
+    op.value = Operation.Create
+    op.value = Operation.Remove
+    op.value = Operation.Rename
+    print('has create:', op.has_create())
+    print('has write:', op.has_wirte())
+    print('cur op:', op)
 
 
 if __name__ == '__main__':
@@ -1227,6 +1276,6 @@ if __name__ == '__main__':
     # run_mod_imports()
 
     # py_base_ex23_01()
-    py_base_ex48()
+    py_base_ex49()
 
     print('python base demo DONE.')
