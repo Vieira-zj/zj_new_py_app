@@ -6,11 +6,14 @@ Created on 2018-10-31
 
 from collections import deque, defaultdict, Counter
 from datetime import datetime
+from enum import Enum
 import getopt
 import glob
 import inspect
+import logging
 import json
 import os
+import random
 import sys
 import time
 
@@ -19,6 +22,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 print('python base demo INIT.')
+
+logger = logging.getLogger(__name__)
 
 
 def run_mod_imports():
@@ -77,7 +82,6 @@ def py_base_ex02():
     print(lines)
 
     # print random float number within range
-    import random
     f = float('%.1f' % random.choice(np.arange(-2.0, 2.0, step=0.1)))
     print('float number with 1 decimal:', f)
     f = float('%.3f' % random.choice(np.arange(92., 94., step=0.001)))
@@ -1253,6 +1257,23 @@ def py_base_ex49():
     print('cur op:', op)
 
 
+# example 50, enum
+class Color(Enum):
+    red = 1
+    orange = 2
+    yellow = 3
+    green = 4
+    blue = 5
+    indigo = 6
+    purple = 7
+
+
+def py_base_ex50():
+    print('\navailable colors:')
+    for color in Color:
+        print(color.name, color.value)
+
+
 if __name__ == '__main__':
 
     def get_parent(path, level):
@@ -1275,7 +1296,11 @@ if __name__ == '__main__':
 
     # run_mod_imports()
 
+    # 使用 logger 方式打印字符串，可以避免不必要的字符串解析，提高性能
+    logger.warning(
+        'this is logger print: str=%s, number=%d, float=%.2f', 'helloworld', 123, 11.337)
+
     # py_base_ex23_01()
-    py_base_ex49()
+    py_base_ex50()
 
     print('python base demo DONE.')
