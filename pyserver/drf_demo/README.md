@@ -1,7 +1,10 @@
 # Django Rest Framework
 
-- Refer to: <https://www.django-rest-framework.org/tutorial/quickstart/>
+Refer:
+
+- Quick start: <https://www.django-rest-framework.org/tutorial/quickstart/>
 - Github: <https://github.com/encode/rest-framework-tutorial>
+- Django模型 <https://docs.djangoproject.com/zh-hans/3.1/topics/db/>
 
 ## Quickstart
 
@@ -90,7 +93,7 @@ python manage.py migrate
 Start up Django's development server.
 
 ```sh
-cd restframeworkdemo/tutorial
+cd djangodemo/tutorial
 python manage.py runserver
 ```
 
