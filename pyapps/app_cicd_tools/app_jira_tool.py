@@ -1,23 +1,37 @@
 # coding: utf-8
+
 import json
-import logging
 import requests
+import os
 import time
+import traceback
 
 
 class JiraTools(object):
 
-    _jira_host = 'https://jira.xxxxx.io'
-    _jira_rest_api_url = f'{_jira_host}/rest/api/latest'
-    _jira_webhook_url = f'{_jira_host}/rest/webhooks/1.0/webhook'
-    # token: echo -n 'username:password' | base64
-    _auth_token = 'base64_token'
-
     def __init__(self):
+        self._jira_host = os.getenv('JIRA_HOST', '')
+        if not self._jira_host:
+            raise EnvironmentError('env JIRA_HOST is not set.')
+        self._git_host = os.getenv('GIT_HOST')
+
+        self._jira_rest_api_url = f'{self._jira_host}/rest/api/latest'
+        self._jira_webhook_url = f'{self._jira_host}/rest/webhooks/1.0/webhook'
+        # token: echo -n 'username:password' | base64
+        self._auth_token = 'base64_token'
+
         self._sess = requests.session()
         default_headers = {'Authorization': 'Basic ' +
                            self._auth_token, 'Content-Type': 'application/json'}
         self._sess.headers.update(default_headers)
+
+    @property
+    def jira_host(self):
+        return self._jira_host
+
+    @property
+    def git_host(self):
+        return self._git_host
 
     '''
     query issues
@@ -55,7 +69,7 @@ class JiraTools(object):
 
     def add_remote_issue_link(self, issue_id, link, title):
         url = f'{self._jira_rest_api_url}/issue/{issue_id}/remotelink'
-        favicon_url = 'https://git.xxxxx.com/assets/favicon-7901bd695fb93edb07975966062049829afb56cf11511236e61bcf425070e36e.png'
+        favicon_url = f'{self._git_host}/assets/favicon-7901bd695fb93edb07975966062049829afb56cf11511236e61bcf425070e36e.png'
         link_data = {
             'object': {
                 'url': link,
@@ -105,8 +119,12 @@ class JiraTools(object):
         if self._sess is not None:
             self._sess.close()
 
+#
+# Test
+#
 
-def get_issues_test(jira):
+
+def get_issues_test(jira: JiraTools):
     # get a issue
     issue_id = 'issue-xxxxx'
     expand_fields = ['names', 'renderedFields']
@@ -117,10 +135,10 @@ def get_issues_test(jira):
     jira.search(jql)
 
 
-def remote_issue_link_test(jira):
+def remote_issue_link_test(jira: JiraTools):
     # add issue link
     issue_id = 'issue-xxxxx'
-    link = 'https://git.xxxxx.com/jin.zheng/zhengjin_worksapce/-/merge_requests/1'
+    link = f'{jira.git_host}/jin.zheng/zhengjin_worksapce/-/merge_requests/1'
     title = f'[Merge Request] - {issue_id} / Update workspace readme.'
     jira.add_remote_issue_link(issue_id, link, title)
 
@@ -133,12 +151,12 @@ def remote_issue_link_test(jira):
     # jira.delete_remote_issue_link(issue_id, link_id)
 
 
-def webhook_test(jira):
+def webhook_test(jira: JiraTools):
     jira.query_webhook()
 
     webhook_data_dict = {
         "name": "zj webhook test via rest",
-        "url": "http://www.xxxxx.com/webhooks",
+        "url": f"{jira.jira_host}/webhooks",
         "events": [
             "jira:issue_created",
                 "jira:issue_updated"
@@ -153,13 +171,16 @@ def webhook_test(jira):
 
 if __name__ == '__main__':
 
-    jira = JiraTools()
+    jira = None
     try:
+        jira = JiraTools()
         # get_issues_test(jira)
         # remote_issue_link_test(jira)
-        webhook_test(jira)
+        # webhook_test(jira)
+    except Exception:
+        traceback.print_exc()
     finally:
         if jira:
             jira.close()
 
-    print('jira demo done.')
+    print('jira tool demo done.')
