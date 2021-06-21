@@ -202,6 +202,11 @@ def test_get_build_info(tool: JenkinsTools, job: str):
 
 
 def test_run_a_build(tool: JenkinsTools, job: str):
+    """
+    refer:
+    https://stackoverflow.com/questions/28311030/check-jenkins-job-status-after-triggering-a-build-remotely
+    https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI
+    """
     build_no = tool.get_nextbuild_number(job)
     print(f'job [{job}]: start build [{build_no}]')
 
