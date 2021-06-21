@@ -5,15 +5,36 @@ Created on 2019-03-06
 @author: zhengjin
 '''
 
-import base64
-import os
 import sys
-import json
-import requests
+import os
+sys.path.append(os.getenv('PYROOT'))
 
-sys.path.append(os.getenv('PYPATH'))
-from utils import LogManager
-from utils import Constants
+import base64
+import functools
+import json
+import time
+import random
+import requests
+from utils import Constants, LogManager
+
+
+def retry(retries=3, delay=1):
+    def _deco(func):
+        @functools.wraps(func)
+        def _inner_deco(*args, **kwargs):
+            for i in range(1, retries+1):
+                try:
+                    resp = func(*args, **kwargs)
+                    if 200 <= resp['status_code'] < 300:
+                        return resp
+                    print(
+                        f'response code is {resp["status_code"]} and retry {i}.')
+                except Exception as e:
+                    print(f'request error {e} and retry {i}.')
+                time.sleep(delay * i)
+
+        return _inner_deco
+    return _deco
 
 
 class HttpUtils(object):
@@ -63,7 +84,8 @@ class HttpUtils(object):
         resp = None
         try:
             self.__log_request_info(url, query, self.__headers)
-            resp = requests.get(url, params=data_dict, headers=self.__headers, timeout=timeout)
+            resp = requests.get(url, params=data_dict,
+                                headers=self.__headers, timeout=timeout)
             self.__log_response_info(resp, is_log_body)
         except TimeoutError:
             self.__logger.error('http get request time out(%ds)!' % timeout)
@@ -79,7 +101,8 @@ class HttpUtils(object):
         resp = None
         try:
             self.__log_request_info(url, data, self.__headers)
-            resp = requests.post(url, headers=self.__headers, data=data, timeout=timeout)
+            resp = requests.post(url, headers=self.__headers,
+                                 data=data, timeout=timeout)
             self.__log_response_info(resp, is_log_body)
         except TimeoutError:
             self.__logger.error('http post request time out(%ds)!' % timeout)
@@ -91,8 +114,10 @@ class HttpUtils(object):
 
         resp = None
         try:
-            self.__log_request_info(url, json.dumps(json_object), self.__headers)
-            resp = requests.post(url, headers=self.__headers, json=json_object, timeout=timeout)
+            self.__log_request_info(
+                url, json.dumps(json_object), self.__headers)
+            resp = requests.post(url, headers=self.__headers,
+                                 json=json_object, timeout=timeout)
             self.__log_response_info(resp, is_log_body)
         except TimeoutError:
             self.__logger.error('http post request time out(%ds)!' % timeout)
@@ -157,8 +182,22 @@ class HttpUtils(object):
         self.__logger.debug('* ' + text)
 
 
-if __name__ == '__main__':
+def retry_test():
+    @retry(retries=5)
+    def mock_request():
+        i = random.randint(1, 10)
+        print('run mock request, val:', i)
+        time.sleep(1)
+        if i > 7:
+            return {'status_code': 200}
+        return {'status_code': 404}
 
+    print(mock_request.__name__)
+    resp = mock_request()
+    print(resp)
+
+
+def http_test():
     LogManager.build_logger(Constants.LOG_FILE_PATH)
 
     # get request
@@ -185,4 +224,10 @@ if __name__ == '__main__':
     assert(resp is not None and resp.status_code == 200)
 
     LogManager.clear_log_handles()
+
+
+if __name__ == '__main__':
+
+    retry_test()
+    # http_test()
     print('http utils test DONE.')
