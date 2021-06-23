@@ -2,6 +2,7 @@
 
 import os
 import json
+import re
 import requests
 import time
 import traceback
@@ -39,7 +40,8 @@ class JenkinsTools(object):
             self._session.close()
 
     def _resp_handler(self, resp):
-        assert resp.status_code >= 200, resp.text
+        # case 404: start a build, and build in queue (not run immediately)
+        assert 200 <= resp.status_code < 300 or resp.status_code == 404, resp.text
 
     #
     # job
@@ -155,6 +157,53 @@ class JenkinsTools(object):
         self._resp_handler(resp)
         return resp.text
 
+    def get_build_stages_info(self, job_name, build_no):
+        """
+        apis:
+        https://github.com/jenkinsci/pipeline-stage-view-plugin/tree/master/rest-api#get-jobjob-namewfapiruns
+        """
+        url = f'{self._jenkins_host}/job/{job_name}/{build_no}/wfapi/describe'
+        resp = self._session.get(url)
+        self._resp_handler(resp)
+        build_data = resp.json()
+
+        ret_data = {}
+        for key in ('id', 'name', 'status'):
+            ret_data[key] = build_data[key]
+        ret_data['duration'] = '%.2fs' % (build_data['durationMillis'] / 1000)
+
+        ret_stages = []
+        for stage in build_data['stages']:
+            node_id = self._get_node_id_from_link(
+                stage['_links']['self']['href'])
+            ret_log = self.get_build_stage_log_data(
+                job_name, build_no, node_id)
+
+            ret_stages.append({
+                'name': stage['name'],
+                'status': stage['status'],
+                'duration': '%.2fs' % (stage['durationMillis'] / 1000),
+                'log': ret_log,
+            })
+        ret_data['stages'] = ret_stages
+        return ret_data
+
+    def get_build_stage_log_data(self, job_name, build_no, node_id):
+        url = f'{self._jenkins_host}//job/{job_name}/{build_no}/execution/node/{node_id}/wfapi/log'
+        resp = self._session.get(url)
+        self._resp_handler(resp)
+        log_data = resp.json()
+
+        ret_data = {}
+        for key in ('length', 'consoleUrl'):
+            ret_data[key] = log_data[key]
+        return ret_data
+
+    def _get_node_id_from_link(self, link):
+        regexp = re.compile(r'node/(\d+)/')
+        m = regexp.search(link)
+        return m.groups()[0]
+
     #
     # operation
     #
@@ -162,7 +211,8 @@ class JenkinsTools(object):
     def start_job_build_with_params(self, job_name, payload: dict) -> str:
         url = f'{self._jenkins_host}/job/{job_name}/buildWithParameters'
         resp = self._session.post(url, params=payload)
-        return self._resp_handler(resp)
+        self._resp_handler(resp)
+        return resp
 
     def wait_build_start(self, job_name, build_no, timeout=10) -> bool:
         for _ in range(timeout):
@@ -185,20 +235,25 @@ def test_get_job_info(tool: JenkinsTools, job: str):
     print(f'job [{job}] info:')
     tool.get_job_info(job)
 
-    print(f'\njob [{job}] config data:')
-    tool.get_job_config(job)
+    if False:
+        print(f'\njob [{job}] config data:')
+        tool.get_job_config(job)
 
 
 def test_get_build_info(tool: JenkinsTools, job: str):
     build_no = tool.get_lastbuild_number(job)
-    print(f'job [{job}] build info for {build_no}:')
-    tool.get_build_info(job, build_no)
+    if False:
+        print(f'job [{job}] build info for {build_no}:')
+        tool.get_build_info(job, build_no)
 
-    print(f'\njob [{job}] build [{build_no}] console log:')
-    logs = tool.get_build_console_log(job, build_no)
-    logs = [log for log in logs.split('\r\n') if len(log.strip()) > 0]
-    for log in logs[-10:]:
-        print(log)
+        print(f'\njob [{job}] build [{build_no}] console log:')
+        logs = tool.get_build_console_log(job, build_no)
+        logs = [log for log in logs.split('\r\n') if len(log.strip()) > 0]
+        for log in logs[-10:]:
+            print(log)
+
+    print(f'\njob [{job}] build [{build_no}] stages info:')
+    print(tool.get_build_stages_info(job, build_no))
 
 
 def test_run_a_build(tool: JenkinsTools, job: str):
@@ -229,7 +284,8 @@ def test_run_a_build(tool: JenkinsTools, job: str):
 
     # wait build done
     while tool.is_build_running(job, build_no):
-        print(f'job [{job}]: wait build [{build_no}] done ...')
+        print(f'\njob [{job}]: wait build [{build_no}] done ...')
+        print(tool.get_build_stages_info(job, build_no))
         time.sleep(3)
 
     # get build info
@@ -241,7 +297,6 @@ def test_run_a_build(tool: JenkinsTools, job: str):
 if __name__ == '__main__':
 
     job = 'test-dev-grpc-swagger'
-
     tool = None
     try:
         tool = JenkinsTools()
