@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
 
+count = 0
+
+
 # unused in DefaultRouter
 @api_view(['GET'])
 def api_root(request, format=None):
@@ -15,6 +18,17 @@ def api_root(request, format=None):
         'users': reverse('user-list', request=request, format=format),
         'snippets': reverse('snippet-list', request=request, format=format)
     })
+
+
+class ApiTestViewSet(viewsets.views.APIView):
+
+    def get(self, request, *args, **kwargs):
+        import time
+        global count
+        count += 1
+        wait = request.query_params.get('wait', 1)
+        time.sleep(int(wait))
+        return Response(data={'code': 0, 'count': count})
 
 
 class SnippetViewSet(viewsets.ModelViewSet):

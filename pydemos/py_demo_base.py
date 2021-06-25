@@ -12,6 +12,7 @@ import glob
 import inspect
 import logging
 import json
+import re
 import os
 import random
 import sys
@@ -1274,6 +1275,22 @@ def py_base_ex50():
         print(color.name, color.value)
 
 
+# expample 51, regexp samples
+def py_base_ex51():
+    # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
+    # search: 函数类似于 match, 不同之处在于不限制正则表达式的开始匹配位置
+    # findall: 寻找所有匹配正则表达式的字串，返回一个列表
+    # finditer: findall 返回一个列表， finditer 返回一个迭代器
+    test_str = '/jenkins/job/Test%20Workflow/16/execution/node/6/wfapi/describe'
+    regexp = re.compile(r'node/(?P<node_id>\d+)/')
+    m = regexp.search(test_str)
+    if m:
+        print('\nregexp results:')
+        print(m.group())
+        print(m.groups())
+        print(m.groupdict('default'))
+
+
 if __name__ == '__main__':
 
     def get_parent(path, level):
@@ -1301,6 +1318,6 @@ if __name__ == '__main__':
         'this is logger print: str=%s, number=%d, float=%.2f', 'helloworld', 123, 11.337)
 
     # py_base_ex23_01()
-    py_base_ex50()
+    py_base_ex51()
 
     print('python base demo DONE.')
