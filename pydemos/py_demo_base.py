@@ -1290,6 +1290,12 @@ def py_base_ex51():
         print(m.groups())
         print(m.groupdict('default'))
 
+    test_str = '[AS][BE][TH]Merchant portal send noti to partner app users'
+    regexp = re.compile(r'(\[\w+\])')
+    res = regexp.findall(test_str)
+    print('\nregexp results:')
+    print(' | '.join(res))
+
 
 if __name__ == '__main__':
 

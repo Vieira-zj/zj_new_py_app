@@ -27,7 +27,9 @@ class ApiTestViewSet(viewsets.views.APIView):
         global count
         count += 1
         wait = request.query_params.get('wait', 1)
+        print(f'mock wait {wait} seconds')
         time.sleep(int(wait))
+        print(f'send count {count}')
         return Response(data={'code': 0, 'count': count})
 
 
