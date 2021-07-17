@@ -141,8 +141,61 @@ def test04():
         print('#2. search number %d, and index %d' %
               (val, bin_search02(val, numbers)))
 
+# -----------------------------------
+# List Group By
+# -----------------------------------
+
+
+def list_group_by(src_list: list) -> list:
+    '''
+    element ui table 合并单元格
+    '''
+    for item in src_list:
+        item['rowspan'] = 1
+        item['colspan'] = 1
+    sorted_list = sorted(src_list, key=lambda item: item['group'])
+
+    i = 0
+    while i < (len(sorted_list) - 1):
+        cur_item = sorted_list[i]
+        tmp_include = cur_item['include']
+        while i < (len(sorted_list) - 1):
+            next_item = sorted_list[i+1]
+            if cur_item['group'] != next_item['group']:
+                break
+            cur_item['rowspan'] += 1
+            next_item['include'] = []
+            next_item['rowspan'] = 0
+            next_item['colspan'] = 0
+            tmp_include.extend(next_item['include'])
+            i += 1
+
+        if cur_item['rowspan'] > 0:
+            cur_item['include'] = set(tmp_include)
+        i += 1
+
+    return sorted_list
+
+
+def test05():
+    src_list = [
+        {'group': 'a', 'id': '01', 'include': [1, 2]},
+        {'group': 'b', 'id': '02', 'include': [11, 13]},
+        {'group': 'a', 'id': '07', 'include': [1, 3]},
+        {'group': 'e', 'id': '10', 'include': [41, 43]},
+        {'group': 'b', 'id': '03', 'include': [12, 13]},
+        {'group': 'e', 'id': '05', 'include': [42, 43]},
+        {'group': 'c', 'id': '08', 'include': [21, 23]},
+        {'group': 'd', 'id': '09', 'include': [31, 32]},
+        {'group': 'a', 'id': '04', 'include': [2, 4]},
+        {'group': 'a', 'id': '06', 'include': [1, 4]},
+    ]
+    print('list group by, and and merge "include":')
+    for item in list_group_by(src_list):
+        print(item)
+
 
 if __name__ == '__main__':
 
-    test03()
+    test05()
     print('py alg sort demo done.')
