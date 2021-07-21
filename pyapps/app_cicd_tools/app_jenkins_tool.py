@@ -41,7 +41,8 @@ class JenkinsTools(object):
 
     def _resp_handler(self, resp):
         # case 404: start a build, and build in queue (not run immediately)
-        assert 200 <= resp.status_code < 300 or resp.status_code == 404, resp.text
+        code = resp.status_code
+        assert int(code / 100) == 2 or code == 404, resp.text
 
     #
     # job
@@ -209,10 +210,41 @@ class JenkinsTools(object):
     #
 
     def start_job_build_with_params(self, job_name, payload: dict) -> str:
+        """
+        return queue id from location.
+        Location: https://jenkins.i.airpay.com/queue/item/564210/
+        """
         url = f'{self._jenkins_host}/job/{job_name}/buildWithParameters'
         resp = self._session.post(url, params=payload)
         self._resp_handler(resp)
-        return resp
+
+        queue_no = self._get_queueno_from_location(resp.headers['Location'])
+        return queue_no if queue_no else ''
+
+    def get_executeno_by_queueno(self, queue_no, timeout=10) -> str:
+        # note: if use /api/json, no executable data
+        url = f'{self._jenkins_host}/queue/item/{queue_no}/api/xml'
+        for _ in range(0, timeout):
+            resp = self._session.get(url)
+            execute_no = self._get_executeno_from_resp(resp.text)
+            if execute_no:
+                return execute_no
+            print(f'wait executable for queue no [{queue_no}] ...')
+            time.sleep(1)
+        return ''
+
+    def _get_queueno_from_location(self, location) -> str:
+        return self._get_key_by_regexp(location, r'item/(\d+)/$')
+
+    def _get_executeno_from_resp(self, body) -> str:
+        return self._get_key_by_regexp(body, r'<number>(\d+)</number>')
+
+    def _get_key_by_regexp(self, text, pattern) -> str:
+        regexp = re.compile(pattern)
+        m = regexp.search(text)
+        if not m or (len(m.groups()) == 0):
+            return ''
+        return m.groups()[0]
 
     def wait_build_start(self, job_name, build_no, timeout=10) -> bool:
         for _ in range(timeout):
@@ -270,7 +302,12 @@ def test_run_a_build(tool: JenkinsTools, job: str):
         'ENVIRONMENT': 'test',
         'BRANCH': 'origin/master',
     }
-    tool.start_job_build_with_params(job, payload)
+    queue_no = tool.start_job_build_with_params(job, payload)
+    execute_no = tool.get_executeno_by_queueno(queue_no, timeout=30)
+    print(f'job [{job}]: start execute [{execute_no}]')
+    assert execute_no == str(
+        build_no), f'execute no [{execute_no} is not equal to build no {build_no}]'
+
     if not tool.wait_build_start(job, build_no, timeout=30):
         raise EnvironmentError(
             f'job [{job}]: no running build [{build_no}] found')
@@ -300,9 +337,9 @@ if __name__ == '__main__':
     tool = None
     try:
         tool = JenkinsTools()
-        test_get_job_info(tool, job)
+        # test_get_job_info(tool, job)
         # test_get_build_info(tool, job)
-        # test_run_a_build(tool, job)
+        test_run_a_build(tool, job)
     except Exception:
         traceback.print_exc()
     finally:

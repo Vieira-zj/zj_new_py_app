@@ -1296,6 +1296,18 @@ def py_base_ex51():
     print('\nregexp results:')
     print(' | '.join(res))
 
+    test_str = 'https://jenkins.i.test.com/queue/item/564210/'
+    regexp = re.compile(r'item/(\d+)/$')
+    m = regexp.search(test_str)
+    if m:
+        print('\nqueue item id:', m.groups()[0])
+
+    regexp = re.compile('com.+$')
+    print('\nvalidate emails:')
+    for test_str in ('tester@mailserver.com_783c77ab-4e2f', 'tester@mailserver.com#1'):
+        print(re.sub('com.+$', 'com', test_str))
+        print(regexp.sub('com', test_str))
+
 
 if __name__ == '__main__':
 
@@ -1323,7 +1335,10 @@ if __name__ == '__main__':
     logger.warning(
         'this is logger print: str=%s, number=%d, float=%.2f', 'helloworld', 123, 11.337)
 
-    # py_base_ex23_01()
-    py_base_ex51()
+    try:
+        # py_base_ex23_01()
+        py_base_ex51()
+    except Exception as e:
+        print(e)
 
     print('python base demo DONE.')
