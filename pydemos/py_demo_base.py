@@ -1275,8 +1275,61 @@ def py_base_ex50():
         print(color.name, color.value)
 
 
-# expample 51, regexp samples
+# expample 51, map operations
 def py_base_ex51():
+    import copy
+    from typing import Text, Any, Dict
+
+    src: Dict[Text, Any] = {}
+    src['1st'] = 1
+    src['2nd'] = 2
+    src['3rd'] = 3
+
+    # copy and update
+    new_dict = {
+        '1st': 'one',
+        '4th': 'four',
+    }
+    dst = copy.copy(src)
+    dst.update(new_dict)
+
+    print('\nsrc:', src)
+    print('dst:', dst)
+
+    # pop
+    key = '2nd'
+    print(f'dst pop {key}:{dst.pop("2nd")}')
+    print('dst:', dst)
+
+    # get first kv
+    k, v = list(dst.items())[0]
+    print(f'first item: {k}:{v}')
+
+
+# expample 52, object dyn attrs
+def py_base_ex52():
+    class MyStudent(object):
+        def __init__(self, uid, name):
+            self._uid = uid
+            self._name = name
+
+        def __repr__(self):
+            ret = []
+            for k in vars(self):
+                ret.append('%s:%s' % (k, getattr(s, k)))
+            return '|'.join(ret)
+
+    s = MyStudent(1, 'foo')
+    print('\nstudent info:', s)
+
+    s = MyStudent(2, 'bar')
+    s.age = 23
+    setattr(s, 'major', 'computer')
+    print('student info:', s)
+
+
+# expample 99, regexp samples
+def py_base_ex99():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
     # search: 函数类似于 match, 不同之处在于不限制正则表达式的开始匹配位置
     # findall: 寻找所有匹配正则表达式的字串，返回一个列表
@@ -1337,7 +1390,7 @@ if __name__ == '__main__':
 
     try:
         # py_base_ex23_01()
-        py_base_ex51()
+        py_base_ex52()
     except Exception as e:
         print(e)
 
