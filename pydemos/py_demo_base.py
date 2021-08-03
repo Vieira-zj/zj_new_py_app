@@ -775,22 +775,22 @@ def py_base_ex30():
 
 # example 31, *args and **kwargs
 def py_base_ex31():
-    # as declare
+    # 1
     def _sum(*args):
-        print('input args:', args)
+        print(f'\nfunc args, type={type(args)}, value={args}')
         return sum(args)
 
-    print()
-    print('*args as declare, and return:', _sum(1, 2, 3))
+    print('*args func args, and return:', _sum(1, 2, 3))
 
-    # as input
-    def _add(a, b):
-        return a + b
+    # 2
+    def _add(a, b, c=1):
+        print(f'\ninput args: a={a}, b={b}')
+        return a + b + c
 
     tmp_list = [1, 2]
-    print('\n*args as input, and return:', _add(*tmp_list))
-    tmp_dict = {'a': 1, 'b': 6}
-    print('**kwargs as input, and return:', _add(**tmp_dict))
+    print('*args as func input, and return:', _add(*tmp_list))
+    tmp_dict = {'b': 1, 'a': 6}
+    print('**kwargs as func input, and return:', _add(**tmp_dict))
 
     # list to tuple
     def _print(*val):
@@ -1328,6 +1328,22 @@ def py_base_ex52():
     print('student info:', s)
 
 
+# expample 53, with context
+def py_base_ex53():
+    import contextlib
+
+    @contextlib.contextmanager
+    def run_time_context():
+        start = time.time()
+        yield
+        print('exec duration: %ds' % int(time.time() - start))
+
+    with run_time_context():
+        print('\nmock start')
+        time.sleep(3)
+        print('mock end')
+
+
 # expample 99, regexp samples
 def py_base_ex99():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
@@ -1390,7 +1406,7 @@ if __name__ == '__main__':
 
     try:
         # py_base_ex23_01()
-        py_base_ex52()
+        py_base_ex53()
     except Exception as e:
         print(e)
 
