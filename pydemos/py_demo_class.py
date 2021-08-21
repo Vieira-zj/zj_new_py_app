@@ -6,6 +6,8 @@ Created on 2019-03-17
 Python class and meta class examples.
 '''
 
+from typing import List
+
 
 def py_base_ext():
     import py_demo_base
@@ -595,7 +597,7 @@ def py_class_ex14():
     print(getattr(apple, 'name'))
 
 
-# example 15, object attributes inherit
+# example 15, instance attributes inherit
 class Root(object):
 
     def __init__(self, name):
@@ -637,8 +639,36 @@ def py_class_ex15():
     print(vars(sub3))
 
 
+# example 16, class attributes inherit
+class TestCase(object):
+
+    config: str
+    steps: List[str]
+
+    def perform(self):
+        print(f'\nuse config: {self.config}')
+        print('run steps:')
+        for idx, step in enumerate(self.steps):
+            print(f'{idx}. {step}')
+
+
+class TestHomePage(TestCase):
+
+    config = 'debug=true,level=debug'
+    steps = [
+        'open url',
+        'input products'
+        'click search',
+    ]
+
+
+def py_class_ex16():
+    test = TestHomePage()
+    test.perform()
+
+
 if __name__ == '__main__':
 
     # py_base_ext()
-    py_class_ex15()
-    print('python meta class demo DONE.')
+    py_class_ex16()
+    print('python class demo DONE.')

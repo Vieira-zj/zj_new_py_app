@@ -4,9 +4,6 @@ Created on 2018-10-31
 @author: zhengjin
 '''
 
-from collections import deque, defaultdict, Counter
-from datetime import datetime
-from enum import Enum
 import getopt
 import glob
 import inspect
@@ -17,6 +14,11 @@ import os
 import random
 import sys
 import time
+
+from collections import deque, defaultdict, Counter
+import datetime
+from datetime import datetime as dt
+from enum import Enum
 
 import numpy as np
 import matplotlib
@@ -642,9 +644,6 @@ def py_base_ex24():
 
 # example 25, datetime
 def py_base_ex25():
-    import datetime
-    from datetime import datetime as dt
-
     def print_next_day(timestamp):
         next_day_timestamp = timestamp + datetime.timedelta(days=1)
         next_date = dt.strftime(next_day_timestamp, '%Y-%m-%d')
@@ -1334,14 +1333,79 @@ def py_base_ex53():
 
     @contextlib.contextmanager
     def run_time_context():
+        print('\nbefore mock start')
         start = time.time()
         yield
+        print('after mock end')
         print('exec duration: %ds' % int(time.time() - start))
 
     with run_time_context():
-        print('\nmock start')
+        print('mock start')
         time.sleep(3)
         print('mock end')
+
+
+# expample 54, get week of year
+def py_base_ex54():
+    now = dt.now()
+    print('\ncurrent date:', dt.strftime(now, '%Y-%m-%d'))
+    print('current date without leading zero:', dt.strftime(now, '%Y-%-m-%-d'))
+
+    print('\nweek of year:', dt.strftime(now, '%Y-%V'))
+    res = datetime.date(now.year, now.month, now.day).isocalendar()
+    print('week of year:', res[1])
+
+
+# expample 55, init object by dict
+def py_base_ex55():
+    class TestEntry(object):
+        def __init__(self):
+            self.ticket_key = 'na'
+            self.ticket_name = 'na'
+
+        def __str__(self):
+            return f'tkey={self.ticket_key}, tname={self.ticket_name}'
+
+    d = {
+        'ticket_key': 'key-001'
+    }
+    entry = TestEntry()
+    entry.__dict__.update(d)
+    print('\nentry:', entry)
+
+
+# expample 56, calculate delta date
+def py_base_ex56():
+    target_ts = dt.strptime('20210823', '%Y%m%d')
+    cur_ts = dt.now()
+    delta = target_ts - cur_ts
+    print('\ndelta days:', delta.days)
+
+    test_ts = dt.strptime('20210816', '%Y%m%d')
+    delta = test_ts - target_ts
+    print('delta days:', delta.days)
+
+
+# expample 57, json dump object
+def py_base_ex57():
+    class Student(object):
+        def __init__(self, name, age):
+            self.name: str = name
+            self.age: int = age
+
+        def __str__(self):
+            return f'name={self.name},age={self.age}'
+
+    # object -> dict -> str
+    s = Student('foo', 11)
+    s_str = json.dumps(s.__dict__)
+    print('\nstudent string:', s_str)
+
+    # str -> dict -> object
+    s_str = s_str.replace('foo', 'bar')
+    s_dict = json.loads(s_str)
+    s.__dict__.update(s_dict)
+    print('student object:', s)
 
 
 # expample 99, regexp samples
@@ -1350,32 +1414,58 @@ def py_base_ex99():
     # search: 函数类似于 match, 不同之处在于不限制正则表达式的开始匹配位置
     # findall: 寻找所有匹配正则表达式的字串，返回一个列表
     # finditer: findall 返回一个列表， finditer 返回一个迭代器
-    test_str = '/jenkins/job/Test%20Workflow/16/execution/node/6/wfapi/describe'
-    regexp = re.compile(r'node/(?P<node_id>\d+)/')
-    m = regexp.search(test_str)
-    if m:
+    def get_node_id():
+        test_str = '/jenkins/job/Test%20Workflow/16/execution/node/6/wfapi/describe'
+        regexp = re.compile(r'node/(?P<node_id>\d+)/')
+        m = regexp.search(test_str)
+        if m:
+            print('\nregexp results:')
+            print(m.group())
+            print(m.groups())
+            print(m.groupdict('default'))
+    get_node_id()
+
+    def get_title_tags():
+        test_str = '[AS][BE][TH]Merchant portal send noti to partner app users'
+        regexp = re.compile(r'(\[\w+\])')
+        res = regexp.findall(test_str)
         print('\nregexp results:')
-        print(m.group())
-        print(m.groups())
-        print(m.groupdict('default'))
+        print(' | '.join(res))
+    get_title_tags()
 
-    test_str = '[AS][BE][TH]Merchant portal send noti to partner app users'
-    regexp = re.compile(r'(\[\w+\])')
-    res = regexp.findall(test_str)
-    print('\nregexp results:')
-    print(' | '.join(res))
+    def get_item_number():
+        test_str = 'https://jenkins.i.test.com/queue/item/564210/'
+        regexp = re.compile(r'item/(\d+)/$')
+        m = regexp.search(test_str)
+        if m:
+            print('\nqueue item id:', m.groups()[0])
+    get_item_number()
 
-    test_str = 'https://jenkins.i.test.com/queue/item/564210/'
-    regexp = re.compile(r'item/(\d+)/$')
-    m = regexp.search(test_str)
-    if m:
-        print('\nqueue item id:', m.groups()[0])
+    def email_validate():
+        regexp = re.compile('com.+$')
+        print('\nvalidate emails:')
+        for test_str in ('tester@mailserver.com_783c77ab-4e2f', 'tester@mailserver.com#1'):
+            print(re.sub('com.+$', 'com', test_str))
+            print(regexp.sub('com', test_str))
+    email_validate()
 
-    regexp = re.compile('com.+$')
-    print('\nvalidate emails:')
-    for test_str in ('tester@mailserver.com_783c77ab-4e2f', 'tester@mailserver.com#1'):
-        print(re.sub('com.+$', 'com', test_str))
-        print(regexp.sub('com', test_str))
+    def check_no_mr(text):
+        text = text.lower()
+        regexp = re.compile('no.*mr')
+        m = regexp.search(text)
+        return True if m else False
+    print('\nno mr check results:')
+    for text in ('no-mr', 'NO-mr', 'NO_MR', 'noMr', 'test'):
+        print(f'text:{text}, result:{check_no_mr(text)}')
+
+    def check_app_tag(text):
+        text = text.lower()
+        regexp = re.compile('andorid|ios')
+        m = regexp.search(text)
+        return True if m else False
+    print('\napp tag check results:')
+    for text in ('[is][Andorid]', '[iOS][pay]', '[be][wallet]'):
+        print(f'text:{text}, result:{check_app_tag(text)}')
 
 
 if __name__ == '__main__':
