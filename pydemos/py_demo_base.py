@@ -4,9 +4,11 @@ Created on 2018-10-31
 @author: zhengjin
 '''
 
+import copy
 import getopt
 import glob
 import inspect
+import importlib
 import logging
 import json
 import re
@@ -1129,7 +1131,6 @@ def py_base_ex45():
         print('test methods:', methods)
 
     # 1
-    import importlib
     file_name = 'py_ut_selenium.py'
     file_path = os.path.abspath(file_name)
     file_dir = os.path.dirname(file_path)
@@ -1150,7 +1151,7 @@ def py_base_ex45():
     printTestMethod(mod.TestPy01)
     print()
 
-    # 3
+    # 3, 'imp' is deprecated
     import imp
     mod = imp.load_source('test_import_mod', file_path)
     print(type(mod))
@@ -1276,7 +1277,6 @@ def py_base_ex50():
 
 # expample 51, map operations
 def py_base_ex51():
-    import copy
     from typing import Text, Any, Dict
 
     src: Dict[Text, Any] = {}
@@ -1398,7 +1398,7 @@ def py_base_ex57():
 
     # object -> dict -> str
     s = Student('foo', 11)
-    s_str = json.dumps(s.__dict__)
+    s_str = json.dumps(s.__dict__, indent=2)
     print('\nstudent string:', s_str)
 
     # str -> dict -> object
@@ -1406,6 +1406,55 @@ def py_base_ex57():
     s_dict = json.loads(s_str)
     s.__dict__.update(s_dict)
     print('student object:', s)
+
+
+# expample 58, deep copy
+def py_base_ex58():
+    skills = ['java', 'golang', 'js']
+    p = {
+        'name': 'foo',
+        'age': 30,
+        'skills': skills,
+    }
+
+    print('\nbefore update')
+    p1 = copy.copy(p)
+    p2 = copy.deepcopy(p)
+    print(json.dumps(p1))
+    print(json.dumps(p2))
+
+    skills.append('rust')
+    print('\nafter update')
+    print(json.dumps(p1))
+    print(json.dumps(p2))
+
+
+# expample 59, load module and run func
+def py_base_ex59():
+    test_script = """# coding=utf-8
+def hello_foo():
+    print('foo')
+
+def hello_bar():
+    return 'bar'
+"""
+    file_path = '/tmp/test/hello.py'
+    with open(file_path, mode='w') as f:
+        f.write(test_script)
+
+    mod_name = 'hello'
+    source = importlib.machinery.SourceFileLoader(mod_name, file_path)
+    imported = source.load_module(mod_name)
+
+    fns = [item for item in vars(imported).values() if callable(item)]
+    print('\nfunc:', [fn.__name__ for fn in fns])
+    for fn in fns:
+        if 'foo' in fn.__name__:
+            print('\ncall foo func:')
+            fn()
+        if 'bar' in fn.__name__:
+            print('\ncall bar func:')
+            print(fn())
 
 
 # expample 99, regexp samples
@@ -1496,7 +1545,7 @@ if __name__ == '__main__':
 
     try:
         # py_base_ex23_01()
-        py_base_ex53()
+        py_base_ex59()
     except Exception as e:
         print(e)
 

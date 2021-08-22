@@ -4,13 +4,15 @@ Created on 2018-11-2
 @author: zhengjin
 '''
 
+import os
+import sys
 import signal
+import subprocess
 import threading
 
+from pathlib import Path
 from monkeytest import MonkeyTest
-from utils import Constants
-from utils import AdbUtils
-from utils import SysUtils
+from utils import Constants, AdbUtils, SysUtils
 
 
 def test_mod_imports_01():
@@ -36,6 +38,20 @@ def run_monkey_test(args_kv):
     test = MonkeyTest(Constants.PKG_NAME_ZGB, args_kv.get(
         Constants.RUN_MINS_TEXT, Constants.RUN_MINS))
     test.mokeytest_main()
+
+
+def run_py_demo():
+    cur_dir = Path.resolve(Path(__file__)).parent
+    py_file = Path.joinpath(cur_dir, 'pydemos', 'py_demo_base.py')
+    cmd = ' '.join([sys.executable, str(py_file)])
+
+    print('exec:', cmd)
+    p = subprocess.Popen(
+        cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=os.environ)
+    p.wait()
+
+    output = p.stdout.read()
+    print(output.decode(encoding='utf-8'))  # bytes to string
 
 
 def cmd_args_parse():
@@ -81,12 +97,13 @@ def cmd_args_parse_v2():
                         default=0, help='show verbose log.')
     parser.add_argument('-c', '--config', dest='config',
                         help='config file path.')
+    parser.add_argument('-t', '--test', dest='test',
+                        action='store_true', help='run test demo.')
 
     args = parser.parse_args()
     if hasattr(args, 'help'):
         parser.print_help()
         exit(1)
-
     return args
 
 
@@ -109,9 +126,12 @@ if __name__ == '__main__':
     if args.config and len(args.config):
         print('config file:', args.config)
 
+    if args.test:
+        run_py_demo()
+
     def signal_handler(signum, frame):
         threading.Event().set()
-        print('ctrl-C pressed, and stop!')
+        print('ctrl-C pressed, and stop.')
         exit(1)
 
     signal.signal(signal.SIGINT, signal_handler)

@@ -1,9 +1,13 @@
 # coding: utf-8
 
-import random
 import gevent
+import random
+import time
+
+from queue import Queue
 from gevent.pool import Group
 from gevent.local import local
+from typing import List, Text
 
 group = Group()
 
@@ -108,7 +112,55 @@ def gevent_ex5():
     print(list(res))
 
 
+# ex6, blocked queue
+def gevent_ex6():
+    def consume(q: Queue):
+        while True:
+            cmd = q.get()
+            if cmd == 'stop':
+                print('consume exit')
+                return
+            print(cmd)
+
+    def product(q: Queue, values: List[Text]):
+        for value in values:
+            q.put(value)
+            gevent.sleep(1)
+
+    def test_with_threadpool():
+        from concurrent.futures import ThreadPoolExecutor
+        from concurrent.futures import wait
+
+        q = Queue()
+        values = 'this is a consume and product example, stop'.split(' ')
+
+        executor = ThreadPoolExecutor()
+        try:
+            f1 = executor.submit(consume, q)
+            f2 = executor.submit(product, q, values)
+            done, not_done = wait((f1, f2), return_when='ALL_COMPLETED')
+            print(f'done={len(done)}, not done={len(not_done)}')
+        finally:
+            if executor:
+                executor.shutdown()
+
+    def test_with_gevent():
+        q = Queue()
+        values = 'this is a consume and product example, stop'.split(' ')
+
+        g1 = gevent.spawn(consume, q)
+        g2 = gevent.spawn(product, q, values)
+        gevent.joinall([g1, g2])
+
+    is_threadpool = True
+    if is_threadpool:
+        test_with_threadpool()
+    else:
+        # notes: queue cannot be used with gevent
+        test_with_gevent()
+
+
 if __name__ == '__main__':
 
-    gevent_ex5()
+    gevent_ex6()
     print('gevent demo Done.')
