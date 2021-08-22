@@ -1432,22 +1432,26 @@ def py_base_ex58():
 # expample 59, load module and run func
 def py_base_ex59():
     test_script = """# coding=utf-8
+import os
+
 def hello_foo():
     print('foo')
 
 def hello_bar():
+    print('pwd:', os.getcwd())
     return 'bar'
 """
     file_path = '/tmp/test/hello.py'
     with open(file_path, mode='w') as f:
         f.write(test_script)
 
-    mod_name = 'hello'
+    mod_name, suffix = os.path.splitext(os.path.basename(file_path))
+    print(f'\nload: file={mod_name}{suffix},module_name={mod_name}')
     source = importlib.machinery.SourceFileLoader(mod_name, file_path)
     imported = source.load_module(mod_name)
 
     fns = [item for item in vars(imported).values() if callable(item)]
-    print('\nfunc:', [fn.__name__ for fn in fns])
+    print('func:', [fn.__name__ for fn in fns])
     for fn in fns:
         if 'foo' in fn.__name__:
             print('\ncall foo func:')

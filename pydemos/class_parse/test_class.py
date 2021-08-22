@@ -4,6 +4,7 @@ def desc(desc):
     """ @desc: a testcase description. """
 
     def _deco(func):
+        print('deco for:', func.__name__)
         func.desc = desc
         return func
 
