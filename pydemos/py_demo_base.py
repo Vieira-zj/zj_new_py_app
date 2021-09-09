@@ -1433,6 +1433,8 @@ def py_base_ex58():
 def py_base_ex59():
     test_script = """# coding=utf-8
 import os
+# error: No module named 'x'
+# import x.y.z
 
 def hello_foo():
     print('foo')
@@ -1459,6 +1461,21 @@ def hello_bar():
         if 'bar' in fn.__name__:
             print('\ncall bar func:')
             print(fn())
+
+
+# expample 60, default get
+def py_base_ex60():
+    def hello():
+        print('call')
+        return 'hello'
+
+    d = {
+        '1': 'one',
+        '3': 'three'
+    }
+    print('\ndict values:')
+    for i in ('1', '2', '3'):
+        print(d.get(i, hello()))
 
 
 # expample 99, regexp samples
@@ -1549,7 +1566,7 @@ if __name__ == '__main__':
 
     try:
         # py_base_ex23_01()
-        py_base_ex59()
+        py_base_ex60()
     except Exception as e:
         print(e)
 

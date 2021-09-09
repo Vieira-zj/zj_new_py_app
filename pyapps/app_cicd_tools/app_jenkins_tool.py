@@ -6,6 +6,7 @@ import re
 import requests
 import time
 import traceback
+from urllib import parse
 import xml.dom.minidom as xmldom
 
 
@@ -18,9 +19,13 @@ class JenkinsTools(object):
     """
 
     def __init__(self):
-        jenkins_host = os.getenv('JENKINS_HOST')
-        if not jenkins_host:
+        host = os.getenv('JENKINS_HOST')
+        if not host:
             raise EnvironmentError('env JENKINS_HOST is not set.')
+        user = os.getenv('JENKINS_USER')
+        token = os.getenv('JENKINS_TOKEN')
+        userinfo = f'{user}:{token}'
+        jenkins_host = f'https://{userinfo}@{host}'
 
         self._jenkins_host = jenkins_host
         self._session = self._build_session()
@@ -29,8 +34,6 @@ class JenkinsTools(object):
         sess = requests.session()
         default_headers = {
             'Content-Type': 'application/json',
-            'cookie': os.getenv('JENKINS_COOKIE'),
-            'jenkins-crumb': os.getenv('JENKINS_CRUMB')
         }
         sess.headers.update(default_headers)
         return sess
@@ -337,9 +340,9 @@ if __name__ == '__main__':
     tool = None
     try:
         tool = JenkinsTools()
-        # test_get_job_info(tool, job)
+        test_get_job_info(tool, job)
         # test_get_build_info(tool, job)
-        test_run_a_build(tool, job)
+        # test_run_a_build(tool, job)
     except Exception:
         traceback.print_exc()
     finally:
