@@ -218,6 +218,10 @@ class GitlabTool(object):
         except GitlabGetError as e:
             logger.info(e.error_message + ": " + tag_name)
 
+    def get_tag_commit(self, tag_name):
+        tag = self.get_a_tag(tag_name)
+        return tag.commit
+
     def get_tags(self):
         return self._project.tags.list()
 
@@ -233,11 +237,21 @@ class GitlabTool(object):
     def print_tag_info(self, tag):
         data = {
             'name': tag.name,
+            'target': tag.target[:8],
             'message': tag.message,
-            'target': tag.target[:6],
-            'commit_msg': tag.commit['message'],
         }
         return print(json.dumps(data))
+
+    def compare_two_tags(self, old_tag, new_tag):
+        return self._compare_two_repo_object(old_tag, new_tag)
+
+    def _compare_two_repo_object(self, old_obj, new_obj):
+        """ support compare two branches, tags or commits. """
+        result = self._project.repository_compare(old_obj, new_obj)
+        return {
+            'commits': result['commits'],
+            'diffs': result['diffs'],
+        }
 
     # mr
 
@@ -264,9 +278,13 @@ class GitlabTool(object):
 
     # commit
 
-    def get_branch_head_sha(self, branch_name):
+    def get_branch_history_commits(self, branch_name, number):
         commits = self._project.commits.list(ref_name=branch_name)
-        return commits[0].short_id
+        return commits[:number]
+
+    def get_branch_head_sha(self, branch_name):
+        commit = self.get_branch_history_commits(branch_name, 1)
+        return commit[0].short_id
 
     def cherry_pick_a_commit(self, commit_sha, dst_branch):
         """
@@ -280,6 +298,15 @@ class GitlabTool(object):
                 f'gitlab cherry pick error for commit {commit_sha}: {e.error_message}')
             return False
         return True
+
+    def print_commit_info(self, commit):
+        data = {}
+        for key in ('short_id', 'title', 'message', 'committer_email', 'committed_date', 'web_url'):
+            data[key] = commit[key]
+        print(json.dumps(data))
+
+    def compare_two_commits(self, old_commit_id, new_commit_id):
+        return self._compare_two_repo_object(old_commit_id, new_commit_id)
 
     # file
 
@@ -564,17 +591,60 @@ def test_tag_version():
         print('next tag version:', tag_version)
 
 
+def test_cicd():
+    prj_name = os.getenv('GITLAB_REPO')
+    if not prj_name:
+        raise Exception('env var [GITLAB_REPO] is not set')
+    group_name = os.getenv('GITLAB_GROUP')
+    tool = GitlabTool(gitlab_url, private_token)
+    tool.set_project(prj_name, group_name=group_name)
+    tool.print_project_info()
+
+    if False:
+        latest_commit_short_id = tool.get_branch_head_sha('staging')
+        print('latest commit for staging branch:', latest_commit_short_id)
+
+        release_tag = tool.get_a_tag('release-2019.10.v2')
+        tool.print_tag_info(release_tag)
+
+        commit = tool.get_tag_commit('release-2019.10.v2')
+        tool.print_commit_info(commit)
+
+        # get diff by tag
+        result = tool.compare_two_tags(
+            'release-2019.10.v2', ' release-2019.10.v2-Hotfix')
+        diff_commits = result['commits']
+        for commit in diff_commits:
+            tool.print_commit_info(commit)
+
+        # get diff by commits
+        result = tool.compare_two_commits('e800b63e', '044dbaf3')
+        diff_commits = result['commits']
+        diffs = result['diffs']
+        print('diff commits count %d, diff files count %d' %
+              (len(diff_commits), len(diffs)))
+        for commit in diff_commits:
+            print(commit['short_id'], commit['title'])
+
+
 if __name__ == '__main__':
 
-    test_gitlab_rest_api()
+    try:
+        # test_gitlab_rest_api()
 
-    # test_git_tool()
-    # main_create_deploy_branches_by_git()
+        # test_git_tool()
+        # main_create_deploy_branches_by_git()
 
-    # test_gitlab_tool()
-    # main_create_deploy_branches_by_gitlab()
+        # test_gitlab_tool()
+        # main_create_deploy_branches_by_gitlab()
 
-    # main_check_all_projects()
+        # main_check_all_projects()
 
-    # test_tag_version()
+        # test_tag_version()
+
+        # test_cicd()
+        pass
+    except Exception as e:
+        print('exception:', e)
+
     print('git tool test done.')

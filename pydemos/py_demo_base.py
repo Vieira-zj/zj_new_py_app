@@ -1463,12 +1463,13 @@ def hello_bar():
             print(fn())
 
 
-# expample 60, default get
+# expample 60, default invoke
 def py_base_ex60():
     def hello():
         print('call')
         return 'hello'
 
+    # get返回默认值 => always invoke
     d = {
         '1': 'one',
         '3': 'three'
@@ -1476,6 +1477,14 @@ def py_base_ex60():
     print('\ndict values:')
     for i in ('1', '2', '3'):
         print(d.get(i, hello()))
+    print()
+
+    # 默认参数 => invoke once when method declare
+    def say_hello(text=hello()):
+        print('hello,', text)
+
+    say_hello('foo')
+    say_hello('bar')
 
 
 # expample 99, regexp samples
