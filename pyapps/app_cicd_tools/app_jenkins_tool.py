@@ -21,7 +21,7 @@ class JenkinsTools(object):
     def __init__(self):
         host = os.getenv('JENKINS_HOST')
         if not host:
-            raise EnvironmentError('env JENKINS_HOST is not set.')
+            raise EnvironmentError('env var [JENKINS_HOST] is not set.')
         user = os.getenv('JENKINS_USER')
         token = os.getenv('JENKINS_TOKEN')
         userinfo = f'{user}:{token}'
@@ -101,7 +101,7 @@ class JenkinsTools(object):
     # build
     #
 
-    def get_build_info(self, job_name, build_no, is_print=True):
+    def get_build_info(self, job_name, build_no: int, is_print=False):
         '''
         Get jenkins job's build info.
         '''
@@ -112,39 +112,54 @@ class JenkinsTools(object):
             return {}
 
         resp_obj = resp.json()
+        # print(json.dumps(resp_obj))  # for debug
         if is_print:
             print('build name=%s, building=%s, duration=%s(sec), result=%s' % (
                 resp_obj['fullDisplayName'], resp_obj['building'], (int(resp_obj['duration'] / 1000)), resp_obj['result']))
 
         build_params = []
-        actions = resp_obj['actions']
-        for action in actions:
-            if 'ParametersAction' in action.get('_class', ''):
+        commit_data = {}
+        for action in resp_obj['actions']:
+            action_class = action.get('_class', '')
+            if action_class == 'hudson.model.ParametersAction':
                 build_params = action['parameters']
+            # git build data
+            if action_class == 'hudson.plugins.git.util.BuildData':
+                remote_url = action['remoteUrls'][0]
+                if 'jenkins_pipeline_shared_library' in remote_url:
+                    continue
+                commit_data['remote_url'] = remote_url
+                branch = action['lastBuiltRevision']['branch'][0]
+                commit_data['branch_or_tag'] = branch['name']
+                commit_data['commit_id'] = branch['SHA1']
+        if is_print:
+            print(f'\nbuild commit data:', commit_data)
 
         params = {}
-        for item in ('ENVIRONMENT', 'BRANCH', 'TAG'):
+        for item in ('ENVIRONMENT', 'BRANCH', 'TAG', 'DEPLOY_CIDS', 'FROM_BRANCH'):
             for param in build_params:
                 if param['name'] == item:
                     params[item] = param['value']
         if is_print:
             print('\nbuild parameters:', params)
 
-        remote_urls = ''
-        for action in actions:
-            if 'BuildData' in action.get('_class', ''):
-                remote_urls = action['remoteUrls']
-                break
-        if is_print and remote_urls:
-            print('\nbuild git repo url:', remote_urls[0])
-
         ret_data = {
             'build_no': build_no,
             'params': params,
+            'commit': commit_data,
         }
         for key in ('building', 'duration', 'result'):
             ret_data[key] = resp_obj[key]
         return ret_data
+
+    def _get_build_by_branch_from_resp_action(self, action, branch_tag_name):
+        """
+        get commit info from [Git Build Data] plugin values:
+        "_class": "hudson.plugins.git.util.BuildData" => buildsByBranchName: {}
+        """
+        for key, value in action['buildsByBranchName'].items():
+            if key == branch_tag_name:
+                return value['revision']['SHA1']
 
     def get_lastbuild_number(self, job_name) -> int:
         url = f'{self._jenkins_host}/job/{job_name}/lastBuild/buildNumber'
@@ -215,7 +230,7 @@ class JenkinsTools(object):
     def start_job_build_with_params(self, job_name, payload: dict) -> str:
         """
         return queue id from location.
-        Location: https://jenkins.i.airpay.com/queue/item/564210/
+        Location: https://jenkins.i.test.com/queue/item/564210/
         """
         url = f'{self._jenkins_host}/job/{job_name}/buildWithParameters'
         resp = self._session.post(url, params=payload)
@@ -258,7 +273,7 @@ class JenkinsTools(object):
         return False
 
     def is_build_running(self, job_name, build_no) -> bool:
-        build_info = self.get_build_info(job_name, build_no, is_print=False)
+        build_info = self.get_build_info(job_name, build_no)
         return bool(build_info['building']) if build_info else False
 
 #
@@ -329,20 +344,32 @@ def test_run_a_build(tool: JenkinsTools, job: str):
         time.sleep(3)
 
     # get build info
-    res = tool.get_build_info(job, build_no, is_print=False)
+    res = tool.get_build_info(job, build_no)
     print('job [%s] build [%s] finished: duration=%.2f(s),result=%s' %
           (job, build_no, (res['duration'] / 1000), res['result']))
 
 
+def test_cicd(tool: JenkinsTools, job: str):
+    # get commit/tag in latest job build
+    build_no = tool.get_lastbuild_number(job)
+    res = tool.get_build_info(job, build_no)
+    print(res)
+
+
 if __name__ == '__main__':
 
-    job = 'test-dev-grpc-swagger'
+    job = os.getenv('JENKINS_JOB')
+    if not job:
+        print('env var [JENKINS_JOB] is not set.')
+        exit(99)
+
     tool = None
     try:
         tool = JenkinsTools()
-        test_get_job_info(tool, job)
+        # test_get_job_info(tool, job)
         # test_get_build_info(tool, job)
         # test_run_a_build(tool, job)
+        test_cicd(tool, job)
     except Exception:
         traceback.print_exc()
     finally:
