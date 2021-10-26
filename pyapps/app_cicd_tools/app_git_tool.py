@@ -6,11 +6,13 @@
 
 import json
 import os
-
 import git
 import gitlab
+import traceback
+
 from gitlab.exceptions import GitlabCherryPickError, GitlabGetError
 from loguru import logger
+from typing import Dict
 
 
 def cur_dir():
@@ -285,6 +287,19 @@ class GitlabTool(object):
     def get_branch_head_sha(self, branch_name):
         commit = self.get_branch_history_commits(branch_name, 1)
         return commit[0].short_id
+
+    def filter_commits_by_branch(self, commits: Dict[str, str], branch_name) -> Dict[str, str]:
+        br_history_commits = self.get_branch_history_commits(branch_name, 50)
+        br_history_commits_ids = [commit.id[:8]
+                                  for commit in br_history_commits]
+
+        ret_commits = []
+        for commit in commits:
+            for commit_id in br_history_commits_ids:
+                if commit['id'][:8] == commit_id:
+                    ret_commits.append(commit)
+                    break
+        return ret_commits
 
     def cherry_pick_a_commit(self, commit_sha, dst_branch):
         """
@@ -591,7 +606,7 @@ def test_tag_version():
         print('next tag version:', tag_version)
 
 
-def test_cicd():
+def test_compare_two_commits():
     prj_name = os.getenv('GITLAB_REPO')
     if not prj_name:
         raise Exception('env var [GITLAB_REPO] is not set')
@@ -604,20 +619,19 @@ def test_cicd():
         latest_commit_short_id = tool.get_branch_head_sha('staging')
         print('latest commit for staging branch:', latest_commit_short_id)
 
-        release_tag = tool.get_a_tag('release-2019.10.v2')
+        test_tag = 'release-2019.10.v2'
+        release_tag = tool.get_a_tag(test_tag)
         tool.print_tag_info(release_tag)
-
-        commit = tool.get_tag_commit('release-2019.10.v2')
+        commit = tool.get_tag_commit(test_tag)
         tool.print_commit_info(commit)
 
-        # get diff by tag
-        result = tool.compare_two_tags(
-            'release-2019.10.v2', ' release-2019.10.v2-Hotfix')
+        print('\nget history commits by diff tag:')
+        result = tool.compare_two_tags(test_tag, f'{test_tag}-Hotfix')
         diff_commits = result['commits']
         for commit in diff_commits:
             tool.print_commit_info(commit)
 
-        # get diff by commits
+        print('\nget history commits by diff commits:')
         result = tool.compare_two_commits('e800b63e', '044dbaf3')
         diff_commits = result['commits']
         diffs = result['diffs']
@@ -625,6 +639,23 @@ def test_cicd():
               (len(diff_commits), len(diffs)))
         for commit in diff_commits:
             print(commit['short_id'], commit['title'])
+
+
+def test_filter_commit_by_branch():
+    prj_name = os.getenv('GITLAB_REPO')
+    tool = GitlabTool(gitlab_url, private_token)
+    tool.set_project(prj_name)
+    tool.print_project_info()
+
+    # get history commits between two commits
+    result = tool.compare_two_commits('36ddb7eb', '12aa2338')
+    diff_commits = result['commits']
+    print('src diff commits count:', len(diff_commits))
+
+    # get history commits for uat branch
+    ret_commits = tool.filter_commits_by_branch(diff_commits, 'uat')
+    print(f'\nuat commits count: {len(ret_commits)}')
+    print('commits details:', [commit['id'][:8] for commit in ret_commits])
 
 
 if __name__ == '__main__':
@@ -642,9 +673,10 @@ if __name__ == '__main__':
 
         # test_tag_version()
 
+        # test_filter_commit_by_branch()
         # test_cicd()
         pass
-    except Exception as e:
-        print('exception:', e)
+    except:
+        traceback.print_exc()
 
     print('git tool test done.')

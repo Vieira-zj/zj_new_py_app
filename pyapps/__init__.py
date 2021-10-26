@@ -1,1 +1,1 @@
-from appdemos.app_crawl_text import CrawlHtml
+from pyapps.app_crawl_text import CrawlHtml

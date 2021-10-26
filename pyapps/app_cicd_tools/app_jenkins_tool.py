@@ -358,8 +358,7 @@ def test_run_a_build(tool: JenkinsTools, job: str):
           (job, build_no, (res['duration'] / 1000), res['result']))
 
 
-def test_cicd(tool: JenkinsTools, job: str):
-    # get commit/tag in latest job build
+def test_get_build_commit_info(tool: JenkinsTools, job: str):
     build_no = tool.get_lastbuild_number(job)
     res = tool.get_build_info(job, build_no)
     print(res)
@@ -378,7 +377,8 @@ if __name__ == '__main__':
         # test_get_job_info(tool, job)
         # test_get_build_info(tool, job)
         # test_run_a_build(tool, job)
-        test_cicd(tool, job)
+        # test_get_build_commit_info(tool, job)
+        pass
     except Exception:
         traceback.print_exc()
     finally:
