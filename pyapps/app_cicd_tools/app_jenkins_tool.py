@@ -117,39 +117,42 @@ class JenkinsTools(object):
             print('build name=%s, building=%s, duration=%s(sec), result=%s' % (
                 resp_obj['fullDisplayName'], resp_obj['building'], (int(resp_obj['duration'] / 1000)), resp_obj['result']))
 
-        build_params = []
-        commit_data = {}
+        build_params_list = []
+        git_build_data = {}
         for action in resp_obj['actions']:
             action_class = action.get('_class', '')
             if action_class == 'hudson.model.ParametersAction':
-                build_params = action['parameters']
+                build_params_list = action['parameters']
             # git build data
             if action_class == 'hudson.plugins.git.util.BuildData':
                 remote_url = action['remoteUrls'][0]
                 if 'jenkins_pipeline_shared_library' in remote_url:
                     continue
-                commit_data['remote_url'] = remote_url
+                git_build_data['remote_url'] = remote_url
                 branch = action['lastBuiltRevision']['branch'][0]
-                commit_data['branch_or_tag'] = branch['name']
-                commit_data['commit_id'] = branch['SHA1']
+                git_build_data['branch_or_tag'] = branch['name']
+                git_build_data['commit_id'] = branch['SHA1']
         if is_print:
-            print(f'\nbuild commit data:', commit_data)
+            print(f'\ngit build data:', git_build_data)
 
-        params = {}
+        build_params = {}
         for item in ('ENVIRONMENT', 'BRANCH', 'TAG', 'DEPLOY_CIDS', 'FROM_BRANCH'):
-            for param in build_params:
+            for param in build_params_list:
                 if param['name'] == item:
-                    params[item] = param['value']
+                    build_params[item] = param['value']
         if is_print:
-            print('\nbuild parameters:', params)
+            print('\nbuild parameters:', build_params)
 
         ret_data = {
             'build_no': build_no,
-            'params': params,
-            'commit': commit_data,
+            'build_params': build_params,
+            'git_build_data': git_build_data,
         }
-        for key in ('building', 'duration', 'result'):
-            ret_data[key] = resp_obj[key]
+        for key in ('building', 'duration', 'result', 'timestamp'):
+            if key == 'timestamp':
+                ret_data[key] = self._format_job_timestamp(resp_obj[key])
+            else:
+                ret_data[key] = resp_obj[key]
         return ret_data
 
     def _get_build_by_branch_from_resp_action(self, action, branch_tag_name):
@@ -160,6 +163,12 @@ class JenkinsTools(object):
         for key, value in action['buildsByBranchName'].items():
             if key == branch_tag_name:
                 return value['revision']['SHA1']
+
+    def _format_job_timestamp(self, ts: int):
+        ts = str(ts)[:-3]
+        local_ts = time.localtime(int(ts))
+        res = time.strftime("%Y-%m-%d %H:%M:%S", local_ts)
+        return res
 
     def get_lastbuild_number(self, job_name) -> int:
         url = f'{self._jenkins_host}/job/{job_name}/lastBuild/buildNumber'
