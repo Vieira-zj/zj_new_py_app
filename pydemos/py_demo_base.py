@@ -16,15 +16,15 @@ import os
 import random
 import sys
 import time
-
-from collections import deque, defaultdict, Counter
 import datetime
-from datetime import datetime as dt
-from enum import Enum
 
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+
+from collections import deque, defaultdict, Counter
+from datetime import datetime as dt
+from enum import Enum
 
 print('python base demo INIT.')
 

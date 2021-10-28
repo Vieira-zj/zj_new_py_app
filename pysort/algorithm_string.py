@@ -280,7 +280,7 @@ def format_by_word_v1(content: str) -> str:
         else:
             is_change = True
     if len(ret) == 0:
-        return 'shopee'
+        return 'shop'
 
     if 65 <= ord(ret[0]) <= 90:  # 大写字母
         ret[0] = ret[0].lower()
@@ -301,7 +301,7 @@ def format_by_word_v2(content: str) -> str:
         words.append(''.join(word))
 
     if len(words) == 0:
-        return 'shopee'
+        return 'shop'
 
     ret = []
     first_word = words[0]
@@ -325,8 +325,8 @@ def format_by_word_v2(content: str) -> str:
 
 def test08():
     cases = []
-    cases.append(('', 'shopee'))
-    cases.append(('_', 'shopee'))
+    cases.append(('', 'shop'))
+    cases.append(('_', 'shop'))
     cases.append(('hello_world', 'helloWorld'))
     cases.append(('Hello_World', 'helloWorld'))
     cases.append(('**Hello_worLD', 'helloWorld'))
