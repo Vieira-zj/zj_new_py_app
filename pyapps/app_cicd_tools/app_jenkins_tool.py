@@ -123,7 +123,7 @@ class JenkinsTools(object):
             action_class = action.get('_class', '')
             if action_class == 'hudson.model.ParametersAction':
                 build_params_list = action['parameters']
-            # git build data
+            # get git build data
             if action_class == 'hudson.plugins.git.util.BuildData':
                 remote_url = action['remoteUrls'][0]
                 if 'jenkins_pipeline_shared_library' in remote_url:
@@ -155,7 +155,7 @@ class JenkinsTools(object):
                 ret_data[key] = resp_obj[key]
         return ret_data
 
-    def _get_build_by_branch_from_resp_action(self, action, branch_tag_name):
+    def _get_build_by_branch_from_resp_actions(self, action, branch_tag_name):
         """
         get commit info from [Git Build Data] plugin values:
         "_class": "hudson.plugins.git.util.BuildData" => buildsByBranchName: {}

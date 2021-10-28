@@ -67,7 +67,7 @@ def run_monkey_test(args_kv):
 def test_cicd():
     """
     1. 基于 jenkins job 的 git build data 获取 commit 信息
-    2. 比较两个 job 的 commit 信息，获取 commit 提交历史
+    2. 比较两个 job 的 commit 信息，获取 commit 提交历史（基于分支）
     """
     job = os.getenv('JENKINS_JOB')
     if not job:
@@ -79,16 +79,13 @@ def test_cicd():
     build_no = jenkins_tool.get_lastbuild_number(job)
     new_build_result = jenkins_tool.get_build_info(job, build_no)
     print('new build:\n', new_build_result)
-    old_build_result = jenkins_tool.get_build_info(job, build_no - 7)
+    old_build_result = jenkins_tool.get_build_info(job, build_no - 11)
     print('old build:\n', old_build_result)
 
     # init gitlab tool
-    gitlab_url = os.getenv('GITLAB_URL')
-    private_token = os.getenv('GITLAB_PRIVATE_TOKEN')
-
     repo_url = new_build_result['git_build_data']['remote_url']
-    prj_name = repo_url.split('/')[1][:-4]
-    git_tool = GitlabTool(gitlab_url, private_token)
+    prj_name = repo_url.split('/')[-1][:-4]
+    git_tool = GitlabTool()
     git_tool.set_project(prj_name)
     print('\nproject:')
     git_tool.print_project_info()
@@ -105,10 +102,11 @@ def test_cicd():
           (len(diff_commits), len(diffs)))
 
     # get diff commits for uat branch
-    res_commits = git_tool.filter_commits_by_branch(diff_commits, 'uat')
-    print('\ndiff commits for uat br count:', len(res_commits))
+    diff_commits_for_br = git_tool.filter_commits_by_branch(
+        diff_commits, 'uat')
+    print('\ndiff commits for uat br count:', len(diff_commits_for_br))
     print('commits:')
-    for commit in res_commits:
+    for commit in diff_commits_for_br:
         print(commit['short_id'], commit['title'])
 
 #

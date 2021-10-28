@@ -4,15 +4,17 @@
 # pip install gitpython
 # pip install python-gitlab
 
+import datetime
 import json
 import os
 import git
 import gitlab
+import time
 import traceback
 
-from gitlab.exceptions import GitlabCherryPickError, GitlabGetError
+from gitlab import exceptions
 from loguru import logger
-from typing import Dict
+from typing import List, Dict
 
 
 def cur_dir():
@@ -108,10 +110,19 @@ class GitTool(object):
 class GitlabTool(object):
 
     """
-    api docs: https://python-gitlab.readthedocs.io/en/stable/gl_objects/mrs.html
+    py api docs: https://python-gitlab.readthedocs.io/en/stable/gl_objects/mrs.html
+    rest api docs: https://docs.gitlab.com/ee/api/merge_requests.html
     """
 
-    def __init__(self, url, private_token, project_id=''):
+    def __init__(self, project_id=''):
+        url = os.getenv('GITLAB_URL')
+        if not url:
+            raise EnvironmentError('env var [GITLAB_URL] is not set.')
+        private_token = os.getenv('GITLAB_PRIVATE_TOKEN')
+        if not private_token:
+            raise EnvironmentError(
+                'env var [GITLAB_PRIVATE_TOKEN] is not set.')
+
         self._gitlab = gitlab.Gitlab(url, private_token=private_token)
         if len(project_id) > 0:
             self.set_project_by_id(project_id)
@@ -120,7 +131,9 @@ class GitlabTool(object):
     def gitlab(self):
         return self._gitlab
 
+    #
     # project
+    #
 
     def set_project_by_id(self, project_id):
         self._project = self._gitlab.projects.get(id=project_id)
@@ -155,15 +168,17 @@ class GitlabTool(object):
         }
         print(json.dumps(info_dict))
 
+    #
     # branch
+    #
 
     def get_a_branch(self, branch_name):
         try:
             return self._project.branches.get(branch_name)
-        except GitlabGetError as e:
+        except exceptions.GitlabGetError as e:
             logger.info(e.error_message + ": " + branch_name)
 
-    def get_all_remote_branches(self):
+    def get_all_remote_branches(self) -> List[str]:
         return [branch.name for branch in self._project.branches.list(all=True)]
 
     def create_branch(self, src_branch, dst_branch, is_delete_existing=False):
@@ -197,7 +212,7 @@ class GitlabTool(object):
             if br:
                 logger.warning('protect branch [%s] is exsit' % branch_name)
                 return
-        except GitlabGetError:
+        except exceptions.GitlabGetError:
             pass
 
         data = {
@@ -212,20 +227,37 @@ class GitlabTool(object):
             data['allowed_to_merge'] = allowed_users
         return self._project.protectedbranches.create(data)
 
+    #
     # tag
+    #
 
     def get_a_tag(self, tag_name):
+        """
+        return: gitlab.v4.objects.ProjectTag
+        properties:
+          'commit', 'delete', 'get_id', 'manager', 'message', 'name', 'project_id', 'protected', 'release', 'set_release_description', 'target'
+        """
         try:
             return self._project.tags.get(tag_name)
-        except GitlabGetError as e:
+        except exceptions.GitlabGetError as e:
             logger.info(e.error_message + ": " + tag_name)
 
-    def get_tag_commit(self, tag_name):
+    def get_tags(self, num=10):
+        all_tags = self._project.tags.list()
+        return all_tags[:num]
+
+    def get_tag_commit_shortid(self, tag_name):
+        commit = self.get_tag_commit(tag_name)
+        return commit['short_id']
+
+    def get_tag_commit(self, tag_name) -> Dict[str, str]:
+        """
+        tag.commit dict:
+          'id', 'short_id', 'created_at', 'parent_ids', 'title', 'message', 'author_name', 'author_email', 'authored_date',
+          'committer_name', 'committer_email', 'committed_date', 'web_url'
+        """
         tag = self.get_a_tag(tag_name)
         return tag.commit
-
-    def get_tags(self):
-        return self._project.tags.list()
 
     def create_tag(self, tag_name, commit_sha):
         if self.get_a_tag(tag_name):
@@ -236,6 +268,24 @@ class GitlabTool(object):
         data = {'tag_name': tag_name, 'ref': commit_sha}
         return self._project.tags.create(data)
 
+    def compare_two_tags(self, old_tag, new_tag) -> dict:
+        return self._compare_two_repo_object(old_tag, new_tag)
+
+    def _compare_two_repo_object(self, old_obj, new_obj) -> dict:
+        """ support compare two branches, tags or commits.
+
+        commit dict:
+          'id', 'short_id', 'created_at', 'parent_ids', 'title', 'message', 'author_name', 'author_email', 'authored_date',
+          'committer_name', 'committer_email', 'committed_date', 'web_url'
+
+        Note: diff commits results NOT base on given branch.
+        """
+        result = self._project.repository_compare(old_obj, new_obj)
+        return {
+            'commits': result['commits'],
+            'diffs': result['diffs'],
+        }
+
     def print_tag_info(self, tag):
         data = {
             'name': tag.name,
@@ -244,30 +294,83 @@ class GitlabTool(object):
         }
         return print(json.dumps(data))
 
-    def compare_two_tags(self, old_tag, new_tag):
-        return self._compare_two_repo_object(old_tag, new_tag)
-
-    def _compare_two_repo_object(self, old_obj, new_obj):
-        """ support compare two branches, tags or commits. """
-        result = self._project.repository_compare(old_obj, new_obj)
-        return {
-            'commits': result['commits'],
-            'diffs': result['diffs'],
-        }
-
+    #
     # mr
-
-    def get_open_merge_requests(self):
-        return self.get_merge_requests('opened')
-
-    def get_merge_requests(self, state):
-        return self._project.mergerequests.list(state=state, order_by='updated_at')
+    #
 
     def get_merge_request_by_id(self, mr_id):
+        """
+        return: gitlab.v4.objects.ProjectMergeRequest
+        properties:
+          'approval_rules', 'approvals', 'approvals_before_merge', 'approve', 'assignee', 'assignees',
+          'attributes', 'author', 'awardemojis', 'blocking_discussions_resolved', 'cancel_merge_when_pipeline_succeeds',
+          'changes', 'closed_at', 'closed_by', 'closes_issues', 'commits', 'created_at', 'delete', 'description', 'diffs',
+          'discussion_locked', 'discussions', 'downvotes', 'force_remove_source_branch', 'get_id', 'has_conflicts',
+          'id', 'iid', 'labels', 'manager', 'merge', 'merge_commit_sha', 'merge_status', 'merge_when_pipeline_succeeds',
+          'merged_at', 'merged_by', 'milestone', 'notes', 'participants', 'pipelines', 'project_id', 'rebase', 'reference', 'references',
+          'reset_spent_time', 'reset_time_estimate', 'resourcelabelevents', 'resourcemilestoneevents', 'save', 'sha',
+          'should_remove_source_branch', 'source_branch', 'source_project_id', 'squash', 'squash_commit_sha', 'state', 'subscribe',
+          'target_branch', 'target_project_id', 'task_completion_status', 'time_estimate', 'time_stats', 'time_stats', 'title',
+          'todo', 'unapprove', 'unsubscribe', 'updated_at', 'upvotes', 'user_notes_count', 'web_url', 'work_in_progress'
+        """
         return self._project.mergerequests.get(mr_id)
+
+    def get_merge_requests_by_brname(self, state, branch_name, num=10) -> list:
+        """
+        state:
+          all, merged, opened, closed
+        """
+        all_mrs = self._project.mergerequests.list(
+            state=state, target_branch=branch_name, order_by='created_at')
+        return all_mrs[:num]
+
+    def get_merge_request_commits(self, mr):
+        return mr.commits()
+
+    def get_merged_mrs_from_commits(self, branch_name, commits: Dict[str, str]):
+        """
+        通过 commit 查询关联的 mr 信息。
+        注：直接 push 或 mr 合入生成的 commit 并不会关联 mr.
+        """
+        branch_mrs = self.get_merge_requests_by_brname(
+            'merged', branch_name, 10)
+        result_mrs = []
+        for mr in branch_mrs:
+            mr_commits = self.get_merge_request_commits(mr)
+            mr_commit_ids = [mr_commit.short_id for mr_commit in mr_commits]
+            result_mrs.append({
+                'id': mr.iid,
+                'title': mr.title,
+                'commits': mr_commit_ids,
+            })
+
+        print(f'\nmerged {branch_name} mrs:')
+        for mr in result_mrs:
+            print(json.dumps(mr))
+
+        # filter mrs by commits
+        ret_mrs = {}
+        not_match_commit_ids = []
+        for commit in commits:
+            is_found = False
+            for mr in result_mrs:
+                if commit['short_id'] in mr['commits']:
+                    is_found = True
+                    iid = mr['id']
+                    if iid not in ret_mrs.keys():
+                        ret_mrs[iid] = ({
+                            'id': iid,
+                            'title': mr['title'],
+                        })
+                    break
+            if not is_found:
+                not_match_commit_ids.append(commit['short_id'])
+
+        return list(ret_mrs.values()), not_match_commit_ids
 
     def print_merge_request_info(self, mr):
         info_dict = {
+            'id': mr.id,
             'title': mr.title,
             'assignee': mr.assignee['username'],
             'source_branch': mr.source_branch,
@@ -278,25 +381,47 @@ class GitlabTool(object):
         }
         print(json.dumps(info_dict))
 
+    #
     # commit
+    #
 
-    def get_branch_history_commits(self, branch_name, number):
+    def get_a_commit(self, commit_id):
+        """
+        return: gitlab.v4.objects.ProjectCommit
+        properties:
+          'attributes', 'author_email', 'author_name', 'authored_date', 'cherry_pick', 'comments', 'committed_date',
+          'committer_email', 'committer_name', 'created_at', 'diff', 'discussions', 'get_id', 'id', 'last_pipeline', 'manager',
+          'merge_requests', 'message', 'parent_ids', 'project_id', 'refs', 'revert', 'short_id', 'signature',
+          'stats', 'status', 'statuses', 'title', 'web_url'
+        """
+        return self._project.commits.get(commit_id)
+
+    def get_branch_history_commits(self, branch_name, num=10) -> list:
         commits = self._project.commits.list(ref_name=branch_name)
-        return commits[:number]
+        return commits[:num]
 
     def get_branch_head_sha(self, branch_name):
         commit = self.get_branch_history_commits(branch_name, 1)
         return commit[0].short_id
 
+    def get_commit_merge_requests(self, commit) -> List[dict]:
+        """
+        mr dict:
+          'id', 'iid', 'project_id', 'title', 'description', 'state', 'created_at', 'updated_at', 'merged_by', 'merged_at',
+          'closed_by', 'closed_at', 'target_branch', 'source_branch', 'user_notes_count', 'upvotes', 'downvotes',
+          'author', 'assignees', 'assignee', 'source_project_id', 'target_project_id', 'labels', 'work_in_progress', 'milestone',
+          'merge_when_pipeline_succeeds', 'merge_status', 'sha', 'merge_commit_sha', 'squash_commit_sha',
+          'discussion_locked', 'should_remove_source_branch', 'force_remove_source_branch', 'reference', 'references',
+          'web_url', 'time_stats', 'squash', 'task_completion_status', 'has_conflicts', 'blocking_discussions_resolved', 'approvals_before_merge'
+        """
+        return commit.merge_requests()
+
     def filter_commits_by_branch(self, commits: Dict[str, str], branch_name) -> Dict[str, str]:
         br_history_commits = self.get_branch_history_commits(branch_name, 50)
-        br_history_commits_ids = [commit.id[:8]
-                                  for commit in br_history_commits]
-
         ret_commits = []
         for commit in commits:
-            for commit_id in br_history_commits_ids:
-                if commit['id'][:8] == commit_id:
+            for br_commit in br_history_commits:
+                if commit['short_id'] == br_commit.short_id:
                     ret_commits.append(commit)
                     break
         return ret_commits
@@ -308,11 +433,17 @@ class GitlabTool(object):
         commit = self._project.commits.get(commit_sha)
         try:
             commit.cherry_pick(branch=dst_branch)
-        except GitlabCherryPickError as e:
+        except exceptions.GitlabCherryPickError as e:
             logger.error(
                 f'gitlab cherry pick error for commit {commit_sha}: {e.error_message}')
             return False
         return True
+
+    def compare_two_commits(self, old_commit_id, new_commit_id) -> dict:
+        """
+        Note: result diff commits may includes commits to diff branch.
+        """
+        return self._compare_two_repo_object(old_commit_id, new_commit_id)
 
     def print_commit_info(self, commit):
         data = {}
@@ -320,15 +451,14 @@ class GitlabTool(object):
             data[key] = commit[key]
         print(json.dumps(data))
 
-    def compare_two_commits(self, old_commit_id, new_commit_id):
-        return self._compare_two_repo_object(old_commit_id, new_commit_id)
-
+    #
     # file
+    #
 
     def get_a_file(self, file_path, branch_name):
         try:
             return self._project.files.get(file_path=file_path, ref=branch_name)
-        except GitlabGetError as e:
+        except exceptions.GitlabGetError as e:
             logger.warning(e.error_message + ': ' + file_path)
 
     def commit_a_file(self, commit_data: dict):
@@ -351,7 +481,9 @@ class GitlabTool(object):
         logger.info("commit a file [%s]" % commit_data["file_path"])
         return self._project.files.create(commit_data)
 
+    #
     # hook
+    #
 
     def create_project_hook(self, url, enable_events, disable_events):
         """
@@ -384,6 +516,16 @@ class GitlabTool(object):
             }
             print('project hooks:')
             print(json.dumps(info_dict))
+
+    def format_commit_datetime_to_timestamp(self, input_datetime) -> int:
+        items = input_datetime.split('T')
+        tmp_date = items[0]
+        tmp_time = items[1][:8]
+
+        d = datetime.datetime.strptime(
+            f'{tmp_date} {tmp_time}', "%Y-%m-%d %H:%M:%S")
+        return int(time.mktime(d.timetuple()))
+
 
 #
 # tag version
@@ -469,72 +611,6 @@ class VersionNumber(object):
 repo_urls = [
     os.getenv('GITLAB_SSH_ADDR') + ':jin.zheng/zhengjin_worksapce.git',
 ]
-gitlab_url = os.getenv('GITLAB_URL')
-private_token = os.getenv('GITLAB_PRIVATE_TOKEN')
-
-
-def test_gitlab_rest_api():
-    import requests
-
-    url = f'{gitlab_url}api/v4/users/4902/projects'
-    header = {'PRIVATE-TOKEN': private_token}
-    resp = requests.get(url, headers=header)
-    print(resp.status_code)
-    print('1st project:', resp.json()[0]['name'])
-
-
-def test_git_tool():
-    root_path = '/tmp/test/repos'
-    for repo_url in repo_urls:
-        repo_path = get_dir_from_git_url(repo_url)
-        tool = GitTool(repo_url, os.path.join(root_path, repo_path))
-        print(tool.get_all_remote_branches())
-
-
-def test_gitlab_tool():
-    group_name = ''
-    project_names = ['zhengjin_worksapce']
-    for prj_name in project_names:
-        tool = GitlabTool(gitlab_url, private_token)
-        tool.set_project(prj_name, group_name=group_name)
-        tool.print_project_info()
-
-        if False:
-            # create br
-            print(tool.get_all_remote_branches())
-            tool.create_branch('master', 'release', is_delete_existing=True)
-
-            # mr
-            mr = tool.get_merge_request_by_id(4)
-            tool.print_merge_request_info(mr)
-
-            for tag in tool.get_tags():
-                tool.print_tag_info(tag)
-
-            # tag
-            print(tool.get_branch_head_sha('master'))
-            tool.cherry_pick_a_commit('dab8b78', 'master')
-
-            # add a web hook
-            hook_url = 'http://qa-test/webhook'
-            enable_events = ['tag_push_events', 'merge_requests_events']
-            disable_events = ['push_events']
-            tool.create_project_hook(hook_url, enable_events, disable_events)
-            tool.print_project_hooks_info()
-
-            # commit a file
-            file_content = None
-            with open('/tmp/test/gitlab-ci.yml', 'r') as f:
-                file_content = f.read()
-            commit_data = {
-                'file_path': '.gitlab-ci.yml',
-                'branch': 'master',
-                'content': file_content,
-                'author_email': 'jin.zheng@xxxxx.com',
-                'author_name': 'zhengjin',
-                'commit_message': 'Create gitlab ci file.'
-            }
-            print(tool.commit_a_file(commit_data))
 
 
 def main_create_deploy_branches_by_git():
@@ -562,7 +638,7 @@ def main_create_deploy_branches_by_gitlab():
     """
     repo_names = ['zhengjin_worksapce', 'goc']
     new_tag_name = 'v1.0.1-test'
-    tool = GitlabTool(gitlab_url, private_token, repo_names[0])
+    tool = GitlabTool(repo_names[0])
     for repo in repo_names:
         tool.set_project(repo)
         for branch in ('master-backup', 'staging', 'release'):
@@ -578,7 +654,7 @@ def main_check_all_projects():
             ('http' in line, not line.startswith('#')))]
     repos = [get_repo_name_from_web_url(url) for url in web_urls]
 
-    tool = GitlabTool(gitlab_url, private_token)
+    tool = GitlabTool()
     failed_repos = []
     for repo in repos:
         try:
@@ -596,6 +672,10 @@ def main_check_all_projects():
     if len(failed_repos) > 0:
         logger.error("check failed gitlab repos: " + failed_repos)
 
+#
+# test
+#
+
 
 def test_tag_version():
     cur_tag_vers = ['rm-v1.2.0', 'rm-v1.3.0-hotfix', 'rm-v1.3.0-ad']
@@ -606,44 +686,159 @@ def test_tag_version():
         print('next tag version:', tag_version)
 
 
-def test_compare_two_commits():
+def test_gitlab_rest_api():
+    import requests
+
+    gitlab_url = os.getenv('GITLAB_URL')
+    private_token = os.getenv('GITLAB_PRIVATE_TOKEN')
+
+    url = f'{gitlab_url}api/v4/users/4902/projects'
+    header = {'PRIVATE-TOKEN': private_token}
+    resp = requests.get(url, headers=header)
+    print(resp.status_code)
+    print('get a project:', resp.json()[0]['name'])
+
+
+def test_git_tool():
+    root_path = '/tmp/test/repos'
+    for repo_url in repo_urls:
+        repo_path = get_dir_from_git_url(repo_url)
+        tool = GitTool(repo_url, os.path.join(root_path, repo_path))
+        print(tool.get_all_remote_branches())
+
+
+def test_gitlab_tool():
+    prj_name = os.getenv('GITLAB_REPO')
+    group_name = os.getenv('GITLAB_GROUP')
+
+    tool = GitlabTool()
+    tool.set_project(prj_name, group_name=group_name)
+    tool.print_project_info()
+
+    def test_create_br():
+        print(tool.get_all_remote_branches())
+        tool.create_branch('master', 'release', is_delete_existing=True)
+
+    def test_project_mr():
+        mr = tool.get_merge_request_by_id(4)
+        tool.print_merge_request_info(mr)
+
+    def test_project_tag():
+        for tag in tool.get_tags():
+            tool.print_tag_info(tag)
+
+    def test_project_commit():
+        print(tool.get_branch_head_sha('master'))
+        tool.cherry_pick_a_commit('dab8b78', 'master')
+
+    def test_add_webhook():
+        hook_url = 'http://qa-test/webhook'
+        enable_events = ['tag_push_events', 'merge_requests_events']
+        disable_events = ['push_events']
+        tool.create_project_hook(hook_url, enable_events, disable_events)
+        tool.print_project_hooks_info()
+
+    def test_commit_a_file():
+        file_content = None
+        with open('/tmp/test/gitlab-ci.yml', 'r') as f:
+            file_content = f.read()
+        commit_data = {
+            'file_path': '.gitlab-ci.yml',
+            'branch': 'master',
+            'content': file_content,
+            'author_email': 'jin.zheng@xxxxx.com',
+            'author_name': 'zhengjin',
+            'commit_message': 'Create gitlab ci file.'
+        }
+        print(tool.commit_a_file(commit_data))
+
+    if False:
+        test_create_br()
+        test_project_mr()
+        test_project_tag()
+        test_project_commit()
+        test_add_webhook()
+        test_commit_a_file()
+
+    test_project_tag()
+
+
+def test_gitlab_compare_two_commits():
     prj_name = os.getenv('GITLAB_REPO')
     if not prj_name:
         raise Exception('env var [GITLAB_REPO] is not set')
     group_name = os.getenv('GITLAB_GROUP')
-    tool = GitlabTool(gitlab_url, private_token)
+    tool = GitlabTool()
     tool.set_project(prj_name, group_name=group_name)
     tool.print_project_info()
 
-    if False:
+    def test_get_br_head_commit():
         latest_commit_short_id = tool.get_branch_head_sha('staging')
         print('latest commit for staging branch:', latest_commit_short_id)
 
-        test_tag = 'release-2019.10.v2'
+    def test_get_tag_commit():
+        test_tag = 'release-2021.10.v2'
         release_tag = tool.get_a_tag(test_tag)
-        tool.print_tag_info(release_tag)
-        commit = tool.get_tag_commit(test_tag)
-        tool.print_commit_info(commit)
+        if release_tag:
+            tool.print_tag_info(release_tag)
+            commit = tool.get_tag_commit(test_tag)
+            tool.print_commit_info(commit)
 
-        print('\nget history commits by diff tag:')
-        result = tool.compare_two_tags(test_tag, f'{test_tag}-Hotfix')
+    def test_diff_tags():
+        print('get history commits by diff tag:')
+        test_tag = 'release-2021.10.v2'
+        result = tool.compare_two_tags(test_tag, f'{test_tag}-hotfix')
         diff_commits = result['commits']
+        print('diff commits count:', len(diff_commits))
         for commit in diff_commits:
             tool.print_commit_info(commit)
 
-        print('\nget history commits by diff commits:')
-        result = tool.compare_two_commits('e800b63e', '044dbaf3')
+    def test_diff_commits():
+        print('get history commits by diff commits:')
+        result = tool.compare_two_commits('1dd9122e', '7a0add46')
         diff_commits = result['commits']
-        diffs = result['diffs']
+        diff_files = result['diffs']
         print('diff commits count %d, diff files count %d' %
-              (len(diff_commits), len(diffs)))
+              (len(diff_commits), len(diff_files)))
         for commit in diff_commits:
             print(commit['short_id'], commit['title'])
 
+    def test_get_to_uat_mrs():
+        uat_mrs = tool.get_merge_requests_by_brname('merged', 'uat', num=5)
+        print('top 10 uat merged mrs:')
+        for mr in uat_mrs:
+            print(mr.iid, mr.title)
+            commits = tool.get_merge_request_commits(mr)
+            print('\ttotal:', commits.total)
+            for commit in commits:
+                print('\t\t', commit.short_id, commit.title)
 
-def test_filter_commit_by_branch():
+    def test_compare_commits_by_date():
+        import time
+        import datetime
+        new_commit = tool.get_a_commit('5d15c4ef')
+        old_commit = tool.get_a_commit('9ed45ae3')
+
+        new_ts = tool.format_commit_datetime_to_timestamp(
+            new_commit.committed_date)
+        old_ts = tool.format_commit_datetime_to_timestamp(
+            old_commit.committed_date)
+        print('compare commit date:', new_ts > old_ts)
+
+    if False:
+        test_get_br_head_commit()
+        test_get_tag_commit()
+        test_diff_tags()
+        test_diff_commits()
+        test_get_to_uat_mrs()
+        test_compare_commits_by_date()
+
+    test_get_br_head_commit()
+
+
+def test_gitlab_filter_commits_by_branch():
     prj_name = os.getenv('GITLAB_REPO')
-    tool = GitlabTool(gitlab_url, private_token)
+    tool = GitlabTool()
     tool.set_project(prj_name)
     tool.print_project_info()
 
@@ -653,28 +848,46 @@ def test_filter_commit_by_branch():
     print('src diff commits count:', len(diff_commits))
 
     # get history commits for uat branch
-    ret_commits = tool.filter_commits_by_branch(diff_commits, 'uat')
-    print(f'\nuat commits count: {len(ret_commits)}')
-    print('commits details:', [commit['id'][:8] for commit in ret_commits])
+    uat_commits = tool.filter_commits_by_branch(diff_commits, 'uat')
+    uat_commits = [
+        commit for commit in uat_commits if not commit['title'].startswith('Merge branch')]
+    print(f'\nuat history commits count: {len(uat_commits)}')
+    print('commits:', [commit['short_id'] for commit in uat_commits])
+
+    # get commits linked master mrs
+    print('\nmaster')
+    ret_mrs, not_match_commit_ids = tool.get_merged_mrs_from_commits(
+        uat_commits, 'master')
+    print('mr data:', json.dumps(ret_mrs))
+    print('not matched commit ids:', not_match_commit_ids)
+
+    # get commits linked staging mrs
+    print('\nstaging')
+    uat_commits = [
+        commit for commit in uat_commits if commit['short_id'] in not_match_commit_ids]
+    ret_mrs, not_match_commit_ids = tool.get_merged_mrs_from_commits(
+        uat_commits, 'staging')
+    print('\nmr data:', json.dumps(ret_mrs))
+
+    # commits push to uat directly, and no mr linked
+    print('not matched commit ids:', not_match_commit_ids)
 
 
 if __name__ == '__main__':
 
     try:
-        # test_gitlab_rest_api()
-
-        # test_git_tool()
-        # main_create_deploy_branches_by_git()
-
-        # test_gitlab_tool()
-        # main_create_deploy_branches_by_gitlab()
-
         # main_check_all_projects()
+        # main_create_deploy_branches_by_git()
+        # main_create_deploy_branches_by_gitlab()
 
         # test_tag_version()
 
-        # test_filter_commit_by_branch()
-        # test_cicd()
+        # test_git_tool()
+
+        # test_gitlab_rest_api()
+        # test_gitlab_tool()
+        # test_gitlab_compare_two_commits()
+        # test_gitlab_filter_commits_by_branch()
         pass
     except:
         traceback.print_exc()
