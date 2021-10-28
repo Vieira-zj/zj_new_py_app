@@ -47,6 +47,12 @@ def get_week_of_year_v2(input_date: str) -> str:
     return f'{calendar[0]}-{calendar[1]}'
 
 
+def format_timestamp_to_datetime(input_ts: str) -> str:
+    if len(input_ts) == 13:
+        input_ts = input_ts[:-3]
+    return dt.fromtimestamp(int(input_ts)).strftime("%Y-%m-%d %H:%M:%S")
+
+
 def format_datetime_to_timestamp(input_datetime) -> int:
     """
     input_datetime: 2021-10-18 20:05:43
@@ -64,8 +70,10 @@ if __name__ == '__main__':
         # print(get_delta_days('2021-10-18', '2021-10-30'))
         # print(get_week_of_year_v1('2021-12-23'))
         # print(get_week_of_year_v2('2021-12-23'))
+
+        # print(format_timestamp_to_datetime(time.time()))
+        print(format_timestamp_to_datetime('1635416838'))
         # print(format_datetime_to_timestamp('2021-10-18 20:05:43'))
-        pass
     except:
         traceback.print_exc()
 
