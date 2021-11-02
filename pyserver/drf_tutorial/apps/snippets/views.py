@@ -1,35 +1,35 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
+from pyserver.drf_tutorial.apps.snippets.models import Snippet
+from pyserver.drf_tutorial.apps.snippets.serializers import SnippetSerializer
 
 
 @csrf_exempt
 def snippet_list(request):
     """
     List all code snippets, or create a new snippet.
-    Request: django.core.handlers.wsgi.WSGIRequest
-    Path: /snippets/
     """
+    # list all
     if request.method == 'GET':
         snippets = Snippet.objects.all()
         serializer = SnippetSerializer(snippets, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+    # create
     elif request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = SnippetSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
-    return JsonResponse(serializer.errors, status=400)
+        return JsonResponse(serializer.errors, status=400)
 
 
 @csrf_exempt
 def snippet_detail(request, pk):
     """
     Retrieve, update or delete a code snippet.
-    Path: /snippets/[pk]/
     """
     try:
         snippet = Snippet.objects.get(pk=pk)
@@ -39,6 +39,7 @@ def snippet_detail(request, pk):
     if request.method == 'GET':
         serializer = SnippetSerializer(snippet)
         return JsonResponse(serializer.data)
+
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
         serializer = SnippetSerializer(snippet, data=data)
@@ -46,6 +47,7 @@ def snippet_detail(request, pk):
             serializer.save()
             return JsonResponse(serializer.data)
         return JsonResponse(serializer.errors, status=400)
+
     elif request.method == 'DELETE':
         snippet.delete()
         return HttpResponse(status=204)
