@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'apps.quickstart',
     'apps.snippets',
 ]
 
@@ -127,11 +128,15 @@ STATIC_URL = '/static/'
 # Custom Settings
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
 }
 
-# Loads Env
+# Load Env
 base_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(base_path)
 environs.Env.read_env(base_path + '/.env')

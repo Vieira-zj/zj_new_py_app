@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from apps.snippets.models import Snippet
 from apps.snippets.serializers import SnippetSerializer
 from apps.snippets.serializers import UserSerializer
+from apps.snippets.permissions import IsOwnerOrReadOnly
 
 
 @csrf_exempt
@@ -31,7 +32,7 @@ def snippet_list_v1(request):
         data = JSONParser().parse(request)
         serializer = SnippetSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=get_admin_user())
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
 
@@ -76,7 +77,7 @@ def snippet_list_v2(request):
     elif request.method == 'POST':
         serializer = SnippetSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -124,7 +125,7 @@ class SnippetListV3(APIView):
     def post(self, request, format=None):
         serializer = SnippetSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -175,6 +176,10 @@ class SnippetListV4(mixins.ListModelMixin,
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
+    def perform_create(self, serializer):
+        print('request user:', self.request.user)
+        serializer.save(owner=self.request.user)
+
 
 class SnippetDetailV4(mixins.RetrieveModelMixin,
                       mixins.UpdateModelMixin,
@@ -200,14 +205,17 @@ class SnippetDetailV4(mixins.RetrieveModelMixin,
 class SnippetListV5(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    # def perform_create(self, serializer):
-    #     serializer.save(owner=self.request.user)
+    def perform_create(self, serializer):
+        print('request user:', self.request.user)
+        serializer.save(owner=self.request.user)
 
 
 class SnippetDetailV5(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
 #
 # User
@@ -222,3 +230,11 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+#
+# Test
+#
+
+
+def get_admin_user():
+    return User.objects.get(username='admin')

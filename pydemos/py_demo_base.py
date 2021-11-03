@@ -1487,6 +1487,16 @@ def py_base_ex60():
     say_hello('bar')
 
 
+# expample 98, common use
+def py_base_ex98():
+    # dict as input params
+    def my_print(name='default', age=1):
+        print(f'name={name}, age={age}')
+
+    test_data = {'name': 'foo', 'age': 30}
+    my_print(**test_data)
+
+
 # expample 99, regexp samples
 def py_base_ex99():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
@@ -1575,7 +1585,7 @@ if __name__ == '__main__':
 
     try:
         # py_base_ex23_01()
-        py_base_ex60()
+        py_base_ex98()
     except Exception as e:
         print(e)
 

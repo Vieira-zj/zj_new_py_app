@@ -49,7 +49,11 @@ python manage.py runserver
 2. Test API
 
 ```sh
+# without auth
 curl -H 'Accept:application/json' http://127.0.0.1:8000/users/ | jq .
+# invalid pwd
+curl -H 'Accept:application/json' -u admin:password http://127.0.0.1:8000/users/ | jq .
+# ok
 curl -H 'Accept:application/json' -u admin:password123 http://127.0.0.1:8000/users/ | jq .
 ```
 
@@ -119,5 +123,59 @@ python manage.py makemigrations snippets
 python manage.py migrate
 ```
 
-TODO:
+2. Test model
+
+```text
+py manage.py shell
+> from apps.snippets import models
+> models.select_admin_snippet_data()
+> from apps.snippets import serializers
+> serializers.test_snippet_serializer_save()
+```
+
+3. Test auth api
+
+```sh
+# invalid pwd
+curl -XPOST http://127.0.0.1:8000/snippets/v5/ -u admin:password \
+  -H 'Content-Type:application/json' -H 'Accept:application/json' \
+  -d '{ "title": "", "code": "foo = \"bar\"\n", "linenos": false, "language": "python", "style": "friendly" }'
+
+# ok
+curl -XPOST http://127.0.0.1:8000/snippets/v5/ -u admin:password123 \
+  -H 'Content-Type:application/json' -H 'Accept:application/json' \
+  -d '{ "title": "", "code": "foo = \"bar\"\n", "linenos": false, "language": "python", "style": "friendly" }'
+```
+
+4. Test custom object permissions
+
+```sh
+# by pass for GET
+curl -u foo:bar http://127.0.0.1:8000/snippets/v5/35/ | jq .
+
+# failed by request.user != owner
+# "You do not have permission to perform this action."
+curl -XDELETE -u foo:bar http://127.0.0.1:8000/snippets/v5/35/ | jq .
+# ok
+curl -XDELETE -u admin:password123 http://127.0.0.1:8000/snippets/v5/35/ | jq .
+````
+
+## Diango External
+
+### ForeignKey
+
+Build db schema:
+
+```sh
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Run test:
+
+```text
+py manage.py shell
+> from apps.quickstart import models
+> models.get_all_female_student()
+```
 
