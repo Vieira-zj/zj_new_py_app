@@ -6,13 +6,15 @@ from rest_framework import status
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
+from rest_framework import renderers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from apps.snippets.models import Snippet
-from apps.snippets.serializers import SnippetSerializer
-from apps.snippets.serializers import UserSerializer
+from apps.snippets.serializers import SnippetSerializer, HyperlinkSnippetSerializer
+from apps.snippets.serializers import UserSerializer, HyperlinkUserSerializer
 from apps.snippets.permissions import IsOwnerOrReadOnly
 
 
@@ -109,6 +111,7 @@ def snippet_detail_v2(request, pk):
 
 #
 # Class based view
+# APIView
 #
 
 
@@ -168,7 +171,7 @@ class SnippetListV4(mixins.ListModelMixin,
                     mixins.CreateModelMixin,
                     generics.GenericAPIView):
     queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    serializer_class = HyperlinkSnippetSerializer
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -186,7 +189,7 @@ class SnippetDetailV4(mixins.RetrieveModelMixin,
                       mixins.DestroyModelMixin,
                       generics.GenericAPIView):
     queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    serializer_class = HyperlinkSnippetSerializer
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -224,12 +227,34 @@ class SnippetDetailV5(generics.RetrieveUpdateDestroyAPIView):
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = HyperlinkUserSerializer
 
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = HyperlinkUserSerializer
+
+#
+# Hyperlink
+#
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'snippets': reverse('snippet-list', request=request, format=format),
+    })
+
+
+class SnippetHighlight(generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    renderer_classes = [renderers.StaticHTMLRenderer]
+
+    def get(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
+
 
 #
 # Test

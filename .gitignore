@@ -15,3 +15,4 @@ pyapps/app_google_sheets/token.pickle
 
 .env
 .env.sh
+db.sqlite3

@@ -112,7 +112,7 @@ curl -XDELETE http://127.0.0.1:8000/snippets/v5/1/ | jq .
 > Note: if post data is json, it must sets request format by header `Content-Type:application/json`, since the default value is form.
 >
 
-### Auth
+### Auth and Permssion
 
 1. Rebuild database
 
@@ -159,6 +159,12 @@ curl -XDELETE -u foo:bar http://127.0.0.1:8000/snippets/v5/35/ | jq .
 # ok
 curl -XDELETE -u admin:password123 http://127.0.0.1:8000/snippets/v5/35/ | jq .
 ````
+
+### Hyperlink
+
+It improves discoverability of API, by instead using hyperlinking for relationships.
+
+In chrome, open url <http://127.0.0.1:8000/snippets/>.
 
 ## Diango External
 

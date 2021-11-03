@@ -21,6 +21,32 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'snippets']
 
 #
+# Hyperlink
+#
+
+
+class HyperlinkSnippetSerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    # point to "snippet-highlight" url pattern
+    highlight = serializers.HyperlinkedIdentityField(
+        view_name='snippet-highlight', format='html')
+
+    class Meta:
+        model = Snippet
+        # url point to "snippet-detail" url pattern
+        fields = ['url', 'id', 'highlight', 'owner',
+                  'title', 'code', 'linenos', 'language', 'style']
+
+
+class HyperlinkUserSerializer(serializers.HyperlinkedModelSerializer):
+    snippets = serializers.HyperlinkedRelatedField(
+        many=True, view_name='snippet-detail', read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['url', 'id', 'username', 'snippets']
+
+#
 # Test
 #
 
@@ -36,6 +62,7 @@ def test_user_serializer():
 
 def test_user_serializer_save():
     import json
+    # when add user by set "snippets" ids, it will sync data in snippets table
     content = '{"username": "bar", "email": "bar@test.com", "is_active": false, "snippets": []}'
     data = json.loads(content)
     ser = UserSerializer(data=data)
@@ -61,5 +88,5 @@ def test_snippet_serializer_save():
     ser = SnippetSerializer(data=data)
     ser.is_valid(raise_exception=True)
     admin = User.objects.get(username='admin')
-    ser.save(owner=admin)
+    ser.save(owner=admin)  # save by set foreign key
     print('count:', Snippet.objects.count())
