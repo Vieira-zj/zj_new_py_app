@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
+import sys
+import environs
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pyserver.drf_tutorial.apps.quickstart',
-    'pyserver.drf_tutorial.apps.snippets',
+    'rest_framework',
+    'apps.snippets',
 ]
 
 MIDDLEWARE = [
@@ -121,9 +124,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Custom
+# Custom Settings
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
+# Loads Env
+base_path = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(base_path)
+environs.Env.read_env(base_path + '/.env')
+
+env = environs.Env()
+DEBUG = env.bool('IS_DEBUG', False)
+LOG_LEVEL = env.str('LOG_LEVEL', 'INFO')
+
+ALLOWED_HOSTS = ['*']

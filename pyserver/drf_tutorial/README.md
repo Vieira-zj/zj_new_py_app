@@ -1,12 +1,9 @@
 # Django Rest Framework Tutorial
 
-> Refer:
-> 
-> - Github: <https://github.com/encode/rest-framework-tutorial>
-> - Django模型 <https://docs.djangoproject.com/zh-hans/3.1/topics/db/>
+> Refer: Django模型 <https://docs.djangoproject.com/zh-hans/3.1/topics/db/>
 >
 
-## Quick Start 
+## Quick Start
 
 > Refer: <https://www.django-rest-framework.org/tutorial/quickstart/>
 >
@@ -41,7 +38,7 @@ python manage.py migrate
 python manage.py createsuperuser --email admin@example.com --username admin
 ```
 
-### Up and Test
+### Server Up and Test
 
 1. Run server
 
@@ -52,8 +49,11 @@ python manage.py runserver
 2. Test API
 
 ```sh
-curl -H 'Accept: application/json; indent=4' -u admin:password123 http://127.0.0.1:8000/users/ | jq .
+curl -H 'Accept:application/json' http://127.0.0.1:8000/users/ | jq .
+curl -H 'Accept:application/json' -u admin:password123 http://127.0.0.1:8000/users/ | jq .
 ```
+
+------
 
 ## Tutorial
 
@@ -71,9 +71,9 @@ python manage.py startapp snippets ./apps/snippets
 2. Create model and run initial migration
 
 ```sh
-# create migrate script in migrations/
+# create migrate script in dir "migrations/"
 python manage.py makemigrations snippets
-# do migration
+# migration to db
 python manage.py migrate
 ```
 
@@ -89,16 +89,35 @@ python manage.py runserver
 
 ```sh
 # create
-curl -XPOST http://127.0.0.1:8000/snippets/ -d '{ "title": "", "code": "foo = \"bar\"\n", "linenos": false, "language": "python", "style": "friendly" }'
-curl -XPOST http://127.0.0.1:8000/snippets/ -d '{ "title": "", "code": "print(\"hello, world\")\n", "linenos": false, "language": "python", "style": "friendly" }'
+curl -XPOST http://127.0.0.1:8000/snippets/v5/ \
+  -H 'Content-Type:application/json' -H 'Accept:application/json' \
+  -d '{ "title": "", "code": "foo = \"bar\"\n", "linenos": false, "language": "python", "style": "friendly" }'
+curl -XPOST http://127.0.0.1:8000/snippets/v5/ \
+  -H 'Content-Type:application/json' -H 'Accept:application/json' \
+  -d '{ "title": "", "code": "print(\"hello, world\")\n", "linenos": false, "language": "python", "style": "friendly" }'
 
 # list
-curl http://127.0.0.1:8000/snippets/ | jq .
+curl http://127.0.0.1:8000/snippets/v5/ | jq .
 # get
-curl http://127.0.0.1:8000/snippets/2/ | jq .
+curl http://127.0.0.1:8000/snippets/v5/2/ | jq .
+
+# delete
+curl -XDELETE http://127.0.0.1:8000/snippets/v5/1/ | jq .
 ```
 
-### Views
+> Note: if post data is json, it must sets request format by header `Content-Type:application/json`, since the default value is form.
+>
+
+### Auth
+
+1. Rebuild database
+
+```sh
+rm -f db.sqlite3
+rm -r apps/snippets/migrations
+python manage.py makemigrations snippets
+python manage.py migrate
+```
 
 TODO:
 
