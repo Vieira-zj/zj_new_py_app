@@ -160,11 +160,35 @@ curl -XDELETE -u foo:bar http://127.0.0.1:8000/snippets/v5/35/ | jq .
 curl -XDELETE -u admin:password123 http://127.0.0.1:8000/snippets/v5/35/ | jq .
 ````
 
-### Hyperlink
+### Hyperlinked API
 
 It improves discoverability of API, by instead using hyperlinking for relationships.
 
 In chrome, open url <http://127.0.0.1:8000/snippets/>.
+
+### Viewsets
+
+Test viewsets api:
+
+```sh
+# retrieve
+curl http://127.0.0.1:8000/viewset/snippets/
+curl http://127.0.0.1:8000/viewset/snippets/38/ | jq .
+curl http://127.0.0.1:8000/viewset/snippets/38/highlight/ | jq .
+
+# delete
+# failed: "You do not have permission to perform this action."
+curl -XDELETE -u test:1 http://127.0.0.1:8000/viewset/snippets/38/ | jq .
+# ok
+curl -XDELETE -u admin:password123 http://127.0.0.1:8000/viewset/snippets/38/ | jq .
+
+# create
+curl -XPOST http://127.0.0.1:8000/viewset/snippets/ -u admin:password123 \
+  -H 'Content-Type:application/json' -H 'Accept:application/json' \
+  -d '{ "title": "", "code": "foo = \"bar\"\n", "linenos": false, "language": "python", "style": "friendly" }'
+```
+
+------
 
 ## Diango External
 
@@ -183,5 +207,14 @@ Run test:
 py manage.py shell
 > from apps.quickstart import models
 > models.get_all_female_student()
+```
+
+### FilterSet
+
+Create `CoursePriceFilterSet`, and set `filter_backends` and `filter_class` in view. Test by diff prices:
+
+```sh
+curl "http://127.0.0.1:8000/courses/free/?max_price=400" | jq .
+curl "http://127.0.0.1:8000/courses/free/?max_price=600" | jq .
 ```
 

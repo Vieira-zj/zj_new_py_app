@@ -1,7 +1,12 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics
 from rest_framework import permissions
+from rest_framework import viewsets
+from apps.quickstart.models import Course
 from apps.quickstart.serializers import UserSerializer, GroupSerializer
+from apps.quickstart.serializers import CourseSerializer
+from apps.quickstart.filtersets import CoursePriceFilterSet
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -20,3 +25,10 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class CourseFreeList(generics.ListAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    filter_backends = [DjangoFilterBackend]
+    filter_class = CoursePriceFilterSet

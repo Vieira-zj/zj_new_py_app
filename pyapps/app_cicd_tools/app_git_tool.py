@@ -404,6 +404,17 @@ class GitlabTool(object):
         commit = self.get_branch_history_commits(branch_name, 1)
         return commit[0].short_id
 
+    def get_branch_commits_index(self, short_ids: List[str], branch_name, num=10) -> Dict[str, int]:
+        commits = self.get_branch_history_commits(branch_name, num)
+        ret_dict = {}
+        for short_id in short_ids:
+            ret_dict[short_id] = -1
+            for idx, commit in enumerate(commits):
+                if commit.short_id == short_id:
+                    ret_dict[short_id] = idx
+                    continue
+        return ret_dict
+
     def get_commit_merge_requests(self, commit) -> List[dict]:
         """
         mr dict:
@@ -776,6 +787,18 @@ def test_gitlab_compare_two_commits():
         latest_commit_short_id = tool.get_branch_head_sha('staging')
         print('latest commit for staging branch:', latest_commit_short_id)
 
+    def test_get_br_commit_index():
+        br_name = 'master'
+        commits = tool.get_branch_history_commits(br_name, num=10)
+        for cm in commits:
+            print(
+                f'short id: {cm.short_id}, title: {cm.title}, commit date: {cm.committed_date}')
+
+        short_ids = ['00f5b4cb', '00f5b4xx', 'e95cffa2']
+        res = tool.get_branch_commits_index(short_ids, br_name)
+        for k, v in res.items():
+            print(f'commit {k}, index: {v}')
+
     def test_get_tag_commit():
         test_tag = 'release-2021.10.v2'
         release_tag = tool.get_a_tag(test_tag)
@@ -827,12 +850,12 @@ def test_gitlab_compare_two_commits():
 
     if False:
         test_get_br_head_commit()
+        test_get_br_commit_index()
         test_get_tag_commit()
         test_diff_tags()
         test_diff_commits()
         test_get_to_uat_mrs()
         test_compare_commits_by_date()
-
     test_get_br_head_commit()
 
 

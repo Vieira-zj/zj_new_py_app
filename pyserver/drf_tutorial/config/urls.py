@@ -26,5 +26,6 @@ router.register(r'groups', views.GroupViewSet)
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('', include(router.urls)),
+    path('', include('apps.quickstart.urls')),
     path('', include('apps.snippets.urls')),
 ]

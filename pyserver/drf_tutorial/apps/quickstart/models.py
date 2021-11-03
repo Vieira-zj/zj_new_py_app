@@ -22,11 +22,23 @@ class Student(models.Model):
         return f'{self.Number}-{self.Gender}'
 
 #
+# Filterset
+#
+
+
+class Course(models.Model):
+    name = models.CharField('课程名称', max_length=32, db_index=True)
+    price = models.IntegerField('课程费用')
+
+    def __str__(self):
+        return f'{self.name}:{self.price}'
+
+#
 # Test
 #
 
 
-def init_data():
+def init_gender_data():
     male = GenderRef(text='male', gender=1)
     male.save()
     female = GenderRef(text='female', gender=2)
@@ -47,6 +59,16 @@ def init_student_data():
         gender = male if i % 2 == 0 else female
         s = Student(id=None, Number=base_num+i, Gender=gender)
         s.save()
+
+
+def init_course_data():
+    c = Course(name='python', price=300)
+    c.save()
+    c = Course(name='java', price=500)
+    c.save()
+    c = Course(name='c++', price=701)
+    c.save()
+    print('course count:', Course.objects.count())
 
 
 def select_data():
