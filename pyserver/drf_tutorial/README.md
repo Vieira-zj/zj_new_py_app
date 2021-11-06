@@ -194,14 +194,14 @@ curl -XPOST http://127.0.0.1:8000/viewset/snippets/ -u admin:password123 \
 
 ### ForeignKey
 
-Build db schema:
+1. Build db schema
 
 ```sh
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-Run test:
+2. Run test
 
 ```text
 py manage.py shell
@@ -211,7 +211,7 @@ py manage.py shell
 
 ### Serializer Validation
 
-1. Create models, serializers and views.
+1. Create models, serializers and views
 
 2. Test api
 
@@ -244,5 +244,20 @@ Create `CoursePriceFilterSet`, and set `filter_backends` and `filter_class` in v
 ```sh
 curl "http://127.0.0.1:8000/courses/free/?max_price=400" | jq .
 curl -H 'Accept:application/json' "http://127.0.0.1:8000/courses/free/?max_price=600" | jq .
+```
+
+### Tests
+
+1. Add unit or API test cases in `tests.py`
+
+2. Run test cases
+
+```sh
+# run all tests in quickstart app
+py manage.py test apps.quickstart.tests
+# run one test class
+py manage.py test apps.quickstart.tests.PersonApiTest
+# run one test mehtod
+py manage.py test apps.quickstart.tests.PersonApiTest.test_filter_person_failed
 ```
 
