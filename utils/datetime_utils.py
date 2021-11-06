@@ -61,6 +61,14 @@ def format_datetime_to_timestamp(input_datetime) -> int:
     return int(time.mktime(d.timetuple()))
 
 
+def test_duration_by_datetime():
+    start = dt.now()
+    time.sleep(3)
+    duration = dt.now() - start
+    print(f'duration: {duration.seconds} seconds')
+    print('duration: %.2f seconds' % duration.total_seconds())
+
+
 if __name__ == '__main__':
 
     try:
@@ -72,8 +80,10 @@ if __name__ == '__main__':
         # print(get_week_of_year_v2('2021-12-23'))
 
         # print(format_timestamp_to_datetime(time.time()))
-        print(format_timestamp_to_datetime('1635416838'))
+        # print(format_timestamp_to_datetime('1635416838'))
         # print(format_datetime_to_timestamp('2021-10-18 20:05:43'))
+
+        test_duration_by_datetime()
     except:
         traceback.print_exc()
 

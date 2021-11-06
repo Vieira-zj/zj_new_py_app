@@ -396,16 +396,24 @@ class GitlabTool(object):
         """
         return self._project.commits.get(commit_id)
 
-    def get_branch_history_commits(self, branch_name, num=10) -> list:
-        commits = self._project.commits.list(ref_name=branch_name)
-        return commits[:num]
+    def get_branch_history_commits(self, branch_name) -> list:
+        # default return first 20 commits
+        return self._project.commits.list(ref_name=branch_name)
+
+    def get_branch_history_commits_by_since_date(self, branch_name: str, since_date: str) -> list:
+        query = {
+            'ref_name': branch_name,
+            'since': f'{since_date}T00:00:00Z',
+        }
+        commits = self._project.commits.list(all=True, query_parameters=query)
+        return commits
 
     def get_branch_head_sha(self, branch_name):
-        commit = self.get_branch_history_commits(branch_name, 1)
-        return commit[0].short_id
+        commits = self.get_branch_history_commits(branch_name)
+        return commits[0].short_id
 
     def get_branch_commits_index(self, short_ids: List[str], branch_name, num=10) -> Dict[str, int]:
-        commits = self.get_branch_history_commits(branch_name, num)
+        commits = self.get_branch_history_commits(branch_name)[:num]
         ret_dict = {}
         for short_id in short_ids:
             ret_dict[short_id] = -1
@@ -428,7 +436,7 @@ class GitlabTool(object):
         return commit.merge_requests()
 
     def filter_commits_by_branch(self, commits: Dict[str, str], branch_name) -> Dict[str, str]:
-        br_history_commits = self.get_branch_history_commits(branch_name, 50)
+        br_history_commits = self.get_branch_history_commits(branch_name)
         ret_commits = []
         for commit in commits:
             for br_commit in br_history_commits:
@@ -789,7 +797,7 @@ def test_gitlab_compare_two_commits():
 
     def test_get_br_commit_index():
         br_name = 'master'
-        commits = tool.get_branch_history_commits(br_name, num=10)
+        commits = tool.get_branch_history_commits(br_name)
         for cm in commits:
             print(
                 f'short id: {cm.short_id}, title: {cm.title}, commit date: {cm.committed_date}')

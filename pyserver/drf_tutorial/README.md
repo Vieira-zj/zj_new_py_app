@@ -46,7 +46,7 @@ python manage.py createsuperuser --email admin@example.com --username admin
 python manage.py runserver
 ```
 
-2. Test API
+2. Test api
 
 ```sh
 # without auth
@@ -109,7 +109,7 @@ curl http://127.0.0.1:8000/snippets/v5/2/ | jq .
 curl -XDELETE http://127.0.0.1:8000/snippets/v5/1/ | jq .
 ```
 
-> Note: if post data is json, it must sets request format by header `Content-Type:application/json`, since the default value is form.
+> Note: if post data is json, it must set request format by header `Content-Type:application/json`, since the default value is form.
 >
 
 ### Auth and Permssion
@@ -123,7 +123,7 @@ python manage.py makemigrations snippets
 python manage.py migrate
 ```
 
-2. Test model
+2. Test models and serializers
 
 ```text
 py manage.py shell
@@ -172,7 +172,7 @@ Test viewsets api:
 
 ```sh
 # retrieve
-curl http://127.0.0.1:8000/viewset/snippets/
+curl http://127.0.0.1:8000/viewset/snippets/ | jq .
 curl http://127.0.0.1:8000/viewset/snippets/38/ | jq .
 curl http://127.0.0.1:8000/viewset/snippets/38/highlight/ | jq .
 
@@ -209,12 +209,40 @@ py manage.py shell
 > models.get_all_female_student()
 ```
 
+### Serializer Validation
+
+1. Create models, serializers and views.
+
+2. Test api
+
+```sh
+# create
+curl -XPOST http://127.0.0.1:8000/quickstart/person/  \
+  -H 'Content-Type:application/json' -H 'Accept:application/json' \
+  -d '{ "name": "foo", "age": 33, "birthday": "1983-7-1", "role": "qa", "language": "python" }'
+
+# retrieve
+curl http://127.0.0.1:8000/quickstart/person/ | jq .
+curl http://127.0.0.1:8000/quickstart/person/1/ | jq .
+
+# delete
+curl -XDELETE http://127.0.0.1:8000/quickstart/person/3/ | jq .
+
+# search
+# get filter results by post
+curl "http://127.0.0.1:8000/quickstart/person/by-filter/" \
+  -H 'Content-Type:application/json' -H 'Accept:application/json' \
+  -d '{ "role": "qa", "age": 30 }' | jq .
+# get by date range
+curl "http://127.0.0.1:8000/quickstart/person/by-filter/?start=1980-1-1&end=1986-12-10" | jq .
+```
+
 ### FilterSet
 
 Create `CoursePriceFilterSet`, and set `filter_backends` and `filter_class` in view. Test by diff prices:
 
 ```sh
 curl "http://127.0.0.1:8000/courses/free/?max_price=400" | jq .
-curl "http://127.0.0.1:8000/courses/free/?max_price=600" | jq .
+curl -H 'Accept:application/json' "http://127.0.0.1:8000/courses/free/?max_price=600" | jq .
 ```
 

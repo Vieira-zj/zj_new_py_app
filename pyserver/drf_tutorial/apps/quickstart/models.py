@@ -1,4 +1,5 @@
 from django.db import models
+from config import settings
 
 #
 # Foreignkey
@@ -22,6 +23,27 @@ class Student(models.Model):
         return f'{self.Number}-{self.Gender}'
 
 #
+# Param validation
+#
+
+
+languages = sorted([(item, item)
+                    for item in ('python', 'java', 'golang', 'javascript')])
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=32)
+    age = models.IntegerField()
+    birthday = models.DateField()
+    role = models.CharField(max_length=16)
+    language = models.CharField(
+        choices=languages, default='python', max_length=32)
+    comment = models.CharField(max_length=256, null=True, blank=True)
+
+    class Meta:
+        db_table = 'quickstart_persons'
+
+#
 # Filterset
 #
 
@@ -36,6 +58,11 @@ class Course(models.Model):
 #
 # Test
 #
+
+
+def test_settings():
+    print('is debug:', settings.DEBUG)
+    print('log level:', settings.LOG_LEVEL)
 
 
 def init_gender_data():
