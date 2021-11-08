@@ -11,7 +11,6 @@ import xml.dom.minidom as xmldom
 
 
 class JenkinsTools(object):
-
     """
     apis:
     http://jenkins-host/job/{job-name}/api
@@ -113,17 +112,56 @@ class JenkinsTools(object):
 
         resp_obj = resp.json()
         # print(json.dumps(resp_obj))  # for debug
-        if is_print:
-            print('build name=%s, building=%s, duration=%s(sec), result=%s' % (
-                resp_obj['fullDisplayName'], resp_obj['building'], (int(resp_obj['duration'] / 1000)), resp_obj['result']))
+        if bool(resp_obj['building']):
+            resp_obj['duration'] = 0
 
+        if is_print:
+            print('build name=%s, building=%s, duration=%s, result=%s' % (
+                resp_obj['fullDisplayName'], resp_obj['building'], resp_obj['duration'], resp_obj['result']))
+
+        # build return data
+        ret_data = {
+            'name': job_name,
+            'build_no': build_no,
+        }
+        for key in ('building', 'duration', 'result', 'timestamp'):
+            if key == 'duration':
+                ret_data[key] = self._format_duration(int(resp_obj[key]))
+            elif key == 'timestamp':
+                ret_data[key] = self._format_job_timestamp(resp_obj[key])
+            else:
+                ret_data[key] = resp_obj[key]
+
+        build_params = self._get_build_parameters(resp_obj['actions'])
+        git_build_data = self._get_build_git_data(resp_obj['actions'])
+        trigger = self._get_build_trigger_name(resp_obj['actions'])
+        if is_print:
+            print('\nbuild parameters:', build_params)
+            print(f'\ngit build data:', git_build_data)
+
+        ret_data['build_params'] = build_params
+        ret_data['git_build_data'] = git_build_data
+        ret_data['trigger'] = trigger
+        return ret_data
+
+    def _get_build_parameters(self, resp_actions) -> dict:
         build_params_list = []
-        git_build_data = {}
-        for action in resp_obj['actions']:
+        for action in resp_actions:
             action_class = action.get('_class', '')
             if action_class == 'hudson.model.ParametersAction':
                 build_params_list = action['parameters']
-            # get git build data
+
+        build_params = {}
+        for item in ('ENVIRONMENT', 'BRANCH', 'TAG', 'DEPLOY_CIDS', 'FROM_BRANCH'):
+            for param in build_params_list:
+                if param['name'] == item:
+                    build_params[item] = param['value']
+        return build_params
+
+    def _get_build_git_data(self, resp_actions) -> dict:
+        git_build_data = {}
+        for action in resp_actions:
+            action_class = action.get('_class', '')
             if action_class == 'hudson.plugins.git.util.BuildData':
                 remote_url = action['remoteUrls'][0]
                 if 'jenkins_pipeline_shared_library' in remote_url:
@@ -132,28 +170,17 @@ class JenkinsTools(object):
                 branch = action['lastBuiltRevision']['branch'][0]
                 git_build_data['branch_or_tag'] = branch['name']
                 git_build_data['commit_id'] = branch['SHA1']
-        if is_print:
-            print(f'\ngit build data:', git_build_data)
+        return git_build_data
 
-        build_params = {}
-        for item in ('ENVIRONMENT', 'BRANCH', 'TAG', 'DEPLOY_CIDS', 'FROM_BRANCH'):
-            for param in build_params_list:
-                if param['name'] == item:
-                    build_params[item] = param['value']
-        if is_print:
-            print('\nbuild parameters:', build_params)
-
-        ret_data = {
-            'build_no': build_no,
-            'build_params': build_params,
-            'git_build_data': git_build_data,
-        }
-        for key in ('building', 'duration', 'result', 'timestamp'):
-            if key == 'timestamp':
-                ret_data[key] = self._format_job_timestamp(resp_obj[key])
-            else:
-                ret_data[key] = resp_obj[key]
-        return ret_data
+    def _get_build_trigger_name(self, resp_actions: dict) -> str:
+        for item in resp_actions:
+            if 'causes' in item.keys():
+                cause = item['causes'][0]
+                cause_class = cause['_class']
+                if cause_class.find('$') > 0:
+                    return cause_class.split('$')[1]
+                return cause_class
+        return ''
 
     def _get_build_by_branch_from_resp_actions(self, action, branch_tag_name):
         """
@@ -163,6 +190,12 @@ class JenkinsTools(object):
         for key, value in action['buildsByBranchName'].items():
             if key == branch_tag_name:
                 return value['revision']['SHA1']
+
+    def _format_duration(self, duration: int) -> str:
+        duration = duration / 1000
+        mins = int(duration / 60)
+        secs = round(duration % 60)
+        return f'{mins}(mins) {secs}(secs)'
 
     def _format_job_timestamp(self, ts: int):
         ts = str(ts)[:-3]
@@ -361,7 +394,7 @@ def test_run_a_build(tool: JenkinsTools, job: str):
 def test_get_build_commit_info(tool: JenkinsTools, job: str):
     build_no = tool.get_lastbuild_number(job)
     res = tool.get_build_info(job, build_no)
-    print(res)
+    print(json.dumps(res, indent='  '))
 
 
 if __name__ == '__main__':
@@ -373,7 +406,7 @@ if __name__ == '__main__':
 
     tool = None
     try:
-        tool = JenkinsTools()
+        # tool = JenkinsTools()
         # test_get_job_info(tool, job)
         # test_get_build_info(tool, job)
         # test_run_a_build(tool, job)
