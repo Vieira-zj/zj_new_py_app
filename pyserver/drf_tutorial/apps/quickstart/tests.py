@@ -16,6 +16,12 @@ class CourseUnitTests(TestCase):
         Course.objects.create(name='python', price=300)
         Course.objects.create(name='java', price=500)
 
+    def test_get_settings(self):
+        # from config import settings
+        from django.conf import settings
+        self.assertEqual(settings.IS_DEBUG, True)
+        self.assertEqual(settings.LOG_LEVEL, 'DEBUG')
+
     def test_create_course(self):
         self.assertEqual(Course.objects.count(), 2)
 

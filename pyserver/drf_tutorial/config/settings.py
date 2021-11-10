@@ -142,7 +142,7 @@ sys.path.append(base_path)
 environs.Env.read_env(base_path + '/.env')
 
 env = environs.Env()
-DEBUG = env.bool('IS_DEBUG', False)
+IS_DEBUG = env.bool('IS_DEBUG', False)
 LOG_LEVEL = env.str('LOG_LEVEL', 'INFO')
 
 ALLOWED_HOSTS = ['*']

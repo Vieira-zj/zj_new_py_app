@@ -1487,18 +1487,8 @@ def py_base_ex60():
     say_hello('bar')
 
 
-# expample 98, common use
+# expample 98, regexp samples
 def py_base_ex98():
-    # dict as input params
-    def my_print(name='default', age=1):
-        print(f'name={name}, age={age}')
-
-    test_data = {'name': 'foo', 'age': 30}
-    my_print(**test_data)
-
-
-# expample 99, regexp samples
-def py_base_ex99():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
     # search: 函数类似于 match, 不同之处在于不限制正则表达式的开始匹配位置
     # findall: 寻找所有匹配正则表达式的字串，返回一个列表
@@ -1557,7 +1547,28 @@ def py_base_ex99():
         print(f'text:{text}, result:{check_app_tag(text)}')
 
 
+# expample 99, common
+def py_base_ex99():
+    # title
+    print('samuel colvin'.title())
+    print()
+
+    # 泰文 bytes 转 str
+    s = b'\340\271\204\340\270\241\340\271\210\340\270\252\340\270\262\340\270\241\340\270\262\340\270\243\340\270\226\340\271\203\340\270\212\340\271\211\340\270\204\340\270\271\340\270\233\340\270\255\340\270\207\340\270\231\340\270\265\340\271\211'
+    print(s.decode())
+    print()
+
+    # dict as input params
+    def my_print(name='default', age=1):
+        print(f'name={name}, age={age}')
+
+    test_data = {'name': 'foo', 'age': 30}
+    my_print(**test_data)
+
+
 if __name__ == '__main__':
+
+    # run_mod_imports()
 
     def get_parent(path, level):
         for _ in range(level):
@@ -1569,23 +1580,18 @@ if __name__ == '__main__':
 
     pypath = os.getenv('PYPATH') if len(os.getenv('PYPATH')) > 0 else 'null'
     print('PYPATH=' + pypath)
-    print()
-
-    print('samuel colvin'.title())
-    print()
 
     project_path = get_parent(os.path.abspath(__file__), 2)
-    print('project root path:', project_path)
-
-    # run_mod_imports()
+    print('PROJECT_ROOT=' + project_path)
 
     # 使用 logger 方式打印字符串，可以避免不必要的字符串解析，提高性能
     logger.warning(
         'this is logger print: str=%s, number=%d, float=%.2f', 'helloworld', 123, 11.337)
+    print()
 
     try:
         # py_base_ex23_01()
-        py_base_ex98()
+        py_base_ex99()
     except Exception as e:
         print(e)
 

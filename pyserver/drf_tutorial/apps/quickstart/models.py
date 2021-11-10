@@ -1,5 +1,4 @@
 from django.db import models
-from config import settings
 
 #
 # Foreignkey
@@ -58,11 +57,6 @@ class Course(models.Model):
 #
 # Test
 #
-
-
-def test_settings():
-    print('is debug:', settings.DEBUG)
-    print('log level:', settings.LOG_LEVEL)
 
 
 def init_gender_data():
