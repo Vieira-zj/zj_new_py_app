@@ -17,6 +17,7 @@ import random
 import sys
 import time
 import datetime
+import traceback
 
 import numpy as np
 import matplotlib
@@ -215,8 +216,6 @@ def py_base_ex07():
 
 # example 08_01, re.match() and re.search()
 def py_base_ex08_01():
-    import re
-
     print(re.match('super', 'superstition').span())  # (0, 5)
     print(re.match('super', 'insuperable'))  # None
 
@@ -239,7 +238,6 @@ def py_base_ex08_02():
     input_lines.append(
         'W System.err: org.json.JSONException: No value for preSaleSkuInfo')
 
-    import re
     ret_dict = {}
     for line in input_lines:
         re_results = re.match(r'.*:\s+(.*Exception.{20,30})', line)
@@ -1487,6 +1485,43 @@ def py_base_ex60():
     say_hello('bar')
 
 
+# expample 61, bean object, and remove when iterator
+def py_base_ex61():
+    class StudentBean(object):
+        def __init__(self, name: str, age: int):
+            self.name = name
+            self.age = age
+
+        def __str__(self):
+            return f'name={self.name},age={self.age}'
+
+    students = []
+    for idx, val in enumerate('abcdefg'):
+        students.append(StudentBean(f'{val}_{val}', idx+30))
+    keys_to_remove = ['a', 'b', 'd', 'e']
+
+    for s in students:
+        print(s)
+    print()
+
+    # NOTE: do not remove item when iterator
+    for s in students:
+        print('iterator:', s.name)
+        if s.name[0] in keys_to_remove:
+            print('remove:', s.name)
+            students.remove(s)
+    print()
+
+    # ok to remove
+    students_to_remove = [s for s in students if s.name[0] in keys_to_remove]
+    for s in students_to_remove:
+        students.remove(s)
+
+    # print bean object as dict
+    for s in students:
+        print(s.__dict__)
+
+
 # expample 98, regexp samples
 def py_base_ex98():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
@@ -1591,8 +1626,8 @@ if __name__ == '__main__':
 
     try:
         # py_base_ex23_01()
-        py_base_ex99()
-    except Exception as e:
-        print(e)
+        py_base_ex61()
+    except:
+        traceback.print_exc()
 
     print('python base demo DONE.')
