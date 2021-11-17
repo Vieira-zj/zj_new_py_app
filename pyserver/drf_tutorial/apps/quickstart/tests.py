@@ -4,6 +4,7 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APITestCase
 from apps.quickstart.models import Course, Person
+from apps.quickstart.serializers import CourseSerializer
 
 #
 # Unit Test
@@ -11,6 +12,9 @@ from apps.quickstart.models import Course, Person
 
 
 class CourseUnitTests(TestCase):
+    """
+    run: py manage.py test apps.quickstart.tests.CourseUnitTests
+    """
 
     def setUp(self):
         Course.objects.create(name='python', price=300)
@@ -26,9 +30,30 @@ class CourseUnitTests(TestCase):
         self.assertEqual(Course.objects.count(), 2)
 
     def test_get_course(self):
-        py = Course.objects.get(name='python')
-        print(py)
-        self.assertEqual(py.price, 300)
+        res = Course.objects.get(name='python')
+        print(type(res), res)
+        print()
+        self.assertEqual(res.price, 300)
+
+    def test_serializer_01(self):
+        courses = Course.objects.all()
+        for item in courses:
+            print(type(item), f'name={item.name}, price={item.price}')
+
+        ser = CourseSerializer(courses, many=True)
+        for item in ser.data:
+            print(type(item), f'name={item["name"]}, price={item["price"]}')
+        print()
+
+    def test_serializer_02(self):
+        courses = Course.objects.all().values()
+        # if use values(), iterator value is a dict
+        for item in courses:
+            print(type(item), f'name={item["name"]}, price={item["price"]}')
+
+        ser = CourseSerializer(courses, many=True)
+        for item in ser.data:
+            print(type(item), f'name={item["name"]}, price={item["price"]}')
 
 #
 # Api Test

@@ -1522,6 +1522,27 @@ def py_base_ex61():
         print(s.__dict__)
 
 
+# expample 62, python3 custom sort string list
+def py_base_ex62():
+    level_value_dict = {
+        'na': 0,
+        'low': 1,
+        'mid': 2,
+        'high': 3,
+    }
+
+    def mycmp(x, y):
+        x_value = level_value_dict[x]
+        y_value = level_value_dict[y]
+        return y_value - x_value
+
+    from functools import cmp_to_key
+    key = cmp_to_key(mycmp)
+    rows = ['low', 'high', 'low', 'high', 'mid', 'low', 'na', 'mid']
+    res = sorted(rows, key=key)
+    print('result:', ','.join(res))
+
+
 # expample 98, regexp samples
 def py_base_ex98():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
@@ -1626,7 +1647,7 @@ if __name__ == '__main__':
 
     try:
         # py_base_ex23_01()
-        py_base_ex61()
+        py_base_ex62()
     except:
         traceback.print_exc()
 
