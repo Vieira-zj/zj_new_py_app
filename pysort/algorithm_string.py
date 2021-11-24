@@ -8,7 +8,7 @@ import sys
 import os
 from typing import List
 
-sys.path.append(os.getenv('PYROOT'))
+sys.path.append(os.getenv('PYPROJECT'))
 from pysort import Stack
 
 # -----------------------------------
@@ -235,6 +235,55 @@ def test07():
         print(actual if len(actual) > 0 else 'null')
 
 
+def add_string_number(x: str, y: str) -> str:
+    """
+    考虑 x, y 转换成 int 时可能会超过整型最长大度，导致溢出的情况，因此每位数分别进行计算。
+    fix: 只能处理两个正整数相加的情况。
+    """
+    x = reversed(x)
+    x_nums = []
+    for num in x:
+        x_nums.append(int(num))
+    y = reversed(y)
+    y_nums = []
+    for num in y:
+        y_nums.append(int(num))
+
+    # 补0 位数对齐
+    append_size = abs(len(y_nums) - len(x_nums))
+    if len(x_nums) < len(y_nums):
+        x_nums.extend([0 for i in range(append_size)])
+    else:
+        y_nums.extend([0 for i in range(append_size)])
+    # 最后可能进一位的情况
+    x_nums.append(0)
+    y_nums.append(0)
+
+    # 计算
+    res = []
+    more = 0
+    for i in range(len(x_nums)):
+        tmp = more if more > 0 else 0
+        tmp += x_nums[i] + y_nums[i]
+        if tmp >= 10:
+            more = 1
+            res.append(tmp - 10)
+        else:
+            more = 0
+            res.append(tmp)
+
+    res = [str(item) for item in res]
+    res = ''.join(reversed(res))
+    return res[1:] if res.startswith('0') else res
+
+
+def test09():
+    for x, y in ((12345678, 9812743), (9999, 5741)):
+        print('expect:', x+y)
+        res = add_string_number(str(x), str(y))
+        print('actual', res)
+
+
 # -----------------------------------
 # Others
 # -----------------------------------
@@ -347,5 +396,5 @@ def test08():
 
 if __name__ == '__main__':
 
-    test08()
+    test09()
     print('py alg string demo done.')

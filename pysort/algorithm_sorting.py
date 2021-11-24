@@ -99,7 +99,25 @@ def test03():
 # -----------------------------------
 
 
-def bin_search01(val: int, sort_list: list, start: int, end: int) -> int:
+def bin_search01(val: int, sort_list: list) -> int:
+    """
+    二分查找 有序数组 O(logN) 递归
+    问题：有 list 复制操作，效率较差
+    """
+    if len(sort_list) == 1:
+        return sort_list[0] == val
+
+    pos = int(len(sort_list) / 2)
+    if sort_list[pos] == val:
+        return True
+
+    if val < sort_list[pos]:
+        return bin_search01(val, sort_list[:pos])
+    else:
+        return bin_search01(val, sort_list[pos:])
+
+
+def bin_search02(val: int, sort_list: list, start: int, end: int) -> int:
     '''
     二分查找 有序数组 O(logN) 递归
     '''
@@ -108,14 +126,14 @@ def bin_search01(val: int, sort_list: list, start: int, end: int) -> int:
 
     mid = int(start + (end - start) / 2)
     if val > sort_list[mid]:
-        return bin_search01(val, sort_list, mid+1, end)
+        return bin_search02(val, sort_list, mid+1, end)
     elif val < sort_list[mid]:
-        return bin_search01(val, sort_list, start, mid-1)
+        return bin_search02(val, sort_list, start, mid-1)
     else:
         return mid
 
 
-def bin_search02(val: int, sort_list: list) -> int:
+def bin_search03(val: int, sort_list: list) -> int:
     '''
     二分查找 有序数组 O(logN) 非递归
     '''
@@ -135,11 +153,13 @@ def bin_search02(val: int, sort_list: list) -> int:
 
 def test04():
     numbers = [1, 3, 4, 6, 8, 9, 10, 12, 13, 77]
-    for val in (1, 12, 77):
-        print('#1. search number %d, and index %d' %
-              (val, bin_search01(val, numbers, 0, len(numbers)-1)))
-        print('#2. search number %d, and index %d' %
-              (val, bin_search02(val, numbers)))
+    for val in (1, 12, 77, 100):
+        print('search number %d, and result %s' %
+              (val, bin_search01(val, numbers)))
+        # print('search number %d, and index %d' %
+        #       (val, bin_search02(val, numbers, 0, len(numbers)-1)))
+        # print('search number %d, and index %d' %
+        #       (val, bin_search03(val, numbers)))
 
 # -----------------------------------
 # List Group By
@@ -197,5 +217,5 @@ def test05():
 
 if __name__ == '__main__':
 
-    test05()
+    test04()
     print('py alg sort demo done.')
