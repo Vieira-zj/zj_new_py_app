@@ -16,17 +16,48 @@ from pysort import Stack
 # -----------------------------------
 
 
-def reverse_string(input_str: str) -> str:
+def find_substring(src_str: str, sub_str: str) -> int:
+    """
+    查找子字符串，并返回下标。
+    """
+    if len(src_str) < len(sub_str):
+        return -1
+    if len(src_str) == 0 or len(sub_str) == 0:
+        return -1
+
+    for i in range(len(src_str) - len(sub_str) + 1):
+        isFound = True
+        for j in range(len(sub_str)):
+            if src_str[i+j] != sub_str[j]:
+                isFound = False
+                break
+        if isFound:
+            return i
+    return -1
+
+
+def test_find_substring():
+    for src_str, sub_str in [('abcd', 'ab'), ('abcd', 'bc'), ('abcd', 'cd'), ('abcd', 'cx'), ('ab', 'ab')]:
+        print(find_substring(src_str, sub_str))
+
+
+def reverse_string(src_str: str) -> str:
     '''
     反转字符串
     '''
+    chs = [ch for ch in src_str]
     start = 0
-    end = len(input_str) - 1
+    end = len(chs) - 1
     while start < end:
-        input_str[start], input_str[end] = input_str[end], input_str[start]
+        chs[start], chs[end] = chs[end], chs[start]
         start += 1
         end -= 1
-    return input_str
+    return ''.join(chs)
+
+
+def test_reverse_string():
+    for item in ('abcd', 'abcde'):
+        print(reverse_string(item))
 
 
 def is_recycle_string(input_str: str) -> bool:
@@ -43,11 +74,10 @@ def is_recycle_string(input_str: str) -> bool:
     return True
 
 
-def test01():
-    print('recycle string test:')
+def test_is_recycle_string():
     for input_str in ['xyayx', 'ahha', 'haha']:
-        print('%s is recycle string: %s' %
-              (input_str, str(is_recycle_string(input_str))))
+        res = is_recycle_string(input_str)
+        print('%s is recycle string: %s' % (input_str, res))
 
 
 def get_longest_numbers(num_str: str) -> str:
@@ -70,34 +100,9 @@ def get_longest_numbers(num_str: str) -> str:
     return num_str[start:(start+max_len)]
 
 
-def test02():
+def test_get_longest_numbers():
     num_str = 'abcd13579ed124ss123456789z'
     print('longest continuious numbers:', get_longest_numbers(num_str))
-
-
-def filter_aba_string(aba_str: str) -> str:
-    '''
-    过滤掉输入字符串中的驼峰字符串（aba）
-    input: AaabxbcdyayBxxy
-    output: AaacdBxxy
-    '''
-    def is_aba_string(input_str):
-        return input_str[0] == input_str[2]
-
-    local_str = aba_str[:]
-    i = 0
-    while i < (len(local_str) - 2):
-        if is_aba_string(local_str[i:i+3]):
-            local_str = local_str[0:i] + local_str[i+3:]
-        else:
-            i += 1
-    return local_str
-
-
-def test03():
-    aba_str = 'AaabxbcdyayBxxy'
-    print('src aba string:', aba_str)
-    print('filter aba string:', filter_aba_string(aba_str))
 
 
 def str_distinct() -> list:
@@ -122,7 +127,7 @@ def str_distinct() -> list:
         return ret_list
 
 
-def test05():
+def test_str_distinct():
     print('distinct items:', ','.join(str_distinct()))
 
 
@@ -167,7 +172,7 @@ def str_ab_distinct02(in_str: str) -> list:
     return upper_chs + lower_chs
 
 
-def test06():
+def test_str_ab_distinct():
     input_str = 'EAAnCmCDffBg'
     ret1 = str_ab_distinct(input_str)
     print(''.join(ret1))
@@ -218,7 +223,7 @@ def longest_common_prefix02(strs: List[str]) -> str:
     return prefix
 
 
-def test07():
+def test_longest_common_prefix():
     data = (
         (["flower", "flow", "flight"], "fl"),
         (["dog", "racecar", "car"], ""),
@@ -277,7 +282,7 @@ def add_string_number(x: str, y: str) -> str:
     return res[1:] if res.startswith('0') else res
 
 
-def test09():
+def test_add_string_number():
     for x, y in ((12345678, 9812743), (9999, 5741)):
         print('expect:', x+y)
         res = add_string_number(str(x), str(y))
@@ -304,7 +309,7 @@ def reverse_by_words(sentence: str) -> str:
     return ' '.join(tmp_list)
 
 
-def test04():
+def test_reverse_by_words():
     sentence = 'this is a test'
     print('src text:', sentence)
     print('text reverse by words:', reverse_by_words(sentence))
@@ -372,7 +377,7 @@ def format_by_word_v2(content: str) -> str:
     return ''.join(ret)
 
 
-def test08():
+def test_format_by_word():
     cases = []
     cases.append(('', 'shop'))
     cases.append(('_', 'shop'))
@@ -396,5 +401,5 @@ def test08():
 
 if __name__ == '__main__':
 
-    test09()
+    test_is_recycle_string()
     print('py alg string demo done.')

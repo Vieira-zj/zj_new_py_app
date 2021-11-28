@@ -27,7 +27,7 @@ def alg_demo01(num: int) -> int:
     return ret_num
 
 
-def alg_test01():
+def test_alg_demo01():
     inputs = (2, 10, 100)
     expected_res = (1, 5, 50)
     for num, expected in zip(inputs, expected_res):
@@ -36,15 +36,9 @@ def alg_test01():
         assert(ret == expected)
 
 
-def alg_test02():
-    input = ['i am a coder', 'Coder Coder', 'Code', 'more coder']
-    fc = FindCoder()
-    print(fc.find(input))
-
-
 class FindCoder(object):
     '''
-    再给定的字符串数组中，找到包含"Coder"的字符串(不区分大小写)，并将其作为一个新的数组返回。
+    再给定的字符串数组中，找到包含"Coder"的字符串（不区分大小写），并将其作为一个新的数组返回。
     结果字符串的顺序按照"Coder"出现的次数递减排列，若两个串中"Coder"出现的次数相同，则保持他们在原数组中的位置关系。
 
     给定一个字符串数组A和它的大小n, 请返回结果数组。
@@ -84,6 +78,12 @@ class FindCoder(object):
         input_list.append(item_dict)
 
 
+def test_find_coder():
+    input = ['i am a coder', 'Coder Coder', 'Code', 'more coder']
+    fc = FindCoder()
+    print(fc.find(input))
+
+
 def alg_demo03(input: list) -> list:
     '''
     shuffle算法：每次从未处理的数据中随机取出一个数字，然后把该数字放在数组的尾部，即数组尾部存放的是已经处理过的数字。
@@ -94,7 +94,7 @@ def alg_demo03(input: list) -> list:
         input[i], input[idx] = input[idx], input[i]
 
 
-def alg_test03():
+def test_alg_demo03():
     input = [i for i in range(0, 10)]
     print('src list:', input)
     alg_demo03(input)
@@ -125,34 +125,73 @@ def alg_demo04(input_list: list) -> list:
     return ret_list
 
 
-def alg_test04():
+def test_alg_demo04():
     input = [3, 2, 7, 8, 1, 4, 10, 11, 12, 14]
     print(alg_demo04(input))
 
 
-def alg_demo05(input: list) -> int:
+def alg_demo05(in_str: str) -> str:
     '''
-    数组里重复次数最多的值。
+    从一个字符串中找出出现频率最高且最先出现的字符。
     '''
-    d = {}
-    ret_num = 0
-    max_val = 0
-    for num in input:
-        val = d.get(num, 0) + 1
-        d[num] = val
-        if val > max_val:
-            max_val = val
-            ret_num = num
-    return ret_num
+    d_count = {}
+    d_pos = {}
+    res_chs = []
+    max_cnt = 0
+    for i in range(len(in_str)):
+        ch = in_str[i]
+        if not ch in d_pos.keys():
+            d_pos[ch] = i
+        cnt = d_count.get(ch, 0) + 1
+        d_count[ch] = cnt
+        if cnt > max_cnt:
+            max_cnt = cnt
+            res_chs = [ch]
+        elif cnt == max_cnt:
+            res_chs.append(ch)
+
+    ret_ch = res_chs[0]
+    if len(res_chs) == 1:
+        return ret_ch
+
+    min_pos = d_pos[ret_ch]
+    for ch in res_chs[1:]:
+        if d_pos[ch] < min_pos:
+            ret_ch = ch
+    return ret_ch
 
 
-def alg_test05():
-    input = [1, 12, 3, 4, 5, 1, 3, 12, 9, 10, 12]
-    result = alg_demo05(input)
-    print(result)
+def test_alg_demo05():
+    for in_str in ('mnq', 'cadxybazb', 'bcbdyxymny'):
+        print(alg_demo05(in_str))
+
+
+def alg_demo06(aba_str: str) -> str:
+    '''
+    过滤掉输入字符串中的驼峰字符串（aba）。
+    input: AaabxbcdyayBxxy
+    output: AaacdBxxy
+    '''
+    def is_aba_string(input_str):
+        return input_str[0] == input_str[2]
+
+    local_str = aba_str[:]
+    i = 0
+    while i < (len(local_str) - 2):
+        if is_aba_string(local_str[i:i+3]):
+            local_str = local_str[0:i] + local_str[i+3:]
+        else:
+            i += 1
+    return local_str
+
+
+def test_alg_demo06():
+    aba_str = 'AaabxbcdyayBxxy'
+    print('src aba string:', aba_str)
+    print('filter aba string:', alg_demo06(aba_str))
 
 
 if __name__ == '__main__':
 
-    alg_test05()
+    test_alg_demo05()
     print('py alg interview demo done.')

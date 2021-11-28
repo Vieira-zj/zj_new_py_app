@@ -24,7 +24,7 @@ def bubble_sort(iter: list):
             return
 
 
-def test01():
+def test_bubble_sort():
     numbers = [15, 16, 1, 99, 50, 0, 99, 13, 6, 2]
     bubble_sort(numbers)
     print('bubble sort results:', numbers)
@@ -57,7 +57,7 @@ def quick_sort(iter: list, start: int, end: int):
     quick_sort(iter, left + 1, end)
 
 
-def test02():
+def test_quick_sort():
     numbers = [15, 16, 1, 7, 99, 50, 0, 99, 13, 7]
     quick_sort(numbers, 0, len(numbers) - 1)
     print('quick sort results:', numbers)
@@ -90,7 +90,7 @@ def merge(iter1: list, iter2: list) -> list:
     return (ret_iter + iter1[i:]) if i < len(iter1) else (ret_iter + iter2[j:])
 
 
-def test03():
+def test_merge_sort():
     numbers = [3, 16, 14, 8, 99, 53, 0, 99, 8, 32, 66]
     print('merge sort results:', merge_sort(numbers))
 
@@ -151,7 +151,7 @@ def bin_search03(val: int, sort_list: list) -> int:
     return -1
 
 
-def test04():
+def test_bin_search():
     numbers = [1, 3, 4, 6, 8, 9, 10, 12, 13, 77]
     for val in (1, 12, 77, 100):
         print('search number %d, and result %s' %
@@ -197,7 +197,7 @@ def list_group_by(src_list: list) -> list:
     return sorted_list
 
 
-def test05():
+def test_list_group_by():
     src_list = [
         {'group': 'a', 'id': '01', 'include': [1, 2]},
         {'group': 'b', 'id': '02', 'include': [11, 13]},
@@ -217,5 +217,5 @@ def test05():
 
 if __name__ == '__main__':
 
-    test04()
+    test_bin_search()
     print('py alg sort demo done.')

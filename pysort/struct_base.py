@@ -102,7 +102,7 @@ class LinkedList(object):
         return ','.join([str(val) for val in ret_values])
 
 
-def linkedlist_test():
+def test_linkedlist():
     l1 = LinkedList()
     for val in (4, 7, 10, 8, 3, 4, 1, 2, 20, 11):
         l1.append(val)
@@ -135,7 +135,7 @@ def distinct_linkedlist(l: LinkedList):
             cur = cur.next
 
 
-def distinct_linkedlist_test():
+def test_distinct_linkedlist():
     cases = [(1, 2, 3, 4)]
     cases.append((1, 2, 2, 3, 4, 4))
     cases.append((4, 4, 7, 7, 7, 10, 8, 3, 4, 8, 1,
@@ -191,7 +191,7 @@ class StackEmptyException(Exception):
 
 if __name__ == '__main__':
 
-    # linkedlist_test()
-    distinct_linkedlist_test()
+    # test_linkedlist()
+    test_distinct_linkedlist()
 
     print('py struct base demo done.')

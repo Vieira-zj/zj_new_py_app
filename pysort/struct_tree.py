@@ -71,7 +71,7 @@ def pre_order_bin_tree02(root):
         print('\n', e)
 
 
-def pre_order_bin_tree_test():
+def test_pre_order_bin_tree():
     bin_tree = create_bin_tree(range(0, 10))
     print('#1. print bin tree by pre order:')
     pre_order_bin_tree01(bin_tree)
@@ -93,13 +93,13 @@ def get_tree_max_depth(root: BinTreeNode) -> int:
     return max(l_depth, r_depth)
 
 
-def get_tree_max_depth_test():
+def test_get_tree_max_depth():
     bin_tree = create_bin_tree(range(0, 10))
     print('max tree depth:', get_tree_max_depth(bin_tree))
 
 
 if __name__ == '__main__':
 
-    # pre_order_bin_tree_test()
-    get_tree_max_depth_test()
+    # test_pre_order_bin_tree()
+    test_get_tree_max_depth()
     print('py struct tree demo done.')

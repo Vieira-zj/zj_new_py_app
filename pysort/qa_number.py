@@ -18,7 +18,7 @@ def int_to_binary_v1(num: int) -> int:
     return count
 
 
-def test01():
+def test_int_to_binary_v1():
     for num in (1, 2, 8, 9):
         print(int_to_binary_v1(num))
 
@@ -32,7 +32,7 @@ def int_to_binary_v2(num: int, bin_dim: int) -> str:
     return ''.join(ret)
 
 
-def test02():
+def test_int_to_binary_v2():
     num = 15
     bin_str = int_to_binary_v2(num, 8)
     print('binary for %d is: %s' % (num, bin_str))
@@ -48,7 +48,7 @@ def binary_to_int(bits: list) -> int:
     return ret
 
 
-def test03():
+def test_binary_to_int():
     bits = '00001111'
     num = binary_to_int([int(bit) for bit in bits])
     print('int for binary %s is: %d' % (bits, num))
@@ -56,5 +56,5 @@ def test03():
 
 if __name__ == '__main__':
 
-    test01()
+    test_int_to_binary_v1()
     print('py alg number demo done.')
