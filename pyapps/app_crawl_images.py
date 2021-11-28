@@ -8,9 +8,9 @@ import logging
 import os
 import re
 import sys
-sys.path.append(os.getenv('PYPATH'))
 
-from appdemos import CrawlHtml
+sys.path.append(os.getenv('PYPROJECT'))
+from pyapps import CrawlHtml
 from utils import Constants, LogManager, HttpUtils, SysUtils
 
 

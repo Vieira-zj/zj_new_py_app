@@ -10,8 +10,8 @@ $ pip3 install pyquery
 import os
 import sys
 from pyquery import PyQuery as pq
-sys.path.append(os.getenv('PYPATH'))
 
+sys.path.append(os.getenv('PYPROJECT'))
 from utils import Constants
 from utils import HttpUtils
 from utils import LogManager

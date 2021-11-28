@@ -9,7 +9,8 @@ import os
 
 
 def generate_data_from_csv(count):
-    root_dir = os.path.join(os.getenv('HOME'), 'Downloads/tmp_files/prophet_testdata')
+    root_dir = os.path.join(
+        os.getenv('HOME'), 'Downloads/tmp_files/prophet_testdata')
     input_file_path = os.path.join(root_dir, 'test_data.csv')
     if not os.path.exists(input_file_path):
         print('input file NOT exist:', input_file_path)
@@ -28,7 +29,7 @@ def generate_data_from_csv(count):
 
         for line in input_lines[1:]:
             output_lines = [line]
-            for i in range(0, count):
+            for _ in range(0, count):
                 fields = line.split(',')
                 fields[0] = str(random.randint(0, 100))
                 fields[12] = str(random.randint(0, 1000))
