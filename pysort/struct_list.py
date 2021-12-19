@@ -193,5 +193,4 @@ if __name__ == '__main__':
 
     # test_linkedlist()
     test_distinct_linkedlist()
-
     print('py struct base demo done.')

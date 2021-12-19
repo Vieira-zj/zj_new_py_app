@@ -4,12 +4,12 @@ Created on 2020-05-28
 @author: zhengjin
 '''
 
+from pysort import Stack
 import sys
 import os
 from typing import List
 
 sys.path.append(os.getenv('PYPROJECT'))
-from pysort import Stack
 
 # -----------------------------------
 # String
@@ -25,9 +25,9 @@ def find_substring(src_str: str, sub_str: str) -> int:
     if len(src_str) == 0 or len(sub_str) == 0:
         return -1
 
-    for i in range(len(src_str) - len(sub_str) + 1):
+    for i in range(0, len(src_str) - len(sub_str) + 1):
         isFound = True
-        for j in range(len(sub_str)):
+        for j in range(0, len(sub_str)):
             if src_str[i+j] != sub_str[j]:
                 isFound = False
                 break
@@ -43,7 +43,7 @@ def test_find_substring():
 
 def reverse_string(src_str: str) -> str:
     '''
-    反转字符串
+    反转字符串。
     '''
     chs = [ch for ch in src_str]
     start = 0
@@ -62,7 +62,7 @@ def test_reverse_string():
 
 def is_recycle_string(input_str: str) -> bool:
     '''
-    判断回文字符串
+    判断回文字符串。
     '''
     start = 0
     end = len(input_str) - 1
@@ -82,21 +82,19 @@ def test_is_recycle_string():
 
 def get_longest_numbers(num_str: str) -> str:
     '''
-    找出字符串中最长的连续数字
+    找出字符串中最长的连续数字。
     '''
-    start = cur_start = 0
+    start = 0
     max_len = cur_len = 0
-
-    for i in range(len(num_str) - 1):
-        if num_str[i].isdigit():
+    for idx in range(0, len(num_str)):
+        if num_str[idx].isdigit():
             cur_len += 1
-        else:
-            cur_len = 0
-            cur_start = i + 1
-
+            continue
         if cur_len > max_len:
             max_len = cur_len
-            start = cur_start
+            start = idx - cur_len
+        cur_len = 0
+
     return num_str[start:(start+max_len)]
 
 
@@ -107,7 +105,7 @@ def test_get_longest_numbers():
 
 def str_distinct() -> list:
     '''
-    有序字符串去重
+    有序字符串去重。
     '''
     def format_line(in_str: str) -> str:
         return in_str.split('_')[0]
@@ -133,7 +131,7 @@ def test_str_distinct():
 
 def str_ab_distinct(in_str: str) -> list:
     '''
-    字符串去重 大写字母在小写字母前
+    字符串去重，并且大写字母在小写字母前。
     输入: EAAnCmCDffBg 输出: EACDBnmfg
     '''
     upper_chs = []
@@ -216,10 +214,14 @@ def longest_common_prefix02(strs: List[str]) -> str:
 
     prefix = strs[0]
     for s in strs[1:]:
-        while not s.startswith(prefix):
+        if len(s) < len(prefix):
+            prefix = s
+
+    for s in strs:
+        while len(prefix) > 0 and (not s.startswith(prefix)):
             prefix = prefix[:-1]
-            if len(prefix) == 0:
-                return prefix
+        if len(prefix) == 0:
+            return ''
     return prefix
 
 
@@ -230,63 +232,38 @@ def test_longest_common_prefix():
         (['ab', 'a'], 'a'),
         ([], ''),
     )
-
-    for item in data:
-        input = item[0]
-        expect = item[1]
-        actual = longest_common_prefix02(input)
-        if actual != expect:
-            print(f'{input} failed, expect={expect}, atucal={actual}')
+    for value, expect in data:
+        actual = longest_common_prefix02(value)
+        assert actual == expect, f'{input} failed, expect={expect}, atucal={actual}'
         print(actual if len(actual) > 0 else 'null')
 
 
-def add_string_number(x: str, y: str) -> str:
+def length_of_longest_unique_substring(input: str) -> int:
     """
-    考虑 x, y 转换成 int 时可能会超过整型最长大度，导致溢出的情况，因此每位数分别进行计算。
-    fix: 只能处理两个正整数相加的情况。
+    无重复字符的最长子串。
+
+    输入: "abcabcbb" 输出: 3
+    输入: "bbbbb" 输出: 1
+    输入: "pwwkew" 输出: 3
     """
-    x = reversed(x)
-    x_nums = []
-    for num in x:
-        x_nums.append(int(num))
-    y = reversed(y)
-    y_nums = []
-    for num in y:
-        y_nums.append(int(num))
-
-    # 补0 位数对齐
-    append_size = abs(len(y_nums) - len(x_nums))
-    if len(x_nums) < len(y_nums):
-        x_nums.extend([0 for i in range(append_size)])
-    else:
-        y_nums.extend([0 for i in range(append_size)])
-    # 最后可能进一位的情况
-    x_nums.append(0)
-    y_nums.append(0)
-
-    # 计算
-    res = []
-    more = 0
-    for i in range(len(x_nums)):
-        tmp = more if more > 0 else 0
-        tmp += x_nums[i] + y_nums[i]
-        if tmp >= 10:
-            more = 1
-            res.append(tmp - 10)
-        else:
-            more = 0
-            res.append(tmp)
-
-    res = [str(item) for item in res]
-    res = ''.join(reversed(res))
-    return res[1:] if res.startswith('0') else res
+    ret = 0
+    i = j = 0
+    for i in range(0, len(input)):
+        sub = {}
+        for j in range(i, len(input)):
+            ch = input[j]
+            if ch in sub.keys():
+                break
+            sub[ch] = None
+            if len(sub) > ret:
+                ret = len(sub)
+    return ret
 
 
-def test_add_string_number():
-    for x, y in ((12345678, 9812743), (9999, 5741)):
-        print('expect:', x+y)
-        res = add_string_number(str(x), str(y))
-        print('actual', res)
+def test_length_of_longest_unique_substring():
+    for value, want in (('abcabcbb', 3), ('bbbbb', 1), ('pwwkew', 3)):
+        got = length_of_longest_unique_substring(value)
+        assert got == want, f'got: {got}, want: {want}'
 
 
 # -----------------------------------
@@ -295,7 +272,7 @@ def test_add_string_number():
 
 def reverse_by_words(sentence: str) -> str:
     '''
-    reverse words divied by space
+    reverse words divied by space.
     input: this is a test
     output: test a is this
     '''
@@ -401,5 +378,5 @@ def test_format_by_word():
 
 if __name__ == '__main__':
 
-    test_is_recycle_string()
+    test_length_of_longest_unique_substring()
     print('py alg string demo done.')

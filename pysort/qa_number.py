@@ -25,7 +25,7 @@ def test_int_to_binary_v1():
 
 def int_to_binary_v2(num: int, bin_dim: int) -> str:
     '''
-    十进制整数转二进制
+    十进制整数转二进制。
     '''
     bin_list = [str(b) for b in bin(num)[2:]]
     ret = ['0'] * (bin_dim - len(bin_list)) + bin_list
@@ -40,7 +40,7 @@ def test_int_to_binary_v2():
 
 def binary_to_int(bits: list) -> int:
     '''
-    二进制转十进制整数
+    二进制转十进制整数。
     '''
     ret = 0
     for idx, bit in enumerate(reversed(bits)):

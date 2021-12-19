@@ -7,7 +7,24 @@ Created on 2020-07-03
 import random
 
 
-def alg_demo01(num: int) -> int:
+def alg_demo01(input: list) -> list:
+    '''
+    shuffle算法：每次从未处理的数据中随机取出一个数字，然后把该数字放在数组的尾部，即数组尾部存放的是已经处理过的数字。
+    注：原始数据被直接打乱。
+    '''
+    for i in range((len(input) - 1), 0, -1):
+        idx = random.randint(0, i)
+        input[i], input[idx] = input[idx], input[i]
+
+
+def test_alg_demo01():
+    input = [i for i in range(0, 10)]
+    print('src list:', input)
+    alg_demo01(input)
+    print('shuffled list:', input)
+
+
+def alg_demo02(num: int) -> int:
     '''
     某商店规定：3个空汽水瓶可以换1瓶汽水。小张手上有10个空汽水瓶，她最多可以换多少瓶汽水喝？答案是5瓶。
     先用9个空瓶子换3瓶汽水，喝掉3瓶满的，喝完以后4个空瓶子；
@@ -27,11 +44,11 @@ def alg_demo01(num: int) -> int:
     return ret_num
 
 
-def test_alg_demo01():
+def test_alg_demo02():
     inputs = (2, 10, 100)
     expected_res = (1, 5, 50)
     for num, expected in zip(inputs, expected_res):
-        ret = alg_demo01(num)
+        ret = alg_demo02(num)
         print('%d => %d' % (num, ret))
         assert(ret == expected)
 
@@ -84,27 +101,11 @@ def test_find_coder():
     print(fc.find(input))
 
 
-def alg_demo03(input: list) -> list:
+def alg_demo0401(input_list: list) -> list:
     '''
-    shuffle算法：每次从未处理的数据中随机取出一个数字，然后把该数字放在数组的尾部，即数组尾部存放的是已经处理过的数字。
-    注：原始数据被直接打乱。
-    '''
-    for i in range((len(input) - 1), 0, -1):
-        idx = random.randint(0, i)
-        input[i], input[idx] = input[idx], input[i]
-
-
-def test_alg_demo03():
-    input = [i for i in range(0, 10)]
-    print('src list:', input)
-    alg_demo03(input)
-    print('shuffled list:', input)
-
-
-def alg_demo04(input_list: list) -> list:
-    '''
-    整数列表如下[3,2,7,8,1,4,10,11,12,14], 请设计程序使连续的整数序列取前后两个数，并输出所有的列表。
-    上面列表应该输出[1,4],[7,8],[10,12],[14]
+    请设计程序使连续的整数序列取前后两个数，并输出所有的列表。
+    输入: [3,2,7,8,1,4,10,11,12,14]
+    输出: [1,4],[7,8],[10,12],[14]
     '''
     ret_list = []
     sort_list = sorted(input_list)
@@ -125,9 +126,32 @@ def alg_demo04(input_list: list) -> list:
     return ret_list
 
 
+def alg_demo0402(input_list: list) -> list:
+    ret_list = []
+    sort_list = sorted(input_list)
+
+    start = end = 0
+    while end < (len(sort_list) - 1):
+        if sort_list[end + 1] - sort_list[end] == 1:
+            end += 1
+            continue
+        if start == end:
+            ret_list.append([sort_list[start]])
+        else:
+            ret_list.append([sort_list[start], sort_list[end]])
+        start = end = end + 1
+
+    if start == end:
+        ret_list.append([sort_list[start]])
+    else:
+        ret_list.append([sort_list[start], sort_list[end]])
+    return ret_list
+
+
 def test_alg_demo04():
-    input = [3, 2, 7, 8, 1, 4, 10, 11, 12, 14]
-    print(alg_demo04(input))
+    l = [3, 2, 7, 8, 1, 4, 10, 17, 11, 12, 14]
+    print(alg_demo0401(l))
+    print(alg_demo0402(l))
 
 
 def alg_demo05(in_str: str) -> str:
@@ -191,7 +215,56 @@ def test_alg_demo06():
     print('filter aba string:', alg_demo06(aba_str))
 
 
+def alg_demo07(x: str, y: str) -> str:
+    """
+    考虑 x, y 转换成 int 时可能会超过整型最长大度，导致溢出的情况，因此每位数分别进行计算。
+    fix: 只能处理两个正整数相加的情况。
+    """
+    x = reversed(x)
+    x_nums = []
+    for num in x:
+        x_nums.append(int(num))
+    y = reversed(y)
+    y_nums = []
+    for num in y:
+        y_nums.append(int(num))
+
+    # 补0 位数对齐
+    append_size = abs(len(y_nums) - len(x_nums))
+    if len(x_nums) < len(y_nums):
+        x_nums.extend([0 for i in range(append_size)])
+    else:
+        y_nums.extend([0 for i in range(append_size)])
+    # 最后可能进一位的情况
+    x_nums.append(0)
+    y_nums.append(0)
+
+    # 计算
+    res = []
+    more = 0
+    for i in range(len(x_nums)):
+        tmp = more if more > 0 else 0
+        tmp += x_nums[i] + y_nums[i]
+        if tmp >= 10:
+            more = 1
+            res.append(tmp - 10)
+        else:
+            more = 0
+            res.append(tmp)
+
+    res = [str(item) for item in res]
+    res = ''.join(reversed(res))
+    return res[1:] if res.startswith('0') else res
+
+
+def test_alg_demo07():
+    for x, y in ((12345678, 9812743), (9999, 5741)):
+        print('expect:', x+y)
+        res = alg_demo07(str(x), str(y))
+        print('actual', res)
+
+
 if __name__ == '__main__':
 
-    test_alg_demo05()
+    test_alg_demo04()
     print('py alg interview demo done.')

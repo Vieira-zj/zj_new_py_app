@@ -114,7 +114,9 @@ def bin_search01(val: int, sort_list: list) -> int:
     if val < sort_list[pos]:
         return bin_search01(val, sort_list[:pos])
     else:
-        return bin_search01(val, sort_list[pos:])
+        if pos+1 < len(sort_list):
+            return bin_search01(val, sort_list[pos+1:])
+        return False
 
 
 def bin_search02(val: int, sort_list: list, start: int, end: int) -> int:
@@ -152,7 +154,7 @@ def bin_search03(val: int, sort_list: list) -> int:
 
 
 def test_bin_search():
-    numbers = [1, 3, 4, 6, 8, 9, 10, 12, 13, 77]
+    numbers = [1, 3, 4, 6, 8, 9, 10, 21, 12, 13, 77]
     for val in (1, 12, 77, 100):
         print('search number %d, and result %s' %
               (val, bin_search01(val, numbers)))
