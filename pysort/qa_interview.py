@@ -5,6 +5,7 @@ Created on 2020-07-03
 '''
 
 import random
+import time
 
 
 def alg_demo01(input: list) -> list:
@@ -264,7 +265,82 @@ def test_alg_demo07():
         print('actual', res)
 
 
+def test_alg_demo08():
+    """
+    Write a decorator to find slow functions (execution time greater than 600ms).
+    """
+    def profile(fn):
+        def wrap(*args):
+            start = time.time()
+            fn(*args)
+            end = time.time()
+            duration = round((end - start) * 1000)
+            # print(duration)
+            if duration > 600:
+                print('slow func:', fn.__name__)
+        return wrap
+
+    @profile
+    def run1():
+        time.sleep(0.5)
+
+    @profile
+    def run2():
+        time.sleep(1)
+
+    @profile
+    def run3():
+        time.sleep(0.2)
+
+    @profile
+    def run4(text):
+        print(text)
+        time.sleep(0.7)
+
+    for run in (run1, run2, run3):
+        run()
+    run4('hello')
+
+
+def alg_demo09(text: str) -> str:
+    """
+    找出连续的字符串。
+    input: abdechjk output: abcde
+    input: abbacefhdj output: abcdef
+    """
+    ch_to_int = {}
+    for idx, ch in enumerate('abcdefghijklmn'):
+        ch_to_int[ch] = idx
+
+    from functools import cmp_to_key
+
+    def my_cmp(a, b):
+        return ch_to_int[a] - ch_to_int[b]
+
+    chs = [ch for ch in text]
+    sorted_chs = sorted(chs, key=cmp_to_key(my_cmp))
+
+    res_list = []
+    for i in range(len(sorted_chs) - 1):
+        ch = sorted_chs[i]
+        next_ch = sorted_chs[i+1]
+        if ch_to_int[next_ch] - ch_to_int[ch] == 0:
+            continue
+        res_list.append(ch)
+        if ch_to_int[next_ch] - ch_to_int[ch] > 1:
+            break
+    return ''.join(res_list)
+
+
+def test_alg_demo09():
+    test_data = (('abdechjk', 'abcde'), ('abbacefhdj', 'abcdef'))
+    for data, want in test_data:
+        got = alg_demo09(data)
+        print(got)
+        assert got == want, f'want {want}, got {got}'
+
+
 if __name__ == '__main__':
 
-    test_alg_demo04()
+    test_alg_demo09()
     print('py alg interview demo done.')
