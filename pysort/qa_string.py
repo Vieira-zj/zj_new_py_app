@@ -4,12 +4,12 @@ Created on 2020-05-28
 @author: zhengjin
 '''
 
-from pysort import Stack
 import sys
 import os
 from typing import List
 
 sys.path.append(os.getenv('PYPROJECT'))
+from pysort import Stack
 
 # -----------------------------------
 # String
@@ -248,21 +248,26 @@ def length_of_longest_unique_substring(input: str) -> int:
     """
     ret = 0
     i = j = 0
-    for i in range(0, len(input)):
+    while i < len(input):
         sub = {}
-        for j in range(i, len(input)):
+        while j < len(input):
             ch = input[j]
             if ch in sub.keys():
                 break
             sub[ch] = None
-            if len(sub) > ret:
-                ret = len(sub)
+            j += 1
+        if len(sub) > ret:
+            print(sub.keys())
+            ret = len(sub)
+        i = j
+
     return ret
 
 
 def test_length_of_longest_unique_substring():
     for value, want in (('abcabcbb', 3), ('bbbbb', 1), ('pwwkew', 3)):
         got = length_of_longest_unique_substring(value)
+        print(f'{value} got: {got}')
         assert got == want, f'got: {got}, want: {want}'
 
 

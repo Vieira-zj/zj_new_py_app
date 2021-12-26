@@ -628,7 +628,7 @@ class VersionNumber(object):
 
 
 repo_urls = [
-    os.getenv('GITLAB_SSH_ADDR') + ':jin.zheng/zhengjin_worksapce.git',
+    f'{os.getenv("GITLAB_SSH_ADDR")}:jin.zheng/zhengjin_worksapce.git',
 ]
 
 
