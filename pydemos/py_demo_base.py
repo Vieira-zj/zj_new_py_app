@@ -1467,7 +1467,7 @@ def py_base_ex60():
         print('call')
         return 'hello'
 
-    # get返回默认值 => always invoke
+    # dict get() 返回默认值 => always invoke
     d = {
         '1': 'one',
         '3': 'three'
@@ -1541,6 +1541,24 @@ def py_base_ex62():
     rows = ['low', 'high', 'low', 'high', 'mid', 'low', 'na', 'mid']
     res = sorted(rows, key=key)
     print('result:', ','.join(res))
+
+
+# expample 63, lambda
+def py_base_ex63():
+    """
+    lambda 函数只能写一个表达式，这个表达式的执行结果就是函数的返回值，不用写 return 关键字。
+    """
+    # 闭包问题
+    def multiply_v1():
+        return [lambda x: i * x for i in range(4)]
+    res = [m(100) for m in multiply_v1()]
+    print(res)
+
+    # fix: use generator instead of list
+    def multiply_v2():
+        return (lambda x: i * x for i in range(4))
+    res = [m(100) for m in multiply_v2()]
+    print(res)
 
 
 # expample 98, regexp samples
@@ -1620,6 +1638,18 @@ def py_base_ex99():
 
     test_data = {'name': 'foo', 'age': 30}
     my_print(**test_data)
+    print()
+
+    # 推导式
+    tmp = {x for x in 'hello world' if x not in 'abcdefg'}
+    print(type(tmp), tmp)
+    print()
+
+    # 类型判断
+    print(isinstance(1, int))
+    print(isinstance(1.0, float))
+    print(isinstance(0.9, (int, float)))
+    print(isinstance('t', (int, float)))
 
 
 if __name__ == '__main__':
@@ -1646,8 +1676,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        # py_base_ex23_01()
-        py_base_ex62()
+        py_base_ex99()
     except:
         traceback.print_exc()
 

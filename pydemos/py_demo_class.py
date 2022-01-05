@@ -6,6 +6,8 @@ Created on 2019-03-17
 Python class and meta class examples.
 '''
 
+import copy
+import functools
 from typing import List
 
 
@@ -667,8 +669,103 @@ def py_class_ex16():
     test.perform()
 
 
+# example 17, class var inherit
+def py_class_ex17():
+    class Parent:
+        x = 1
+
+    class Child1(Parent):
+        pass
+
+    class Child2(Parent):
+        pass
+
+    print(Parent.x, Child1.x, Child2.x)
+    Child1.x = 2
+    print(Parent.x, Child1.x, Child2.x)
+    Parent.x = 3
+    print(Parent.x, Child1.x, Child2.x)
+
+
+# example 18, singleton: deco for class
+def py_class_ex18():
+    def singleton(clss):
+        instances = {}
+
+        @functools.wraps(clss)
+        def wrapped(*args, **kwargs):
+            name = clss.__name__
+            if name not in instances.keys():
+                instances[name] = clss(*args, **kwargs)
+            return instances[name]
+        return wrapped
+
+    @singleton
+    class President:
+        def __init__(self):
+            print('\npresident init')
+
+    p1 = President()
+    p2 = President()
+    print(p1 is p2)
+
+    SrcPresident = President.__wrapped__
+    p3 = SrcPresident()
+    print(p3 is p1)
+
+
+# example 19, singleton: metaclass
+def py_class_ex19():
+    class SingletonMeta(type):
+        """ 自定义单例元类 """
+
+        def __init__(self, *args, **kwargs):
+            self.__instance = None
+            super().__init__(*args, **kwargs)
+
+        def __call__(self, *args, **kwargs):
+            if self.__instance is None:
+                self.__instance = super().__call__(*args, **kwargs)
+            return self.__instance
+
+    class President(metaclass=SingletonMeta):
+        def __init__(self):
+            print('\npresident init')
+
+    p1 = President()
+    p2 = President()
+    print(p1 is p2)
+
+
+# example 20, 基于原型对象实现类的深拷贝
+def py_class_ex20():
+    class PrototypeMeta(type):
+        """ deepcopy 函数的本质其实就是对象的一次序列化和一次返序列化 """
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.clone = lambda self, is_deep=True: copy.deepcopy(
+                self) if is_deep else copy.copy(self)
+
+    class Person(metaclass=PrototypeMeta):
+        def __init__(self, name):
+            self.name = name
+
+        def __str__(self):
+            return f'name:{self.name}'
+
+    p1 = Person('foo')
+    p2 = p1.clone(is_deep=True)
+    print()
+    print(p1)
+    print(p2)
+
+    p2.name = 'bar'
+    print(p2)
+
+
 if __name__ == '__main__':
 
     # py_base_ext()
-    py_class_ex16()
+    py_class_ex20()
     print('python class demo DONE.')
