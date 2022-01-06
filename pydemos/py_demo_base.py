@@ -23,7 +23,6 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-from collections import deque, defaultdict, Counter
 from datetime import datetime as dt
 from enum import Enum
 
@@ -36,7 +35,7 @@ def run_mod_imports():
     """
     use relative import ".module"
 
-    raise error ModuleNotFoundError when invoked from current py file.
+    NOTE: raise error ModuleNotFoundError when invoked from current py file.
     it's ok when invoked from [project-root]/main.py
     """
     from .imports import main
@@ -52,7 +51,7 @@ def py_base_ex01():
     else:
         print('object is none.')
 
-    # test for search str
+    # search str by index or find
     def search_by_index(input_str):
         try:
             print(input_str[:input_str.index('g')])
@@ -111,8 +110,8 @@ def py_base_ex03():
 
 
 # example 04, context current path
-# NOTE: context cur_path is the path where run cmd "python [script.py]"
 def py_base_ex04():
+    # NOTE: context cur_path is the path where run cmd "python [script.py]"
     cur_path = os.getcwd()
     print('current path:', cur_path)
 
@@ -153,11 +152,11 @@ def usage():
 
 # example 06, plt chart line
 def py_base_ex06():
-    '''
+    """
     pre-conditions: 
     $ pip install numpy
     $ pip install matplotlib
-    '''
+    """
     print('numpy version:', np.__version__)
     print('matplotlib version:', matplotlib.__version__)
 
@@ -225,9 +224,9 @@ def py_base_ex08_01():
 
 # example 08_02, reg exp
 def py_base_ex08_02():
-    '''
+    """
     Get Java exceptions sum info from input content.
-    '''
+    """
     input_lines = []
     input_lines.append(
         'W System.err: org.json.JSONException: No value for preSaleSkuInfo')
@@ -261,10 +260,9 @@ def py_base_ex08_02():
 
 # example 09, list files by glob
 def py_base_ex09():
-    '''
+    """
     get file path by glob (regexp pattern).
-    '''
-
+    """
     # "glob.glob" return list
     tmp_dir = os.path.join(os.getenv('HOME'), 'Downloads/tmp_files')
     files = glob.glob(tmp_dir + '/*.txt')
@@ -315,6 +313,7 @@ def py_base_ex10():
 
 # example 11, collections deque
 def py_base_ex11():
+    from collections import deque
     names = ['jack', 'leo', 'sam', 'peter', 'jeo']
     deque_names = deque(names)
     deque_names.popleft()
@@ -337,12 +336,14 @@ def py_base_ex12():
         tmp_dict02[color] = tmp_dict02.get(color, 0) + 1
     print(tmp_dict02)
 
+    from collections import Counter
     count = Counter(colors)
     print(count)
 
 
 # example 13, default dict
 def py_base_ex13():
+    from collections import defaultdict
     names = ['jack', 'leo', 'sam', 'peter', 'jeo']
     # set dict value default as list
     tmp_dict = defaultdict(list)
@@ -800,15 +801,18 @@ def py_base_ex31():
     _print(*vals)
 
 
-# example 32, assert type
+# example 32, field type assert
 def py_base_ex32():
     words = ('11.11', '3.0', '10', '-1', '0', 'a')
     uints = [word for word in words if word.isdigit()]
     print('uints:', uints)
 
-    nums = (11.11, 3.0, 10, -1, 0, 'a')
-    ints = [n for n in nums if type(n) in (int,)]
+    words = (11.11, 3.0, 10, -1, 0, 'a')
+    ints = [w for w in words if type(w) in (int,)]
     print('ints:', ints)
+
+    nums = [w for w in words if isinstance(w, (int, float))]
+    print('numbers:', nums)
 
 
 # example 33, memory size
@@ -898,12 +902,12 @@ def replace_r(in_file, out_file):
 
 
 def replace_r_v2(in_file, out_file):
-    '''
+    """
     1. 读取时, 不指定newline, 则默认开启"Universal new line mode", 所有'\n', '\r', or '\r\n'被默认转换为'\n'
     2. 写入时, 不指定newline, 则换行符为各系统默认的换行符（'\n', '\r', or '\r\n' ）;
     指定为newline='\n', 则都替换为'\n'（相当于Universal new line mode）
     3. 不论读或者写时, newline=''都表示不转换
-    '''
+    """
     if not os.path.exists(in_file):
         raise FileNotFoundError('file not found: ' + in_file)
 
@@ -951,7 +955,7 @@ def py_base_ex36():
 
 # example 38, read chrome cookie (sqlite.db)
 def py_base_ex38():
-    '''
+    """
     path: /Users/jinzheng/Library/Application Support/Google/Chrome/Profile 1/Cookies
 
     sqlite cmd:
@@ -961,7 +965,7 @@ def py_base_ex38():
 
     sql:
     select host_key,name,encrypted_value from cookies where name in ("SID","HSID");
-    '''
+    """
     import sqlite3
 
     c_path = '/tmp/Cookies.db'
@@ -982,7 +986,7 @@ def py_base_ex38():
 
 # example 39, read chrome cookie (sqlite.db)
 def py_base_ex39():
-    '''
+    """
     refer to:
     https://github.com/n8henrie/pycookiecheat
 
@@ -992,7 +996,7 @@ def py_base_ex39():
     cmd:
     cp ${HOME}/Library/Application\\ Support/Google/Chrome/Profile\\ 1/Cookies /tmp/Cookies.db
     chmod 644 /tmp/Cookies.db
-    '''
+    """
     import requests
     from pycookiecheat import chrome_cookies
 
@@ -1073,7 +1077,7 @@ def py_base_ex42():
             print('string:', item)
 
 
-# example 43, deco
+# example 43, deco with parameters
 def py_base_ex43():
     def wrap(author='vieira'):
         def _deco(func):
@@ -1100,7 +1104,7 @@ def py_base_ex43():
     print(say_hello(), say_hello.author)
 
 
-# example 44, reflect, func inspect
+# example 44, reflect for func by inspect
 def py_base_ex44():
     def div(a, b=1):
         return a / b
@@ -1157,6 +1161,7 @@ def py_base_ex45():
     printTestMethod(mod.TestPy01)
 
 
+# example 46, py tips
 def py_base_ex46():
     def printDict(in_dict):
         print('dict:', ','.join([f'{k}={v}' for k, v in in_dict.items()]))
@@ -1196,6 +1201,7 @@ def py_base_ex47():
         print(json.dumps(context_dict))
 
 
+# example 48, assert
 def py_base_ex48():
     s = 'a' and 'b'
     print('\nresult:', s)
@@ -1313,7 +1319,7 @@ def py_base_ex52():
         def __repr__(self):
             ret = []
             for k in vars(self):
-                ret.append('%s:%s' % (k, getattr(s, k)))
+                ret.append('%s:%s' % (k, getattr(self, k)))
             return '|'.join(ret)
 
     s = MyStudent(1, 'foo')
@@ -1337,6 +1343,7 @@ def py_base_ex53():
         print('after mock end')
         print('exec duration: %ds' % int(time.time() - start))
 
+    # 并发安全
     with run_time_context():
         print('mock start')
         time.sleep(3)
@@ -1354,8 +1361,20 @@ def py_base_ex54():
     print('week of year:', res[1])
 
 
-# expample 55, init object by dict
+# expample 55, calculate delta date
 def py_base_ex55():
+    target_ts = dt.strptime('20210823', '%Y%m%d')
+    cur_ts = dt.now()
+    delta = target_ts - cur_ts
+    print('\ndelta days:', delta.days)
+
+    test_ts = dt.strptime('20210816', '%Y%m%d')
+    delta = test_ts - target_ts
+    print('delta days:', delta.days)
+
+
+# expample 56, init object by dict
+def py_base_ex56():
     class TestEntry(object):
         def __init__(self):
             self.ticket_key = 'na'
@@ -1370,18 +1389,6 @@ def py_base_ex55():
     entry = TestEntry()
     entry.__dict__.update(d)
     print('\nentry:', entry)
-
-
-# expample 56, calculate delta date
-def py_base_ex56():
-    target_ts = dt.strptime('20210823', '%Y%m%d')
-    cur_ts = dt.now()
-    delta = target_ts - cur_ts
-    print('\ndelta days:', delta.days)
-
-    test_ts = dt.strptime('20210816', '%Y%m%d')
-    delta = test_ts - target_ts
-    print('delta days:', delta.days)
 
 
 # expample 57, json dump object
@@ -1676,7 +1683,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex99()
+        py_base_ex56()
     except:
         traceback.print_exc()
 
