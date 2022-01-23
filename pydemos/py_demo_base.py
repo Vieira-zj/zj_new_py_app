@@ -1279,7 +1279,7 @@ def py_base_ex50():
         print(color.name, color.value)
 
 
-# expample 51, map operations
+# example 51, map operations
 def py_base_ex51():
     from typing import Text, Any, Dict
 
@@ -1309,7 +1309,7 @@ def py_base_ex51():
     print(f'first item: {k}:{v}')
 
 
-# expample 52, object dyn attrs
+# example 52, object dyn attrs
 def py_base_ex52():
     class MyStudent(object):
         def __init__(self, uid, name):
@@ -1331,7 +1331,7 @@ def py_base_ex52():
     print('student info:', s)
 
 
-# expample 53, with context
+# example 53, with context
 def py_base_ex53():
     import contextlib
 
@@ -1350,7 +1350,7 @@ def py_base_ex53():
         print('mock end')
 
 
-# expample 54, get week of year
+# example 54, get week of year
 def py_base_ex54():
     now = dt.now()
     print('\ncurrent date:', dt.strftime(now, '%Y-%m-%d'))
@@ -1361,7 +1361,7 @@ def py_base_ex54():
     print('week of year:', res[1])
 
 
-# expample 55, calculate delta date
+# example 55, calculate delta date
 def py_base_ex55():
     target_ts = dt.strptime('20210823', '%Y%m%d')
     cur_ts = dt.now()
@@ -1373,7 +1373,7 @@ def py_base_ex55():
     print('delta days:', delta.days)
 
 
-# expample 56, init object by dict
+# example 56, init object by dict
 def py_base_ex56():
     class TestEntry(object):
         def __init__(self):
@@ -1391,7 +1391,7 @@ def py_base_ex56():
     print('\nentry:', entry)
 
 
-# expample 57, json dump object
+# example 57, json dump object
 def py_base_ex57():
     class Student(object):
         def __init__(self, name, age):
@@ -1413,7 +1413,7 @@ def py_base_ex57():
     print('student object:', s)
 
 
-# expample 58, deep copy
+# example 58, deep copy
 def py_base_ex58():
     skills = ['java', 'golang', 'js']
     p = {
@@ -1434,7 +1434,7 @@ def py_base_ex58():
     print(json.dumps(p2))
 
 
-# expample 59, load module and run func
+# example 59, load module and run func
 def py_base_ex59():
     test_script = """# coding=utf-8
 import os
@@ -1468,7 +1468,7 @@ def hello_bar():
             print(fn())
 
 
-# expample 60, default invoke
+# example 60, default invoke
 def py_base_ex60():
     def hello():
         print('call')
@@ -1492,7 +1492,7 @@ def py_base_ex60():
     say_hello('bar')
 
 
-# expample 61, bean object, and remove when iterator
+# example 61, bean object, and remove when iterator
 def py_base_ex61():
     class StudentBean(object):
         def __init__(self, name: str, age: int):
@@ -1529,7 +1529,7 @@ def py_base_ex61():
         print(s.__dict__)
 
 
-# expample 62, python3 custom sort string list
+# example 62, python3 custom sort string list
 def py_base_ex62():
     level_value_dict = {
         'na': 0,
@@ -1550,7 +1550,7 @@ def py_base_ex62():
     print('result:', ','.join(res))
 
 
-# expample 63, lambda
+# example 63, lambda
 def py_base_ex63():
     """
     lambda 函数只能写一个表达式，这个表达式的执行结果就是函数的返回值，不用写 return 关键字。
@@ -1568,7 +1568,19 @@ def py_base_ex63():
     print(res)
 
 
-# expample 98, regexp samples
+# example 64, merge 2 dict
+def py_base_ex64():
+    # NOTE: dict key must be string
+    dict_a = {'1': 'one'}
+    dict_b = {
+        '2': 'two',
+        '3': 'three',
+    }
+    dict_all = dict(**dict_a, **dict_b)
+    print(dict_all)
+
+
+# example 98, regexp samples
 def py_base_ex98():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
     # search: 函数类似于 match, 不同之处在于不限制正则表达式的开始匹配位置
@@ -1628,7 +1640,7 @@ def py_base_ex98():
         print(f'text:{text}, result:{check_app_tag(text)}')
 
 
-# expample 99, common
+# example 99, common
 def py_base_ex99():
     # title
     print('samuel colvin'.title())
@@ -1683,7 +1695,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex56()
+        py_base_ex64()
     except:
         traceback.print_exc()
 

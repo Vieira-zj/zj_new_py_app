@@ -122,25 +122,22 @@ def distinct_linkedlist(l: LinkedList):
         return l
 
     cur = l.head
-    d = {cur.value: 1}
+    s = set()
+    s.add(cur.value)
     # base cur node, check next node
     while cur.next:
-        tmp = d.get(cur.next.value, 0)
-        if tmp == 1:
+        if cur.next.value in s:
             cur.next = cur.next.next
-            if cur.next is None:
-                return l
         else:
-            d[cur.next.value] = 1
+            s.add(cur.next.value)
             cur = cur.next
 
 
 def test_distinct_linkedlist():
-    cases = [(1, 2, 3, 4)]
-    cases.append((1, 2, 2, 3, 4, 4))
-    cases.append((4, 4, 7, 7, 7, 10, 8, 3, 4, 8, 1,
-                  2, 4, 20, 11, 7, 4, 20, 39, 39))
-    for case in cases:
+    case1 = (1, 2, 3, 4)
+    case2 = (1, 2, 2, 3, 4, 4)
+    case3 = (4, 4, 7, 7, 7, 10, 8, 3, 4, 8, 1, 2, 4, 20, 11, 7, 4, 20, 39, 39)
+    for case in (case1, case2, case3):
         l = LinkedList()
         for val in case:
             l.append(val)
