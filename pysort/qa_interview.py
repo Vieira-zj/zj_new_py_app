@@ -41,7 +41,7 @@ def alg_demo02(num: int) -> int:
     ret_num = int(num / 3)
     remained1 = num % 3
     remained2 = ret_num
-    ret_num += alg_demo01(remained1 + remained2)
+    ret_num += alg_demo02(remained1 + remained2)
     return ret_num
 
 
@@ -338,6 +338,53 @@ def test_alg_demo09():
         got = alg_demo09(data)
         print(got)
         assert got == want, f'want {want}, got {got}'
+
+
+def alg_demo10(path: str, dst_name: str) -> list:
+    """
+    有一个文件记录了每个人喜欢的城市，第一列为姓名，后边每一列为一个喜欢城市名，每一行列数不固定。例如：
+    张三，北京，长沙，广州，上海，天津
+    李四，深圳，昆明，西安，杭州
+    王五，拉萨，大连，青岛，厦门，苏州
+    如果A喜欢的城市一半以上都是B喜欢的城市，那么A就是B的朋友。
+
+    题目：
+    给定姓名C, 找出C所有的朋友。
+
+    测试：
+    [功能：]
+    - 正向：
+        1. 无共同喜欢的城市
+        2. 有共同喜欢的城市 + 是否超过一半以上
+        3. 有多个朋友
+    - 负向：
+        1. 文件不存在、空文件
+        2. 无喜欢的城市
+        3. 人名存在重名的情况，但喜欢的城市不一样
+        4. 行数据格式问题，比如不是用 "," 号分隔
+
+    [性能：]
+    1. 一行包括100+喜欢的城市（列）
+    2. 文件行数大于1000W
+    """
+    with open(path, mode='r') as f:
+        lines = f.readlines()
+        d = {}
+        for line in lines:
+            items = line.strip().split(',')
+            name = items[0]
+            cities = set(items[1:])
+            d[name] = cities
+
+        res = []
+        dst_cities = set(d[dst_name])
+        for name, cities in d:
+            if name == dst_name:
+                continue
+            share_cities = dst_cities.intersection(cities)
+            if len(share_cities) > (len(cities) / 2):
+                res.append(name)
+        return res
 
 
 if __name__ == '__main__':
