@@ -1538,16 +1538,22 @@ def py_base_ex62():
         'high': 3,
     }
 
+    # 1: by lambda
+    rows = ['low', 'high', 'low', 'high', 'mid', 'low', 'na', 'mid']
+    sorted_rows = sorted(
+        rows, key=lambda item: level_value_dict[item], reverse=True)
+    print('result:', ','.join(sorted_rows))
+
+    # 2: by custom compare func
     def mycmp(x, y):
         x_value = level_value_dict[x]
         y_value = level_value_dict[y]
         return y_value - x_value
 
     from functools import cmp_to_key
-    key = cmp_to_key(mycmp)
-    rows = ['low', 'high', 'low', 'high', 'mid', 'low', 'na', 'mid']
-    res = sorted(rows, key=key)
-    print('result:', ','.join(res))
+    new_key = cmp_to_key(mycmp)
+    result = sorted(rows, key=new_key)
+    print('result:', ','.join(result))
 
 
 # example 63, lambda
@@ -1695,7 +1701,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex64()
+        py_base_ex62()
     except:
         traceback.print_exc()
 

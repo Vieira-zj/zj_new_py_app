@@ -21,9 +21,13 @@ def read_lint_issues(path: str) -> list:
 def format_issues(issues: list) -> list:
     ret_items = []
     for issue in issues:
+        text = issue['Text']
+        # filter
+        if text.startswith('undeclared name'):
+            continue
         pos = issue['Pos']
         item = {
-            'Title': issue['Text'],
+            'Title': text,
             'Pos': f'{pos["Filename"]}:{pos["Line"]}:{pos["Column"]}',
             'Linter': issue['FromLinter'],
             'Code': issue['SourceLines'][0],
@@ -186,10 +190,11 @@ if __name__ == '__main__':
 
     root_dir = '/tmp/test'
     in_path = f'{root_dir}/lint_results.json'
-    try:
-        in_path = sys.argv[1]
-    except IndexError:
-        raise ValueError('input path is not defined.')
+    if not in_path:
+        try:
+            in_path = sys.argv[1]
+        except IndexError:
+            raise ValueError('input path is not defined')
 
     create_test_data(in_path)
     issues = read_lint_issues(in_path)
@@ -197,11 +202,13 @@ if __name__ == '__main__':
         exit(0)
 
     out_path = f'{root_dir}/lint_report.html'
-    try:
-        out_path = sys.argv[2]
-    except IndexError:
-        raise ValueError('output path is not defined.')
+    if not out_path:
+        try:
+            out_path = sys.argv[2]
+        except IndexError:
+            raise ValueError('output path is not defined')
 
     issues = format_issues(issues)
+    # print(json.dumps(issues, indent=2))
     generate_lint_html_report(issues, out_path)
     print_lint_summary(issues)
