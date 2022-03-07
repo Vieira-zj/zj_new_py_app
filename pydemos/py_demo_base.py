@@ -1576,6 +1576,26 @@ def py_base_ex63():
 
 # example 64, merge 2 dict
 def py_base_ex64():
+    # 1: create dict from list
+    class num(object):
+        def __init__(self, name, value):
+            self.name = name
+            self.value = value
+
+    numbers = [
+        num('one', 1),
+        num('two', 2),
+        num('three', 3),
+        num('four', 4),
+        num('five', 5),
+    ]
+    d = {num.name: num.value for num in numbers}
+    print(type(d))
+    for k, v in d.items():
+        print(f'{k}:{v}')
+    print()
+
+    # 2: merge 2 dict
     # NOTE: dict key must be string
     dict_a = {'1': 'one'}
     dict_b = {
@@ -1584,6 +1604,63 @@ def py_base_ex64():
     }
     dict_all = dict(**dict_a, **dict_b)
     print(dict_all)
+
+
+# example 65, two levels sort
+def py_base_ex65():
+    from functools import cmp_to_key
+
+    def str_cmp(x, y) -> int:
+        length = min(len(x), len(y))
+        for idx in range(0, length):
+            x_val = ord(x[idx])
+            y_val = ord(y[idx])
+            if x_val != y_val:
+                return x_val - y_val
+        return len(x) - len(y)
+
+    # 1: string sort
+    l = ['cn', 'id', 'es', 'cn', 'fr', 'es', 'cn']
+    print(sorted(l, key=lambda item: item))
+
+    def cmp(x, y) -> int:
+        return str_cmp(x, y)
+    result = sorted(l, key=cmp_to_key(cmp))
+    print(result)
+    print()
+
+    # 2: two levels sort: string => list of str
+    class product(object):
+        def __init__(self, category, regions, price):
+            self.category = category
+            self.regions = sorted(regions, key=lambda item: item)
+            self.price = price
+
+        def __str__(self):
+            return f'type={self.category},region={"|".join(self.regions)},price={self.price}'
+
+    products = [
+        product('type_a', ['cn', 'en'], 99),
+        product('type_b', ['es', 'fr'], 90),
+        product('type_a', ['id', 'in'], 92),
+        product('type_a', ['en', 'cn'], 101),
+        product('type_b', ['br', 'mx'], 97),
+        product('type_b', ['fr', 'es'], 95),
+        product('type_a', ['cn', 'en'], 105),
+        product('type_c', ['en', 'es'], 91),
+        product('type_a', ['in', 'id'], 95),
+    ]
+
+    def my_comp(x, y) -> int:
+        if x.category != y.category:
+            return str_cmp(x.category, y.category)
+        return str_cmp(','.join(y.regions), ','.join(x.regions))
+
+    new_key = cmp_to_key(my_comp)
+    new_products = sorted(products, key=new_key)
+
+    for product in new_products:
+        print(product)
 
 
 # example 98, regexp samples
@@ -1701,7 +1778,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex62()
+        py_base_ex64()
     except:
         traceback.print_exc()
 
