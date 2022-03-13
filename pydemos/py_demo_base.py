@@ -1663,6 +1663,32 @@ def py_base_ex65():
         print(product)
 
 
+# example 66, state by bits
+def py_base_ex66():
+    state_qa = 1
+    state_dev = 1 << 1
+    state_pm = 1 << 2
+
+    l = ['qa, pm', 'dev', 'dev, qa']
+    for data in l:
+        cur_state = 0
+        if 'qa' in data:
+            cur_state += state_qa
+        if 'dev' in data:
+            cur_state += state_dev
+        if 'pm' in data:
+            cur_state += state_pm
+
+        result = []
+        if cur_state & state_qa != 0:
+            result.append('qa')
+        if cur_state & state_dev != 0:
+            result.append('dev')
+        if cur_state & state_pm != 0:
+            result.append('pm')
+        print('|'.join(result))
+
+
 # example 98, regexp samples
 def py_base_ex98():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
@@ -1778,7 +1804,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex64()
+        py_base_ex66()
     except:
         traceback.print_exc()
 

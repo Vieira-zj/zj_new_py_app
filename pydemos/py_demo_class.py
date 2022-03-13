@@ -764,8 +764,38 @@ def py_class_ex20():
     print(p2)
 
 
+# example 21, json dump an object
+def py_class_ex21():
+    import json
+
+    class Address(object):
+
+        def __init__(self, country, province):
+            self.country = country
+            self.province = province
+
+    class Student(object):
+
+        def __init__(self, name, age, address):
+            self.name = name
+            self.age = age
+            self.address = address
+
+    addr = Address('cn', 'HuBei')
+    print(json.dumps(addr.__dict__))
+    print()
+
+    s = Student('foo', 21, addr)
+    d = {}
+    for k, v in s.__dict__.items():
+        if hasattr(v, '__dict__'):
+            v = v.__dict__
+        d[k] = v
+    print(json.dumps(d, indent=2))
+
+
 if __name__ == '__main__':
 
     # py_base_ext()
-    py_class_ex20()
+    py_class_ex21()
     print('python class demo DONE.')
