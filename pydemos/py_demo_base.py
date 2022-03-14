@@ -1689,7 +1689,7 @@ def py_base_ex66():
         print('|'.join(result))
 
 
-# example 98, regexp samples
+# example 98, regexp
 def py_base_ex98():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
     # search: 函数类似于 match, 不同之处在于不限制正则表达式的开始匹配位置
