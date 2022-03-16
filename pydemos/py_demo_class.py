@@ -792,6 +792,12 @@ def py_class_ex21():
             v = v.__dict__
         d[k] = v
     print(json.dumps(d, indent=2))
+    print()
+
+    # object attr check
+    print('true' if hasattr(s, 'address') else 'false')
+    print('true' if hasattr(s, 'addr') else 'false')
+    # print('true' if s.addr else 'false') # AttributeError
 
 
 if __name__ == '__main__':

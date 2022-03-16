@@ -1778,6 +1778,16 @@ def py_base_ex99():
     print(isinstance(1.0, float))
     print(isinstance(0.9, (int, float)))
     print(isinstance('t', (int, float)))
+    print()
+
+    # 修改列表的元素值
+    lst = 'a|b|c|d|e|f|g'.split('|')
+    for val in lst:
+        val = val + 'x'
+    print('unchange:', lst)
+
+    new_lst = [val + 'x' for val in lst]
+    print('change:', new_lst)
 
 
 if __name__ == '__main__':
@@ -1804,7 +1814,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex66()
+        py_base_ex99()
     except:
         traceback.print_exc()
 
