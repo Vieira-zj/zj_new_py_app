@@ -387,7 +387,86 @@ def alg_demo10(path: str, dst_name: str) -> list:
         return res
 
 
+def alg_demo11(amount: float, num_of_person: int) -> list:
+    """
+    金额在200元内，人数小于20, 红包随机算法。
+    基于随基函数实现，当金额较小，人数较多时，最后分到的金额可能为0的情况。
+    """
+    def get_random_float(value: float):
+        while True:
+            rate = random.random()
+            if rate < 0.9:
+                break
+        return round(value * rate, ndigits=2)
+
+    if amount < 0 or amount > 200:
+        raise ValueError('0 < amount < 200')
+    if num_of_person < 0 or num_of_person > 20:
+        raise ValueError('0 < num_of_person < 20')
+
+    ret_values = []
+    bucket_num = 5  # 分桶处理，保证随机数据平均
+    src_amount = amount
+    for _ in range(1, num_of_person):
+        sum_value = 0
+        bucket_amount = amount / bucket_num
+        for _ in range(0, bucket_num):
+            tmp = get_random_float(bucket_amount)
+            sum_value = max(round(sum_value + tmp, ndigits=2), 0.01)
+        ret_values.append(sum_value)
+        amount = round(amount - sum_value, ndigits=2)
+
+    last_value = '%.2f' % (src_amount - sum(ret_values))
+    ret_values.append(float(last_value))
+    random.shuffle(ret_values)  # 列表中的值从大到小分布，shuffle处理
+    return ret_values
+
+
+def test_alg_demo11():
+    for amount, num in ((100, 5), (67.4, 3), (150.76, 15), (198.3, 12)):
+        values = alg_demo11(amount, num)
+        print('%.2f, %.2f' % (amount, sum(values)))
+        print(values)
+
+
+def alg_demo12(amount: float, num_of_person: int) -> list:
+    """
+    金额在200元内，人数小于20, 红包随机算法。
+    设定一个范围，再通过随机函数获得金额。
+    """
+    def get_random_float(value: float):
+        rate = random.random()
+        return round(value * rate, ndigits=2)
+
+    if amount < 0 or amount > 200:
+        raise ValueError('0 < amount < 200')
+    if num_of_person < 0 or num_of_person > 20:
+        raise ValueError('0 < num_of_person < 20')
+
+    src_amount = amount
+    ret_values = []
+    for _ in range(num_of_person, 1, -1):
+        avg_value = round(amount / num_of_person)
+        max_value = avg_value * 2  # 设定随机范围
+        res = max(get_random_float(max_value), 0.01)
+        ret_values.append(res)
+        amount = round(amount - res, ndigits=2)
+
+    last_value = '%.2f' % (src_amount - sum(ret_values))
+    ret_values.append(float(last_value))
+    random.shuffle(ret_values)  # 一般情况下，列表中的最后一个值最大，shuffle处理
+    return ret_values
+
+
+def test_alg_demo12():
+    for amount, num in ((100, 5), (67.4, 3), (150.76, 15), (198.3, 12)):
+        values = alg_demo12(amount, num)
+        print('%.2f, %.2f' % (amount, sum(values)))
+        print(values)
+        print()
+
+
 if __name__ == '__main__':
 
-    test_alg_demo09()
+    test_alg_demo12()
     print('py alg interview demo done.')
