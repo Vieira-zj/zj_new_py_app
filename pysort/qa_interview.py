@@ -272,12 +272,14 @@ def test_alg_demo08():
     def profile(fn):
         def wrap(*args):
             start = time.time()
-            fn(*args)
+            res = fn(*args)
             end = time.time()
             duration = round((end - start) * 1000)
             # print(duration)
             if duration > 600:
                 print('slow func:', fn.__name__)
+            return res
+
         return wrap
 
     @profile

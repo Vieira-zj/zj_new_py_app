@@ -5,6 +5,7 @@ Created on 2018-10-31
 '''
 
 import copy
+import functools
 import getopt
 import glob
 import inspect
@@ -708,8 +709,6 @@ def py_base_ex27_02():
 
 # example 28, deco 类装饰器
 def py_base_ex28():
-    import functools
-
     class MyLogging(object):
         def __init__(self, level='warn'):
             self.level = level
@@ -1077,31 +1076,32 @@ def py_base_ex42():
             print('string:', item)
 
 
-# example 43, deco with parameters
+# example 43, *deco: wrap(deco_params) => deco(func) => inner_deco(func_params)
 def py_base_ex43():
     def wrap(author='vieira'):
+
         def _deco(func):
             # add a attribute
+            setattr(func, 'author', author)
 
-            def _inner_deco():
+            @functools.wraps(func)
+            def _inner_deco(*args):
                 # add hooks
                 print('\npre-hook')
-                ret = func()
+                ret = func(*args)
                 print('after-hook')
                 return ret
-
-            setattr(_inner_deco, 'author', author)
             return _inner_deco
 
         return _deco
 
-    @wrap(author='zj')
-    def say_hello():
-        print('say_hello invoked')
-        return 'hello'
+    @wrap(author='jin.zheng')
+    def say_hello(name: str):
+        return 'hello ' + name
 
     assert hasattr(say_hello, 'author')
-    print(say_hello(), say_hello.author)
+    print(f'func={say_hello.__name__}, author={say_hello.author}')
+    print(say_hello('foo'))
 
 
 # example 44, reflect for func by inspect
@@ -1550,8 +1550,7 @@ def py_base_ex62():
         y_value = level_value_dict[y]
         return y_value - x_value
 
-    from functools import cmp_to_key
-    new_key = cmp_to_key(mycmp)
+    new_key = functools.cmp_to_key(mycmp)
     result = sorted(rows, key=new_key)
     print('result:', ','.join(result))
 
@@ -1608,8 +1607,6 @@ def py_base_ex64():
 
 # example 65, two levels sort
 def py_base_ex65():
-    from functools import cmp_to_key
-
     def str_cmp(x, y) -> int:
         length = min(len(x), len(y))
         for idx in range(0, length):
@@ -1625,7 +1622,7 @@ def py_base_ex65():
 
     def cmp(x, y) -> int:
         return str_cmp(x, y)
-    result = sorted(l, key=cmp_to_key(cmp))
+    result = sorted(l, key=functools.cmp_to_key(cmp))
     print(result)
     print()
 
@@ -1656,7 +1653,7 @@ def py_base_ex65():
             return str_cmp(x.category, y.category)
         return str_cmp(','.join(y.regions), ','.join(x.regions))
 
-    new_key = cmp_to_key(my_comp)
+    new_key = functools.cmp_to_key(my_comp)
     new_products = sorted(products, key=new_key)
 
     for product in new_products:
@@ -1814,7 +1811,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex99()
+        py_base_ex43()
     except:
         traceback.print_exc()
 

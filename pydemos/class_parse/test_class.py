@@ -6,6 +6,7 @@ def desc(desc):
     def _deco(func):
         print('deco for:', func.__name__)
         func.desc = desc
+        # NOTE: directly return func here
         return func
 
     return _deco
