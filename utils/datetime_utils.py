@@ -66,12 +66,17 @@ def format_datetime_to_timestamp(input_datetime) -> int:
     return int(time.mktime(d.timetuple()))
 
 
+def get_deltatime_milliseconds(delta):
+    return delta.seconds * 1000 + int(delta.microseconds / 1000)
+
+
 def test_duration_by_datetime():
     start = dt.now()
-    time.sleep(3)
+    time.sleep(2.3)
     duration = dt.now() - start
-    print(f'duration: {duration.seconds} seconds')
-    print('duration: %.2f seconds' % duration.total_seconds())
+    print('duration seconds:', duration.seconds)
+    print('duration seconds: %.2f' % duration.total_seconds())
+    print('duration milliseconds:', get_deltatime_milliseconds(duration))
 
 
 if __name__ == '__main__':
@@ -79,7 +84,7 @@ if __name__ == '__main__':
     try:
         # print(get_current_date())
         # print(get_date_by_delta_days('2022-03-14', 14))
-        print(get_date_by_delta_days(get_current_date(), 4))
+        # print(get_date_by_delta_days(get_current_date(), 4))
 
         # print(get_delta_days('2021-10-18', '2021-10-30'))
         # print(get_week_of_year_v1('2021-12-23'))
@@ -89,7 +94,7 @@ if __name__ == '__main__':
         # print(format_timestamp_to_datetime('1635416838'))
         # print(format_datetime_to_timestamp('2021-10-18 20:05:43'))
 
-        # test_duration_by_datetime()
+        test_duration_by_datetime()
     except:
         traceback.print_exc()
 

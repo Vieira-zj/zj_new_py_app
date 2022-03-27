@@ -4,8 +4,11 @@ Created on 2020-07-03
 @author: zhengjin
 '''
 
+import functools
 import random
 import time
+
+from datetime import datetime as dt
 
 
 def alg_demo01(input: list) -> list:
@@ -265,7 +268,7 @@ def test_alg_demo07():
         print('actual', res)
 
 
-def test_alg_demo08():
+def test_alg_demo0801():
     """
     Write a decorator to find slow functions (execution time greater than 600ms).
     """
@@ -304,6 +307,42 @@ def test_alg_demo08():
     run4('hello')
 
 
+def test_alg_demo0802():
+    """
+    Write a decorator to find slow functions (execution time greater than 600ms).
+    """
+    def get_deltatime_milliseconds(delta):
+        return delta.seconds * 1000 + int(delta.microseconds / 1000)
+
+    def profile(timeout=3, unit='sec'):
+        def _deco(fn):
+            @functools.wraps(fn)
+            def _inner_deco(*args, **kwargs):
+                start = dt.now()
+                result = fn(*args, **kwargs)
+                delta = dt.now() - start
+
+                limit = timeout  # use local var here
+                if unit == 'sec':
+                    limit = timeout * 1000
+                milliseconds = get_deltatime_milliseconds(delta)
+                if milliseconds > limit:
+                    print(
+                        f'timeout: {fn.__name__} run time {milliseconds}, exceed {limit} milliseconds')
+                return result
+            return _inner_deco
+        return _deco
+
+    # @profile(timeout=1)
+    @profile(timeout=1300, unit='millisec')
+    def my_hello(name):
+        time.sleep(1.4)
+        return 'hello ' + name
+
+    print('profile:', my_hello.__name__)
+    print(my_hello('bar'))
+
+
 def alg_demo09(text: str) -> str:
     """
     找出连续的字符串。
@@ -314,13 +353,11 @@ def alg_demo09(text: str) -> str:
     for idx, ch in enumerate('abcdefghijklmn'):
         ch_to_int[ch] = idx
 
-    from functools import cmp_to_key
-
     def my_cmp(a, b):
         return ch_to_int[a] - ch_to_int[b]
 
     chs = [ch for ch in text]
-    sorted_chs = sorted(chs, key=cmp_to_key(my_cmp))
+    sorted_chs = sorted(chs, key=functools.cmp_to_key(my_cmp))
 
     res_list = []
     for i in range(len(sorted_chs) - 1):
@@ -389,7 +426,7 @@ def alg_demo10(path: str, dst_name: str) -> list:
         return res
 
 
-def alg_demo11(amount: float, num_of_person: int) -> list:
+def alg_demo1101(amount: float, num_of_person: int) -> list:
     """
     金额在200元内，人数小于20, 红包随机算法。
     基于随基函数实现，当金额较小，人数较多时，最后分到的金额可能为0的情况。
@@ -426,12 +463,12 @@ def alg_demo11(amount: float, num_of_person: int) -> list:
 
 def test_alg_demo11():
     for amount, num in ((100, 5), (67.4, 3), (150.76, 15), (198.3, 12)):
-        values = alg_demo11(amount, num)
+        values = alg_demo1101(amount, num)
         print('%.2f, %.2f' % (amount, sum(values)))
         print(values)
 
 
-def alg_demo12(amount: float, num_of_person: int) -> list:
+def alg_demo1102(amount: float, num_of_person: int) -> list:
     """
     金额在200元内，人数小于20, 红包随机算法。
     设定一个范围，再通过随机函数获得金额。
@@ -462,7 +499,7 @@ def alg_demo12(amount: float, num_of_person: int) -> list:
 
 def test_alg_demo12():
     for amount, num in ((100, 5), (67.4, 3), (150.76, 15), (198.3, 12)):
-        values = alg_demo12(amount, num)
+        values = alg_demo1102(amount, num)
         print('%.2f, %.2f' % (amount, sum(values)))
         print(values)
         print()
@@ -470,5 +507,5 @@ def test_alg_demo12():
 
 if __name__ == '__main__':
 
-    test_alg_demo12()
+    test_alg_demo0802()
     print('py alg interview demo done.')
