@@ -461,7 +461,7 @@ def alg_demo1101(amount: float, num_of_person: int) -> list:
     return ret_values
 
 
-def test_alg_demo11():
+def test_alg_demo1101():
     for amount, num in ((100, 5), (67.4, 3), (150.76, 15), (198.3, 12)):
         values = alg_demo1101(amount, num)
         print('%.2f, %.2f' % (amount, sum(values)))
@@ -497,7 +497,7 @@ def alg_demo1102(amount: float, num_of_person: int) -> list:
     return ret_values
 
 
-def test_alg_demo12():
+def test_alg_demo1102():
     for amount, num in ((100, 5), (67.4, 3), (150.76, 15), (198.3, 12)):
         values = alg_demo1102(amount, num)
         print('%.2f, %.2f' % (amount, sum(values)))
@@ -505,7 +505,62 @@ def test_alg_demo12():
         print()
 
 
+def alg_demo12(path: str, top: int = 10):
+    """
+    用python实现统计一篇英文文章内每个单词的出现频率，并返回出现频率最高的前10个单词及其出现次数
+    """
+
+    def get_max_top_occurs_words(path: str, top: int) -> dict:
+        res = {}
+        words_map = read_words_from_file(path)
+        sorted_words_occurs = sorted(words_map.values(), reverse=True)
+        top_words_occurs = sorted_words_occurs[:top]
+        for k, v in words_map.items():
+            if v in top_words_occurs:
+                res[k] = v
+                top_words_occurs.remove(v)
+        return res
+
+    def read_words_from_file(path: str) -> dict:
+        ret_words = {}
+        with open(path) as f:
+            lines = f.readlines()
+            for line in lines:
+                line = line.rstrip('\n')
+                if len(line) == 0:
+                    continue
+                words = read_words_from_line(line)
+                for word in words:
+                    occurs = ret_words.get(word, 0)
+                    ret_words[word] = occurs + 1
+        return ret_words
+
+    def read_words_from_line(line: str) -> str:
+        ret_words = []
+        items = line.split(' ')
+        for item in items:
+            word = trim_non_alnum_char(item)
+            if len(word) > 0:
+                ret_words.append(word)
+        return ret_words
+
+    def trim_non_alnum_char(word: str) -> str:
+        while len(word) > 0 and (not word[0].isalnum()):
+            word = word[1:]
+        while len(word) > 0 and (not word[-1].isalnum()):
+            word = word[:-1]
+        return word
+
+    res = get_max_top_occurs_words(path, top)
+    return res
+
+
+def test_alg_demo12():
+    res = alg_demo12('/tmp/test/text.txt', top=5)
+    print("top occurs of words:\n", res)
+
+
 if __name__ == '__main__':
 
-    test_alg_demo0802()
+    test_alg_demo12()
     print('py alg interview demo done.')

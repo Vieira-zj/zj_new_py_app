@@ -34,3 +34,10 @@ class TestSuite02(object):
 
     def test_case12_skip(self):
         print('run testCase12')
+
+
+if __name__ == '__main__':
+
+    # NOTE: deco for func auto exec when current py file run or import.
+    print('trigger [desc] deco for test method.')
+    pass

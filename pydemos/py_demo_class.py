@@ -298,14 +298,17 @@ def py_class_ex09():
         @abstractmethod
         def read(self):
             '''Read raw data.'''
+            pass
 
         @abstractmethod
         def process(self):
             '''Processes raw data.'''
+            pass
 
         @abstractmethod
         def save(self):
             '''Saves processed data.'''
+            pass
 
     class MyProcess(DataProcessor):
         def __init__(self, input, output):
