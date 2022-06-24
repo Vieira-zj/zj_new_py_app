@@ -5,17 +5,44 @@ Created on 2019-03-06
 @author: zhengjin
 '''
 
-import sys
 import os
+import sys
 sys.path.append(os.getenv('PYROOT'))
 
-import base64
 import functools
-import json
+import base64
 import time
-import random
+import json
 import requests
+import random
+
 from utils import Constants, LogManager
+from urllib.parse import urlencode, unquote
+
+#
+# URL Encode / Decode
+#
+
+
+def url_encode(params: dict) -> str:
+    return urlencode(params)
+
+
+def url_decode(url: str) -> str:
+    return unquote(url)
+
+
+def parser_query(query: str) -> dict:
+    ret_params = {}
+    items = query.split('&')
+    for item in items:
+        sub_items = item.split('=', 1)
+        ret_params[sub_items[0]] = sub_items[1]
+    return ret_params
+
+#
+# Http Request
+#
 
 
 def retry(retries=3, delay=1):
@@ -181,6 +208,22 @@ class HttpUtils(object):
     def __print_with_prefix(self, text):
         self.__logger.debug('* ' + text)
 
+#
+# Test
+#
+
+
+def url_encode_decode_test():
+    url = r'https://log.test.io/log-search?date-time=%7B%22type%22%3A%22rel%22%2C%22relativeTime%22%3A%22unit%3DMin%26count%3D-5%26referenceTime%3Dnow%22%7D&enable-long-history-search=0'
+    raw_url = url_decode(url)
+    print("raw url:", raw_url)
+
+    params = {
+        'date-time': r'{"type":"rel","relativeTime":"unit=Min&count=-5&referenceTime=now"}',
+        'enable-long-history-search': 0,
+    }
+    print('encode url:', url_encode(params))
+
 
 def retry_test():
     @retry(retries=5)
@@ -228,6 +271,11 @@ def http_test():
 
 if __name__ == '__main__':
 
-    retry_test()
-    # http_test()
+    try:
+        url_encode_decode_test()
+        # retry_test()
+        # http_test()
+    except Exception as e:
+        print(e)
+
     print('http utils test DONE.')
