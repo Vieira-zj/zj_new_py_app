@@ -1754,7 +1754,10 @@ def py_base_ex99():
 
     # 泰文 bytes 转 str
     s = b'\340\271\204\340\270\241\340\271\210\340\270\252\340\270\262\340\270\241\340\270\262\340\270\243\340\270\226\340\271\203\340\270\212\340\271\211\340\270\204\340\270\271\340\270\233\340\270\255\340\270\207\340\270\231\340\270\265\340\271\211'
-    print(s.decode())
+    if isinstance(s, bytes):
+        print('bytes decode:', s.decode())
+    else:
+        print('string:', s)
     print()
 
     # dict as input params
@@ -1811,7 +1814,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex43()
+        py_base_ex99()
     except:
         traceback.print_exc()
 
