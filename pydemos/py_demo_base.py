@@ -1529,8 +1529,8 @@ def py_base_ex61():
         print(s.__dict__)
 
 
-# example 62, python3 custom sort string list
-def py_base_ex62():
+# example 6201, python3 custom sort string list
+def py_base_ex6201():
     level_value_dict = {
         'na': 0,
         'low': 1,
@@ -1553,6 +1553,37 @@ def py_base_ex62():
     new_key = functools.cmp_to_key(mycmp)
     result = sorted(rows, key=new_key)
     print('result:', ','.join(result))
+
+
+# example 6202, sort objects by fields
+def py_base_ex6202():
+    class student(object):
+        def __init__(self, req_type: str, req_path: str, count: int):
+            self.req_type = req_type
+            self.req_path = req_path
+            self.count = count
+
+    def student_cmp(x: student, y: student) -> int:
+        if x.req_type != y.req_type:
+            return 1 if x.req_type > y.req_type else -1
+        if x.req_path != y.req_path:
+            return 1 if x.req_path > y.req_path else -1
+        return y.count - x.count
+
+    students = [
+        student('http', '/xy', 97),
+        student('rpc', '/foo', 176),
+        student('http', '/ab/2', 63),
+        student('http', '/xy', 275),
+        student('rpc', '/bar', 81),
+        student('http', '/cd', 491),
+        student('http', '/xy', 55),
+        student('http', '/ab/1', 29),
+    ]
+    cmp_key = functools.cmp_to_key(student_cmp)
+    results = sorted(students, key=cmp_key)
+    for s in results:
+        print(s.req_type, s.req_path, s.count)
 
 
 # example 63, lambda
@@ -1814,7 +1845,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex99()
+        py_base_ex6202()
     except:
         traceback.print_exc()
 

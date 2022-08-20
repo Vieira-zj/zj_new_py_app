@@ -7,8 +7,7 @@ from typing import List, Dict, Union, Callable
 """
 raw data by sql:
 
-select distinct pay_load
-from replay_invocation_tab
+select pay_load from replay_invocation_tab
 where entrance = 1 and start_at between 1658332800000 and 1658419200000
 order by app_name, identity;
 """
