@@ -599,7 +599,9 @@ class Apple(object):
 def py_class_ex14():
     apple = Apple()
     print(f'\napple id={apple.id}, color={apple.color}')
-    print(getattr(apple, 'name'))
+    print('hasattr:', hasattr(apple, 'name'))  # return true
+    print('vars:', 'name' in vars(apple))  # use vars() instead of hasattr()
+    print('getattr:', getattr(apple, 'name'))
 
 
 # example 15, instance attributes inherit
@@ -806,5 +808,5 @@ def py_class_ex21():
 if __name__ == '__main__':
 
     # py_base_ext()
-    py_class_ex21()
+    py_class_ex14()
     print('python class demo DONE.')
