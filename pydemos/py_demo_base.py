@@ -24,6 +24,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
+from collections import Counter, defaultdict, namedtuple, OrderedDict
 from datetime import datetime as dt
 from enum import Enum
 
@@ -337,14 +338,12 @@ def py_base_ex12():
         tmp_dict02[color] = tmp_dict02.get(color, 0) + 1
     print(tmp_dict02)
 
-    from collections import Counter
     count = Counter(colors)
     print(count)
 
 
 # example 13, default dict
 def py_base_ex13():
-    from collections import defaultdict
     names = ['jack', 'leo', 'sam', 'peter', 'jeo']
     # set dict value default as list
     tmp_dict = defaultdict(list)
@@ -1638,6 +1637,10 @@ def py_base_ex64():
 
 # example 65, two levels sort
 def py_base_ex65():
+    # 1: string sort
+    l = ['cn', 'id', 'es', 'cn', 'fr', 'es', 'cn']
+    print(sorted(l, key=lambda item: item))
+
     def str_cmp(x, y) -> int:
         length = min(len(x), len(y))
         for idx in range(0, length):
@@ -1647,13 +1650,7 @@ def py_base_ex65():
                 return x_val - y_val
         return len(x) - len(y)
 
-    # 1: string sort
-    l = ['cn', 'id', 'es', 'cn', 'fr', 'es', 'cn']
-    print(sorted(l, key=lambda item: item))
-
-    def cmp(x, y) -> int:
-        return str_cmp(x, y)
-    result = sorted(l, key=functools.cmp_to_key(cmp))
+    result = sorted(l, key=functools.cmp_to_key(str_cmp))
     print(result)
     print()
 
@@ -1717,8 +1714,8 @@ def py_base_ex66():
         print('|'.join(result))
 
 
-# example 98, regexp
-def py_base_ex98():
+# example 97, regexp
+def py_base_ex97():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
     # search: 函数类似于 match, 不同之处在于不限制正则表达式的开始匹配位置
     # findall: 寻找所有匹配正则表达式的字串，返回一个列表
@@ -1777,10 +1774,56 @@ def py_base_ex98():
         print(f'text:{text}, result:{check_app_tag(text)}')
 
 
-# example 99, common
+# example 98, basic
+def py_base_ex98():
+    # 推导式
+    numbers = [1, 2, 3, -3, -2, -1]
+    my_list = [x*x for x in numbers]
+    print(my_list)
+    my_dict = {x: pow(10, x) for x in numbers}
+    print(my_dict)
+    my_set = {abs(x) for x in numbers}
+    print(my_set)
+    print()
+
+    # Counter
+    data = [1, 1, 1, 1, 2, 3, 4, 3, 3, 5, 6, 7, 7]
+    count = Counter(data)
+    for k, v in count.items():
+        print(f'{k}={v}')
+    print()
+
+    # namedtuple
+    Direction = namedtuple('Direction', 'N,S,E,W')
+    dt = Direction(4, 74, 0, 0)
+    print(dt)
+    print()
+
+    # OrderedDict
+    d = OrderedDict()
+    d['a'] = 5
+    d['d'] = 2
+    d['c'] = 1
+    d['b'] = 3
+    print(d)
+
+    # defaultdict
+    dd = defaultdict(int)
+    dd['a'] = 2
+    print(dd['a'])
+    print(dd['b'])
+
+
+# example 99, exp
 def py_base_ex99():
     # title
     print('samuel colvin'.title())
+    print()
+
+    # str compare
+    print('a > b:', 'a' > 'b')
+    print('aa > ab:', 'aa' > 'ab')
+    print('abc > abd:', 'abc' > 'abd')
     print()
 
     # 泰文 bytes 转 str
@@ -1845,7 +1888,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex6202()
+        py_base_ex99()
     except:
         traceback.print_exc()
 
