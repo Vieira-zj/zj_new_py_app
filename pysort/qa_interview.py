@@ -6,16 +6,17 @@ Created on 2020-07-03
 
 import functools
 import random
+import math
 import time
 
 from datetime import datetime as dt
 
 
 def alg_demo01(input: list) -> list:
-    '''
+    """
     shuffle算法：每次从未处理的数据中随机取出一个数字，然后把该数字放在数组的尾部，即数组尾部存放的是已经处理过的数字。
     注：原始数据被直接打乱。
-    '''
+    """
     for i in range((len(input) - 1), 0, -1):
         idx = random.randint(0, i)
         input[i], input[idx] = input[idx], input[i]
@@ -29,13 +30,13 @@ def test_alg_demo01():
 
 
 def alg_demo02(num: int) -> int:
-    '''
+    """
     某商店规定：3个空汽水瓶可以换1瓶汽水。小张手上有10个空汽水瓶，她最多可以换多少瓶汽水喝？答案是5瓶。
     先用9个空瓶子换3瓶汽水，喝掉3瓶满的，喝完以后4个空瓶子；
     用3个再换1瓶，喝掉这瓶满的，这时候剩2个空瓶子；
     然后你让老板先借给你1瓶汽水，喝掉这瓶满的，喝完以后用3个空瓶子换1瓶满的还给老板。
     如果小张手上有n个空汽水瓶，最多可以换多少瓶汽水喝？
-    '''
+    """
     if num < 2:
         return 0
     elif num == 2:
@@ -58,7 +59,7 @@ def test_alg_demo02():
 
 
 class FindCoder(object):
-    '''
+    """
     再给定的字符串数组中，找到包含"Coder"的字符串（不区分大小写），并将其作为一个新的数组返回。
     结果字符串的顺序按照"Coder"出现的次数递减排列，若两个串中"Coder"出现的次数相同，则保持他们在原数组中的位置关系。
 
@@ -67,7 +68,7 @@ class FindCoder(object):
 
     输入：["i am a coder","Coder Coder","Code"]
     返回：["Coder Coder","i am a coder"]
-    '''
+    """
 
     def find(self, input_list_of_str: list) -> list:
         tmp_list_of_dict = []
@@ -106,11 +107,11 @@ def test_find_coder():
 
 
 def alg_demo0401(input_list: list) -> list:
-    '''
+    """
     请设计程序使连续的整数序列取前后两个数，并输出所有的列表。
     输入: [3,2,7,8,1,4,10,11,12,14]
     输出: [1,4],[7,8],[10,12],[14]
-    '''
+    """
     ret_list = []
     sort_list = sorted(input_list)
 
@@ -158,7 +159,7 @@ def test_alg_demo04():
     print(alg_demo0402(l))
 
 
-def alg_demo05(in_str: str) -> str:
+def alg_demo0501(in_str: str) -> str:
     '''
     从一个字符串中找出出现频率最高且最先出现的字符。
     '''
@@ -189,17 +190,36 @@ def alg_demo05(in_str: str) -> str:
     return ret_ch
 
 
+def alg_demo0502(in_str: str) -> str:
+    from collections import OrderedDict
+    d = OrderedDict()
+    for ch in in_str:
+        val = d.setdefault(ch, 0)
+        d[ch] = val + 1
+    # print(d)
+
+    max_value = max(d.values())
+    for k, v in d.items():
+        if v == max_value:
+            return k
+    return 'not go here'
+
+
 def test_alg_demo05():
     for in_str in ('mnq', 'cadxybazb', 'bcbdyxymny'):
-        print(alg_demo05(in_str))
+        print(alg_demo0501(in_str))
+
+    print()
+    for in_str in ('mnq', 'cadxybazb', 'bcbdyxymny'):
+        print(alg_demo0502(in_str))
 
 
 def alg_demo06(aba_str: str) -> str:
-    '''
+    """
     过滤掉输入字符串中的驼峰字符串（aba）。
     input: AaabxbcdyayBxxy
     output: AaacdBxxy
-    '''
+    """
     def is_aba_string(input_str):
         return input_str[0] == input_str[2]
 
@@ -221,7 +241,7 @@ def test_alg_demo06():
 
 def alg_demo07(x: str, y: str) -> str:
     """
-    考虑 x, y 转换成 int 时可能会超过整型最长大度，导致溢出的情况，因此每位数分别进行计算。
+    考虑 x,y 转换成 int 时可能会超过整型最长大度，导致溢出的情况，因此每位数分别进行计算。
     fix: 只能处理两个正整数相加的情况。
     """
     x = reversed(x)
@@ -273,16 +293,15 @@ def test_alg_demo0801():
     Write a decorator to find slow functions (execution time greater than 600ms).
     """
     def profile(fn):
-        def wrap(*args):
-            start = time.time()
-            res = fn(*args)
-            end = time.time()
+        def wrap(*args, **kwargs):
+            start = time.perf_counter()
+            res = fn(*args, **kwargs)
+            end = time.perf_counter()
             duration = round((end - start) * 1000)
             # print(duration)
             if duration > 600:
                 print('slow func:', fn.__name__)
             return res
-
         return wrap
 
     @profile
@@ -308,9 +327,6 @@ def test_alg_demo0801():
 
 
 def test_alg_demo0802():
-    """
-    Write a decorator to find slow functions (execution time greater than 600ms).
-    """
     def get_deltatime_milliseconds(delta):
         return delta.seconds * 1000 + int(delta.microseconds / 1000)
 
@@ -507,9 +523,8 @@ def test_alg_demo1102():
 
 def alg_demo12(path: str, top: int = 10):
     """
-    用python实现统计一篇英文文章内每个单词的出现频率，并返回出现频率最高的前10个单词及其出现次数
+    统计一篇英文文章内每个单词的出现频率，并返回出现频率最高的前10个单词及其出现次数。
     """
-
     def get_max_top_occurs_words(path: str, top: int) -> dict:
         res = {}
         words_map = read_words_from_file(path)
@@ -560,7 +575,40 @@ def test_alg_demo12():
     print("top occurs of words:\n", res)
 
 
+def alg_demo13(n: int, nums: list) -> int:
+    """
+    小于n的最大数
+    给定一个数 n, 如 23121; 给定一组数字 A 如 {2,4,9}, 求由 A 中元素组成的、小于 n 的最大数，如小于 23121 的最大数为 22999.
+    """
+    ret_str = ''
+    n_len = len(str(n))
+    nums = sorted(nums, reverse=True)
+    for i in range(0, n_len):
+        for num in nums:
+            tmp = 0
+            if len(ret_str) == 0:
+                tmp = num * math.pow(10, n_len - i - 1)
+            else:
+                tmp = (int(ret_str) * 10 + num) * math.pow(10, n_len - i - 1)
+            # print(f'tmp={tmp}, n={n}')
+            if int(tmp) < n:
+                ret_str += str(num)
+                break
+    return int(ret_str)
+
+
+def test_alg_demo13():
+    res = alg_demo13(23121, [2, 4, 9])
+    print('results:', res)
+
+    res = alg_demo13(22999, [2, 4, 9])
+    print('results:', res)
+
+    res = alg_demo13(2000, [1, 9])
+    print('results:', res)
+
+
 if __name__ == '__main__':
 
-    test_alg_demo12()
+    test_alg_demo0802()
     print('py alg interview demo done.')

@@ -10,9 +10,9 @@ Created on 2019-11-08
 
 
 def bubble_sort(iter: list):
-    '''
+    """
     冒泡排序（交换排序）O(N*N)
-    '''
+    """
     size = len(iter)
     for i in range(size - 1):
         is_exchange = False
@@ -31,9 +31,9 @@ def test_bubble_sort():
 
 
 def quick_sort(iter: list, start: int, end: int):
-    '''
+    """
     快速排序（交换排序）O(N*logN)
-    '''
+    """
     if start >= end:
         return
 
@@ -64,9 +64,9 @@ def test_quick_sort():
 
 
 def merge_sort(iter: list) -> list:
-    '''
+    """
     归并排序 O(N*logN)
-    '''
+    """
     if len(iter) == 1:
         return iter
 
@@ -120,9 +120,9 @@ def bin_search01(val: int, sort_list: list) -> int:
 
 
 def bin_search02(val: int, sort_list: list, start: int, end: int) -> int:
-    '''
+    """
     二分查找 有序数组 O(logN) 递归
-    '''
+    """
     if start > end:
         return -1
 
@@ -136,9 +136,9 @@ def bin_search02(val: int, sort_list: list, start: int, end: int) -> int:
 
 
 def bin_search03(val: int, sort_list: list) -> int:
-    '''
+    """
     二分查找 有序数组 O(logN) 非递归
-    '''
+    """
     start = 0
     end = len(sort_list) - 1
 
@@ -169,9 +169,9 @@ def test_bin_search():
 
 
 def list_group_by(src_list: list) -> list:
-    '''
+    """
     element ui table 合并单元格
-    '''
+    """
     for item in src_list:
         item['rowspan'] = 1
         item['colspan'] = 1

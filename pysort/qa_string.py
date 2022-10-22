@@ -42,9 +42,9 @@ def test_find_substring():
 
 
 def reverse_string(src_str: str) -> str:
-    '''
+    """
     反转字符串。
-    '''
+    """
     chs = [ch for ch in src_str]
     start = 0
     end = len(chs) - 1
@@ -61,9 +61,9 @@ def test_reverse_string():
 
 
 def is_recycle_string(input_str: str) -> bool:
-    '''
+    """
     判断回文字符串。
-    '''
+    """
     start = 0
     end = len(input_str) - 1
     while start < end:
@@ -81,9 +81,9 @@ def test_is_recycle_string():
 
 
 def get_longest_numbers(num_str: str) -> str:
-    '''
+    """
     找出字符串中最长的连续数字。
-    '''
+    """
     start = 0
     max_len = cur_len = 0
     for idx in range(0, len(num_str)):
@@ -104,9 +104,9 @@ def test_get_longest_numbers():
 
 
 def str_distinct() -> list:
-    '''
+    """
     有序字符串去重。
-    '''
+    """
     def format_line(in_str: str) -> str:
         return in_str.split('_')[0]
 
@@ -130,10 +130,10 @@ def test_str_distinct():
 
 
 def str_ab_distinct(in_str: str) -> list:
-    '''
+    """
     字符串去重，并且大写字母在小写字母前。
     输入: EAAnCmCDffBg 输出: EACDBnmfg
-    '''
+    """
     upper_chs = []
     lower_chs = []
     ret_list = []
@@ -276,11 +276,11 @@ def test_length_of_longest_unique_substring():
 # -----------------------------------
 
 def reverse_by_words(sentence: str) -> str:
-    '''
+    """
     reverse words divied by space.
     input: this is a test
     output: test a is this
-    '''
+    """
     s = Stack()
     for word in sentence.split(' '):
         s.push(word)

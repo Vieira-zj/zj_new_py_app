@@ -6,6 +6,9 @@ Created on 2020-06-06
 
 
 def int_to_binary_v1(num: int) -> int:
+    """
+    十进制整数转二进制。
+    """
     count = 0
     ret = ''
     while num > 0:
@@ -14,19 +17,17 @@ def int_to_binary_v1(num: int) -> int:
             count += 1
         ret = str(tmp) + ret
         num = int(num / 2)
-    print('binary:', ret)
-    return count
+    print('number of 1:', count)
+    return ret
 
 
 def test_int_to_binary_v1():
     for num in (1, 2, 8, 9):
-        print(int_to_binary_v1(num))
+        b = int_to_binary_v1(num)
+        print(f'num={num}, binary={b}')
 
 
 def int_to_binary_v2(num: int, bin_dim: int) -> str:
-    '''
-    十进制整数转二进制。
-    '''
     bin_list = [str(b) for b in bin(num)[2:]]
     ret = ['0'] * (bin_dim - len(bin_list)) + bin_list
     return ''.join(ret)
@@ -39,22 +40,23 @@ def test_int_to_binary_v2():
 
 
 def binary_to_int(bits: list) -> int:
-    '''
+    """
     二进制转十进制整数。
-    '''
+    """
+    import math
     ret = 0
     for idx, bit in enumerate(reversed(bits)):
-        ret += bit * pow(2, idx)
+        ret += bit * math.pow(2, idx)
     return ret
 
 
 def test_binary_to_int():
     bits = '00001111'
     num = binary_to_int([int(bit) for bit in bits])
-    print('int for binary %s is: %d' % (bits, num))
+    print('int for binary [%s] is: %d' % (bits, num))
 
 
 if __name__ == '__main__':
 
-    test_int_to_binary_v1()
+    test_binary_to_int()
     print('py alg number demo done.')
