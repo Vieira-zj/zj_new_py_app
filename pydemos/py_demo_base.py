@@ -1714,6 +1714,110 @@ def py_base_ex66():
         print('|'.join(result))
 
 
+# example 67, f print
+def py_base_ex67():
+    x = 10
+    y = 20
+    print(f'float x: {x:.2f}')
+    print(f'hex x: {x:#0x}')
+    print(f'bin x: {x:b}')
+    print(f'x * y = {x * y}')
+    print()
+
+    now = dt.now()
+    print(f'date time: {now:%m-%d-%Y %H:%M:%S}')
+    print(f'week day: {now:%A}')
+    print(f'day of year: {now:%j}')
+    print()
+
+    num = 4
+    print(f'number is: {num:4}')
+    for idx in range(1, 5):
+        print(f'the number is: {num:{idx}}')
+    print(f'number: {num:<4}eof')  # left align
+    print(f'number: {num:>4}eof')  # right align
+    print(f'number: {num:^4}eof')  # center align
+    print()
+
+    from dataclasses import dataclass
+
+    @dataclass
+    class Person:
+        name: str
+        age: int = 1
+
+        def __str__(self) -> str:
+            return f'{self.name} is {self.age} years old'
+
+    p = Person('foo', 31)
+    print(f'str: {p}')
+    print(f'repr: {p!r}')
+
+
+# example 68, dataclass
+def py_base_ex68():
+    from dataclasses import dataclass
+    from typing import List
+
+    # nest dataclass
+    @dataclass
+    class Player:
+        name: str
+        number: int
+        position: str
+        age: int
+
+    @dataclass
+    class Team:
+        name: str
+        players: List[Player]
+
+    james = Player('Lebron James', 23, 'SF', 25)
+    davis = Player('Anthony Davis', 3, 'PF', 21)
+    lal = Team('Los Angeles Lakers', [james, davis])
+    print(f'team: {lal.name}, players: {lal.players}')
+    print()
+
+    # immutable object
+    @dataclass(frozen=True)
+    class Data:
+        name: str
+        value: int = 42
+
+    data = Data('foo', 31)
+    # dataclasses.FrozenInstanceError: cannot assign to field 'name'
+    # data.name = 'bar'
+    print(f'data: {data}')
+
+
+# example 69, dataclass field
+def py_base_ex69():
+    from dataclasses import dataclass, field
+    from typing import List
+
+    # list 是一个可变默认值，使用默认工厂进行更改
+    @dataclass
+    class MyClazz:
+        values: List[int] = field(default_factory=list)
+
+    c = MyClazz()
+    c.values += [1, 2, 3]
+    print(f'one={c.values[0]}, two={c.values[1]}')
+
+    # __post_init__ 方法
+    @dataclass
+    class MyClazz2:
+        a: float
+        b: float
+        c: float = field(init=False)
+
+        def __post_init__(self):
+            self.c = self.a + self.b
+
+    c2 = MyClazz2(10, 20)
+    print(f'clazz: {c2}')
+
+
 # example 97, regexp
 def py_base_ex97():
     # match: 返回匹配上的第一个字串。需要注意的是 match 函数是从字符串开始处开始查找的，如果开始处不匹配
@@ -1888,7 +1992,7 @@ if __name__ == '__main__':
     print()
 
     try:
-        py_base_ex99()
+        py_base_ex69()
     except:
         traceback.print_exc()
 
