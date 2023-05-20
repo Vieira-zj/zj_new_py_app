@@ -32,12 +32,14 @@
   - baseline 结果对比，json deep diff
 
 - 工具类
-  - http utils
-    - session 连接配置（长连接、连接池、请求超时）
-    - 请求支持重试
-    - aop plugin
-  - io utils
-  - string utils
+  - utils
+    - http
+      - session 连接配置（长连接、连接池、请求超时）
+      - 请求支持重试
+      - aop plugin
+    - io, string, datetime
+  - client
+    - db, redis
 
 - 测试执行
   - 配置 支持多个环境
