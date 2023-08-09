@@ -4,7 +4,7 @@ import difflib
 
 
 def read_file_lines(file_path):
-    with open(file_path, 'r') as f:
+    with open(file_path, 'r', encoding='utf8') as f:
         return f.readlines()
 
 
@@ -23,14 +23,14 @@ def diff_files(file1_path, file2_path, output_html_file_path):
     results = d.make_file(file1_lines, file2_lines)
     print_diff_count(results)
 
-    with open(output_html_file_path, 'w') as f:
+    with open(output_html_file_path, 'w',  encoding='utf8') as f:
         f.write(results)
 
 
 if __name__ == '__main__':
 
-    path1 = '/tmp/test/test1.txt'
-    path2 = '/tmp/test/test2.txt'
+    path1 = '/tmp/test/test1.json'
+    path2 = '/tmp/test/test2.json'
     output_path = '/tmp/test/diff.html'
     diff_files(path1, path2, output_path)
     print('diff files done.')
