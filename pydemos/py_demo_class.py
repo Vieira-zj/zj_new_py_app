@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
+# pylint: disable=C0104,C0201,C0203,C0204,W0212,W0602,W0622,W0613,W0719
+
 '''
 Created on 2019-03-17
 @author: zhengjin
@@ -11,9 +13,10 @@ import functools
 from typing import List
 
 
-def py_base_ext():
-    import py_demo_base
-    py_demo_base.py_base_ex02()
+def py_base_import_ext_mod():
+    # sys.path.append(os.getenv('PYPROJECT'))
+    from pydemos import py_demo_base
+    py_demo_base.py_demo_print_multi_lines()
 
 
 # example 01, 使用函数当做元类
@@ -38,6 +41,7 @@ def py_class_ex01():
     # main
     print('attr bar:', hasattr(Foo, 'bar'))
     print('attr BAR:', hasattr(Foo, 'BAR'))
+    # pylint: disable=E1101
     print('BAR:', Foo.BAR)
 
     f = Foo()
@@ -66,6 +70,7 @@ def py_class_ex02():
     # main
     print('attr bar:', hasattr(Foo, 'bar'))
     print('attr BAR:', hasattr(Foo, 'BAR'))
+    # pylint: disable=E1101
     print('BAR:', Foo.BAR)
 
     f = Foo()
@@ -87,6 +92,7 @@ def py_class_ex03():
             print('Foo __init__ is invoked: args=%s, kwargs=%s' % (args, kwargs))
             self.value = args[0]
 
+        # pylint: disable=E0213
         def __call__(cls, *args, **kwargs):
             print('Foo __call__ is invoked: args=%s, kwargs=%s' % (args, kwargs))
             # super has no attr __call__
@@ -233,6 +239,7 @@ def py_class_ex07():
         def get_final_attrs(self):
             return 'cls_final=%s, ins_final=%s' % (self.__cls_final, self.__inst_final)
 
+    # pylint: disable=W0238
     class Bar(Foo):
         _cls_private = 'bar_class_private'
         __cls_final = 'bar_class_final'
@@ -268,6 +275,7 @@ def py_class_ex08():
     # not global access
     # number = 10
 
+    # pylint: disable=W0603
     class Foo(object):
         def add_number(self, n):
             global number
@@ -288,6 +296,7 @@ def py_class_ex08():
 def py_class_ex09():
     from abc import ABCMeta, abstractmethod
 
+    # pylint: disable=W0107,W0246
     class DataProcessor(metaclass=ABCMeta):
         '''Base processor to be used for all preparation.'''
 
@@ -453,6 +462,8 @@ class Events(object):
 
 
 def py_class_ex11():
+    # pylint: disable=E1120
+
     def start_handler():
         print('start handler')
 
@@ -495,6 +506,7 @@ def py_class_ex12():
 
 # example 13, 使用 metaclass MetaRoom 动态为类 Room 添加静态成员变量和函数
 class Wall(object):
+    # pylint: disable=W0201
 
     STATIC_WALL_ATTR = "static wall"
 
@@ -510,6 +522,7 @@ class Wall(object):
 
 
 class Door(object):
+    # pylint: disable=W0201,E1101
 
     def init_door(self):
         self.door = "attr door"
@@ -550,6 +563,7 @@ class MetaRoom(type):
 
 
 class Room(object, metaclass=MetaRoom):
+    # pylint: disable=E1102
 
     def __init__(self):
         self.room = 'attr room'
@@ -566,6 +580,7 @@ class Room(object, metaclass=MetaRoom):
 
 
 def py_class_ex13():
+    # pylint: disable=E1101
     print('\nroom attrs:')
     print(vars(Room))
     # for attr_name in dir(Room):
@@ -617,6 +632,7 @@ class Sub1(Root):
 
 
 class Sub2(Root):
+    # pylint: disable=W0231
 
     def __init__(self, desc):
         self.desc = desc
@@ -694,6 +710,8 @@ def py_class_ex17():
 
 # example 18, singleton: deco for class
 def py_class_ex18():
+    # pylint: disable=E1101
+
     def singleton(clss):
         instances = {}
 
@@ -744,8 +762,10 @@ def py_class_ex19():
 
 # example 20, 基于原型对象实现类的深拷贝
 def py_class_ex20():
+    # pylint: disable=E1101
+
     class PrototypeMeta(type):
-        """ deepcopy 函数的本质其实就是对象的一次序列化和一次返序列化 """
+        """ deepcopy 函数的本质其实就是对象的一次序列化和一次返序列化。 """
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
@@ -779,6 +799,7 @@ def py_class_ex21():
             self.country = country
             self.province = province
 
+    # pylint: disable=W0621
     class Student(object):
 
         def __init__(self, name, age, address):

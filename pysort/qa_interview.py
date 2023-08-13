@@ -1,14 +1,15 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
+# pylint: disable=C0200,C0201,C0325,W0622
+
 '''
 Created on 2020-07-03
 @author: zhengjin
 '''
 
 import functools
-import random
 import math
+import random
 import time
-
 from datetime import datetime as dt
 
 
@@ -422,7 +423,7 @@ def alg_demo10(path: str, dst_name: str) -> list:
     1. 一行包括100+喜欢的城市（列）
     2. 文件行数大于1000W
     """
-    with open(path, mode='r') as f:
+    with open(path, mode='r', encoding='utf8') as f:
         lines = f.readlines()
         d = {}
         for line in lines:
@@ -538,7 +539,7 @@ def alg_demo12(path: str, top: int = 10):
 
     def read_words_from_file(path: str) -> dict:
         ret_words = {}
-        with open(path) as f:
+        with open(path, mode='r', encoding='utf8') as f:
             lines = f.readlines()
             for line in lines:
                 line = line.rstrip('\n')

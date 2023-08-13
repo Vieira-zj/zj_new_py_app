@@ -1,13 +1,19 @@
 {
-  "editor.formatOnSave": false,
-
+  "python.defaultInterpreterPath": "/Users/jinzheng/.pyenv/versions/env-3.7.2/bin/python3",
   "python.autoComplete.extraPaths": [
-    "/Users/jinzheng/.pyenv/versions/env-3.7.2",
+    "/Users/jinzheng/.pyenv/versions/env-3.7.2"
   ],
-  "python.languageServer": "Jedi",
-  "pylint.args": ["--disable=C0114,C0115,C0116,C0103"],
+  "python.languageServer": "Pylance",
+  "python.analysis.extraPaths": ["/Users/jinzheng/.pyenv/versions/env-3.7.2"],
+
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python"
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
   },
+  "isort.args": ["--profile", "black"],
+  "pylint.args": ["--disable=C0114,C0115,C0116,C0103,C0209,C0301,C0415"]
   // "python.linting.pylintArgs": ["--generate-members"] // for pytest and allure
 }
