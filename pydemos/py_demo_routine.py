@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
+# pylint: disable=W0621
+
 '''
 Created on 2019-03-31
 @author: zhengjin
@@ -249,7 +251,7 @@ def py_routinue_demo13(loop):
 
 # demo14, producer and consumer model
 def py_routinue_demo14(loop):
-    import asyncio
+    # pylint: disable=E1101
 
     class Producer(object):
         def __init__(self, goods):
@@ -265,9 +267,11 @@ def py_routinue_demo14(loop):
                 if self.goods['value'] < 10:
                     self.goods['value'] += 1
                     await asyncio.sleep(1)
-                    print(tag, 'deliver one, now goods: %d' % self.goods['value'])
+                    print(tag, 'deliver one, now goods: %d' %
+                          self.goods['value'])
                 else:
-                    print(tag, 'already 10, stop deliver, now goods: %d' % self.goods['value'])
+                    print(tag, 'already 10, stop deliver, now goods: %d' %
+                          self.goods['value'])
                     await self.produce_not_full()
                     print(tag, 'producer resume')
     # end class
@@ -286,9 +290,11 @@ def py_routinue_demo14(loop):
                 if self.goods['value'] > 1:
                     self.goods['value'] -= 1
                     await asyncio.sleep(0.5)
-                    print(tag, 'consume one, now goods: %d' % self.goods['value'])
+                    print(tag, 'consume one, now goods: %d' %
+                          self.goods['value'])
                 else:
-                    print(tag, 'only 1, stop consume, goods: %d' % self.goods['value'])
+                    print(tag, 'only 1, stop consume, goods: %d' %
+                          self.goods['value'])
                     await self.goods_not_empty()
                     print(tag, 'consumer resume')
     # end class

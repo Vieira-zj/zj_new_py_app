@@ -1,13 +1,12 @@
 # coding: utf-8
 
-import gevent
 import random
-import time
-
 from queue import Queue
-from gevent.pool import Group
-from gevent.local import local
 from typing import List, Text
+
+import gevent
+from gevent.local import local
+from gevent.pool import Group
 
 group = Group()
 
@@ -128,8 +127,7 @@ def gevent_ex6():
             gevent.sleep(1)
 
     def test_with_threadpool():
-        from concurrent.futures import ThreadPoolExecutor
-        from concurrent.futures import wait
+        from concurrent.futures import ThreadPoolExecutor, wait
 
         q = Queue()
         values = 'this is a consume and product example, stop'.split(' ')

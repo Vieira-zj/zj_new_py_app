@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
 '''
 Created on 2018-10-30
 @author: zhengjin
@@ -6,21 +6,20 @@ Created on 2018-10-30
 Includes unit test and selenium web ui test demo by "unittest" module.
 '''
 
-import chromedriver_binary
 import os
 import threading
 import time
 import unittest
 
+import chromedriver_binary
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.support import expected_conditions as cond
 from selenium.webdriver.support.ui import WebDriverWait
-
 
 # --------------------------------------------------------------
 # Unit Test
