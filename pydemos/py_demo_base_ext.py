@@ -736,11 +736,11 @@ def py_demo_import_mod():
     print()
 
     # 3, 'imp' is deprecated
-    import imp
-    mod = imp.load_source('test_import_mod', file_path)
-    print(type(mod))
-    printTestClass(mod)
-    printTestMethod(mod.TestPy01)
+    # import imp
+    # mod = imp.load_source('test_import_mod', file_path)
+    # print(type(mod))
+    # printTestClass(mod)
+    # printTestMethod(mod.TestPy01)
 
 
 def py_load_mod_and_run():
@@ -852,6 +852,24 @@ def py_demo_bits_state_02():
         print('|'.join(result))
 
 
+# pipeline
+
+def py_demo_pipe_01():
+    nums =[1, 2, 3, 4, 5, 6]
+    nums = filter(lambda x: x % 2 == 0, nums)
+    nums = map(lambda x: x ** 2, nums)
+    print('results:', list(nums))
+
+
+def py_demo_pipe_02():
+    from pipe import select, where
+
+    nums =[1, 2, 3, 4, 5, 6]
+    # pylint: disable=E1120
+    result = list(nums | where(lambda x: x % 2 == 0) | select(lambda x: x ** 2))
+    print('results:', result)
+
+
 # py exp
 
 
@@ -959,7 +977,8 @@ def py_demo_run_stack():
 if __name__ == '__main__':
 
     try:
-        py_demo_if_cond()
+        # py_demo_if_cond()
+        py_demo_pipe_02()
     except:
         traceback.print_exc()
 

@@ -1,19 +1,21 @@
 {
-  "python.defaultInterpreterPath": "/Users/jinzheng/.pyenv/versions/env-3.7.2/bin/python3",
+  "python.envFile": "${workspaceFolder}/.env",
+  "python.defaultInterpreterPath": "/Users/jinzheng/.pyenv/versions/env-3.12.1/bin/python3",
   "python.autoComplete.extraPaths": [
-    "/Users/jinzheng/.pyenv/versions/env-3.7.2"
+    "/Users/jinzheng/.pyenv/versions/env-3.12.1"
   ],
   "python.languageServer": "Pylance",
-  "python.analysis.extraPaths": ["/Users/jinzheng/.pyenv/versions/env-3.7.2"],
+  "python.analysis.extraPaths": ["/Users/jinzheng/.pyenv/versions/env-3.12.1"],
 
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python",
+    "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": false,
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports": "explicit"
     }
   },
   "isort.args": ["--profile", "black"],
-  "pylint.args": ["--disable=C0114,C0115,C0116,C0103,C0209,C0301,C0415"]
+  "pylint.args": ["--disable=W0123,W0719,C0114,C0115,C0116,C0103,C0209,C0301,C0415,no-name-in-module"],
+  "pylint.interpreter": ["/Users/jinzheng/.pyenv/versions/env-3.12.1/bin/python3"],
   // "python.linting.pylintArgs": ["--generate-members"] // for pytest and allure
 }
