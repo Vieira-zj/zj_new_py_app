@@ -10,7 +10,7 @@ Python class and meta class examples.
 
 import copy
 import functools
-from typing import List
+from typing import Any, List
 
 
 def py_base_import_ext_mod():
@@ -826,8 +826,53 @@ def py_class_ex21():
     # print('true' if s.addr else 'false') # AttributeError
 
 
+# example 22, 运算符重载
+def py_class_ex22():
+    class MyList(object):
+
+        def __init__(self, *args) -> None:
+            self.cursor = 0
+            self.slots = list(args)
+
+        def __len__(self) -> int:
+            return len(self.slots)
+
+        def __repr__(self) -> str:
+            return str(self.slots)
+
+        def __getitem__(self, idx: int) -> Any:
+            return self.slots[idx]
+
+        def __setitem__(self, idx: int, val: Any) -> None:
+            self.slots[idx] = val
+
+        def __iter__(self):
+            return self
+
+        def __next__(self) -> Any:
+            if self.cursor >= self.__len__():
+                self.cursor = 0
+                raise StopIteration
+            ret = self.slots[self.cursor]
+            self.cursor += 1
+            return ret
+
+    l = MyList(1, 2, 3, 4, 5)
+    print(f"\nlist={l}, size={len(l)}")
+    print(f"list[0]={l[0]}")
+    print(f"list[:2]={l[:2]}")
+
+    print('\n1st iterator:')
+    for i in l:
+        print('value:', i)
+
+    print('\n2nd iterator:')
+    for i in l:
+        print('item:', i)
+
+
 if __name__ == '__main__':
 
     # py_base_ext()
-    py_class_ex14()
+    py_class_ex22()
     print('python class demo DONE.')
