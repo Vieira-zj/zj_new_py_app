@@ -19,6 +19,29 @@ from enum import Enum
 from typing import Any, Dict, List, Text
 
 
+def py_demo_if_cond():
+    s = 'a' and 'b'
+    print('\nresult:', s)  # b
+
+    s = 'a' or 'b'
+    print('result:', s)  # b
+
+    s = '' or 'default'  # b
+    print('result:', s)
+
+
+def py_demo_calculate():
+    i = 12 // 5
+    print('math int div result:', i)
+
+    i = 5**2
+    print('math power result:', i)
+
+    bin_str = '0111'
+    i = int(bin_str, 2)
+    print(f'binary {bin_str} -> int {i}')
+
+
 def py_demo_f_print():
     x = 10
     y = 20
@@ -54,17 +77,6 @@ def py_demo_f_print():
     p = Person('foo', 31)
     print(f'str: {p}')
     print(f'repr: {p!r}')
-
-
-def py_demo_if_cond():
-    s = 'a' and 'b'
-    print('\nresult:', s)  # b
-
-    s = 'a' or 'b'
-    print('result:', s)  # b
-
-    s = '' or 'default'  # b
-    print('result:', s)
 
 
 def py_demo_default_call():
@@ -978,7 +990,8 @@ if __name__ == '__main__':
 
     try:
         # py_demo_if_cond()
-        py_demo_pipe_02()
+        # py_demo_pipe_02()
+        py_demo_calculate()
     except:
         traceback.print_exc()
 

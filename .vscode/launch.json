@@ -5,8 +5,8 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: 当前文件",
-            "type": "python",
+            "name": "Python: cur file",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
