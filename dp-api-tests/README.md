@@ -3,7 +3,7 @@
 要点：
 
 - 测试环境治理
-  - mock
+  - api mock
   - 中间件依赖 db, redis
   - 环境稳定性
 - 数据管理
@@ -79,26 +79,26 @@
 ```text
 ├── README.md
 ├── apis                 原生api接口调用
-│   ├── __init__.py
-│   ├── auth.py
-│   ├── default.py
-│   ├── log.py
-│   └── user.py
+│     ├── __init__.py
+│     ├── auth.py
+│     ├── default.py
+│     ├── log.py
+│     └── user.py
 ├── configs              测试执行配置
-│   ├── configs-test-vn.ini
-│   └── configs.ini
+│     ├── configs-test-vn.ini
+│     └── configs.ini
 ├── main.py
 ├── outputs              测试输出
-│   └── allure           allure测试结果及报告
-│   └── pytest.log       测试执行日志
+│     └── allure           allure测试结果及报告
+│     └── pytest.log       测试执行日志
 ├── run.sh
 ├── tasks                自动化测试场景（api组合）
 ├── tests                自动化测试用例（api+场景 组合）
-│   ├── __init__.py
-│   ├── conftest.py      pytest fixture定义
-│   ├── pytest.ini       pytest 配置
-│   ├── smoke            冒烟测试用例
-│   └── base.py          pytest 测试用例基类
+│     ├── __init__.py
+│     ├── conftest.py      pytest fixture定义
+│     ├── pytest.ini       pytest 配置
+│     ├── smoke            冒烟测试用例
+│     └── base.py          pytest 测试用例基类
 ├── tools                测试工具类
 │   ├── __init__.py
 │   ├── get_pytest_info.py
